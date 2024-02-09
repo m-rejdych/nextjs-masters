@@ -1,3 +1,4 @@
+import { formatDolars } from '@/util/currency';
 import type { Product as ProductType } from '@/types/products';
 
 type Props = Omit<ProductType, 'id'>;
@@ -18,7 +19,7 @@ export const Product = ({ name, description, price, img: { src, alt } }: Props) 
 			</h3>
 			<p className="text-sm text-gray-500">{description}</p>
 			<div className="flex flex-1 flex-col justify-end">
-				<p className="text-base font-medium text-gray-900">{price}</p>
+				<p className="text-base font-medium text-gray-900">{formatDolars(price / 100)}</p>
 			</div>
 		</div>
 	</div>
