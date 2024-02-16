@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import { Disclosure } from '@headlessui/react';
+import { clsx } from 'clsx';
 import Link from 'next/link';
 
 interface Props {
@@ -12,7 +12,7 @@ export const NavItemMobile = ({ href, title, active }: Props) => (
 	<Disclosure.Button
 		as={Link}
 		href={href}
-		className={classNames(
+		className={clsx(
 			'block border-l-4 py-2 pl-3 pr-4 text-base font-medium',
 			active
 				? 'border-primary-500 bg-primary-50 text-primary-700'

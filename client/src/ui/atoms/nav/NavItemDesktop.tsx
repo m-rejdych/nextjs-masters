@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import Link from 'next/link';
+import { clsx } from 'clsx';
 
 interface Props {
 	href: string;
@@ -10,7 +10,7 @@ interface Props {
 export const NavItemDesktop = ({ href, title, active }: Props) => (
 	<Link
 		href={href}
-		className={classNames(
+		className={clsx(
 			'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium',
 			active
 				? 'border-primary-500 text-neutral-900'
