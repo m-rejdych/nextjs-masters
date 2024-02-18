@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-
 import { NavProfileMenuItem } from '@/ui/atoms/nav/NavProfileMenuItem';
 import { NavProfileMenuButton } from '@/ui/atoms/nav/NavProfileMenuButton';
 

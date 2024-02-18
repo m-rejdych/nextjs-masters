@@ -1,18 +1,19 @@
 import Link from 'next/link';
 import { Menu } from '@headlessui/react';
-import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import type { Route } from 'next';
 
-interface Props {
-	href: string;
+interface Props<T extends string> {
+	href: Route<T>;
 	title: string;
 }
 
-export const NavProfileMenuItem = ({ href, title }: Props) => (
+export const NavProfileMenuItem = <T extends string>({ href, title }: Props<T>) => (
 	<Menu.Item>
 		{({ active }) => (
 			<Link
 				href={href}
-				className={clsx(
+				className={twMerge(
 					active ? 'bg-neutral-100' : '',
 					'block px-4 py-2 text-sm text-neutral-700',
 				)}

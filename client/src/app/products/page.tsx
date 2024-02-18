@@ -1,7 +1,10 @@
+import { ProductsList } from '@/ui/molecules/products/ProductsList';
+import { PRODUCTS } from '@/constants/products';
+
 export default function Products() {
-  return (
-    <div>
-      <h1>Products</h1>
-    </div>
-  );
+	return (
+		<main>
+			<ProductsList products={PRODUCTS} />;
+		</main>
+	);
 }
