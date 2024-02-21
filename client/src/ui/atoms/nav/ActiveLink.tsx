@@ -23,14 +23,13 @@ export const ActiveLink = <T extends string>({
 	exact = true,
 }: Props<T>) => {
 	const pathname = usePathname();
-	const isExactPathname = pathname === href;
-	const isActive = exact ? isExactPathname : pathname.startsWith(href);
+	const isActive = exact ? pathname === href : pathname.startsWith(href);
 
 	return (
 		<Link
 			href={href}
 			className={twMerge(className, isActive ? activeClassName : inactiveClassName)}
-			aria-current={isExactPathname}
+			aria-current={isActive}
 		>
 			{children}
 		</Link>
