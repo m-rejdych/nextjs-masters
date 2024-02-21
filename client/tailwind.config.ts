@@ -11,7 +11,7 @@ const config: Config = {
 		colors: {
 			...colors,
 			primary: {
-				'050': '#E6E6FF',
+				'50': '#E6E6FF',
 				'100': '#C4C6FF',
 				'200': '#A2A5FC',
 				'300': '#8888FC',
@@ -26,7 +26,7 @@ const config: Config = {
 				dark: '#1D0EBE',
 			},
 			secondary: {
-				'050': '#EFFCF6',
+				'50': '#EFFCF6',
 				'100': '#C6F7E2',
 				'200': '#8EEDC7',
 				'300': '#65D6AD',
@@ -41,7 +41,7 @@ const config: Config = {
 				dark: '#0C6B58',
 			},
 			neutral: {
-				'050': '#F0F4F8',
+				'50': '#F0F4F8',
 				'100': '#D9E2EC',
 				'200': '#BCCCDC',
 				'300': '#9FB3C8',
@@ -56,7 +56,7 @@ const config: Config = {
 				dark: '#243B53',
 			},
 			accent: {
-				'050': '#FFE3E3',
+				'50': '#FFE3E3',
 				'100': '#FFBDBD',
 				'200': '#FF9B9B',
 				'300': '#F86A6A',
@@ -72,7 +72,7 @@ const config: Config = {
 			},
 		},
 	},
-	plugins: [require('@tailwindcss/aspect-ratio')],
+	plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/typography')],
 };
 
 export default config;
