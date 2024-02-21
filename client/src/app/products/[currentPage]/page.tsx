@@ -3,8 +3,14 @@ import { ProductsList } from '@/ui/molecules/products/ProductsList';
 import { Pagination } from '@/ui/molecules/nav/Pagination';
 import { getProducts } from '@/api/products';
 
-export default async function Home() {
-	const products = await getProducts(20);
+interface Props {
+	params: {
+		currentPage: string;
+	};
+}
+
+export default async function ProductsPaginated({ params: { currentPage } }: Props) {
+	const products = await getProducts(20, (Number(currentPage) - 1) * 20);
 
 	if (!products) {
 		return notFound();
@@ -12,9 +18,8 @@ export default async function Home() {
 
 	return (
 		<main>
-			<h2 className="sr-only">Products</h2>
 			<ProductsList products={products} />
-			<Pagination currentPage={1} />
+			<Pagination currentPage={currentPage} />
 		</main>
 	);
 }

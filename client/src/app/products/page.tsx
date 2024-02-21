@@ -1,10 +1,19 @@
+import { notFound } from 'next/navigation';
 import { ProductsList } from '@/ui/molecules/products/ProductsList';
-import { PRODUCTS } from '@/constants/products';
+import { Pagination } from '@/ui/molecules/nav/Pagination';
+import { getProducts } from '@/api/products';
 
-export default function Products() {
+export default async function Products() {
+	const products = await getProducts(20);
+
+	if (!products) {
+		return notFound();
+	}
+
 	return (
 		<main>
-			<ProductsList products={PRODUCTS} />;
+			<ProductsList products={products} />
+			<Pagination currentPage={1} />
 		</main>
 	);
 }

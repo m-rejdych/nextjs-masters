@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -9,6 +11,7 @@ interface Props<T extends string> {
 	className?: string;
 	activeClassName?: string;
 	inactiveClassName?: string;
+	exact?: boolean;
 }
 
 export const ActiveLink = <T extends string>({
@@ -17,9 +20,10 @@ export const ActiveLink = <T extends string>({
 	className,
 	activeClassName,
 	inactiveClassName,
+	exact = true,
 }: Props<T>) => {
 	const pathname = usePathname();
-	const isActive = pathname === href;
+	const isActive = exact ? pathname === href : pathname.startsWith(href);
 
 	return (
 		<Link

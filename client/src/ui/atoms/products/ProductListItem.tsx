@@ -19,7 +19,7 @@ export const ProductListItem = ({
 		</div>
 		<div className="flex flex-1 flex-col space-y-2 p-4">
 			<h3 className="text-sm font-medium text-neutral-dark">
-				<Link href={`/products/${id}`}>
+				<Link href={`/product/${id}`}>
 					<span aria-hidden="true" className="absolute inset-0" />
 					{name}
 				</Link>
