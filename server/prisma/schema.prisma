@@ -11,51 +11,58 @@ datasource db {
 }
 
 model Product {
-  id          String                 @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   description String
   slug        String
   price       Int
-  image       String
-  categories  CategoriesOnProducts[]
-  collections CollectionsOnPosts[]
+  rating      Float?
+  images      Image[]
+  categories  Category[]
+  collections Collection[]
   orderItems  OrderItem[]
-  createdAt   DateTime               @default(now())
-  updatedAt   DateTime               @updatedAt
+  reviews     Review[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Image {
+  id        String  @id @default(uuid())
+  url       String
+  alt       String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Category {
-  id        String                 @id @default(uuid())
-  name      String
-  products  CategoriesOnProducts[]
-  createdAt DateTime               @default(now())
-  updatedAt DateTime               @updatedAt
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Collection {
-  id        String               @id @default(uuid())
-  name      String
-  products  CollectionsOnPosts[]
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
-model CategoriesOnProducts {
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId  String
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId String
-
-  @@id([productId, categoryId])
-}
-
-model CollectionsOnPosts {
-  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId    String
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  collectionId String
-
-  @@id([productId, collectionId])
+model Review {
+  id          String   @id @default(uuid())
+  author      String
+  email       String
+  title       String
+  description String
+  rating      Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Order {
@@ -77,6 +84,8 @@ model OrderItem {
 }
 
 enum OrderStatus {
-  Active
-  Resolved
+  Cancelled
+  Created
+  Fulfilled
+  Paid
 }
