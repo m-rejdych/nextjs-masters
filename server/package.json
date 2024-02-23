@@ -35,6 +35,7 @@
     "@apollo/server": "^4.10.0",
     "@pothos/core": "^3.41.0",
     "@pothos/plugin-prisma": "^3.64.0",
+    "@pothos/plugin-relay": "^3.46.0",
     "@prisma/client": "5.9.1",
     "graphql": "^16.8.1",
     "graphql-scalars": "^1.22.4",

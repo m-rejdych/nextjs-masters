@@ -1,8 +1,8 @@
 import { builder } from '@/schema/builder';
 
-builder.prismaObject('Product', {
+builder.prismaNode('Product', {
+	id: { field: 'id' },
 	fields: (t) => ({
-		id: t.exposeID('id'),
 		name: t.exposeString('name'),
 		description: t.exposeString('description'),
 		slug: t.exposeString('slug'),
@@ -17,20 +17,16 @@ builder.prismaObject('Product', {
 	}),
 });
 
+
 builder.queryField('products', (t) =>
-	t.prismaField({
-		type: ['Product'],
-		nullable: true,
-		args: {
-			take: t.arg.int({ defaultValue: 10 }),
-			offset: t.arg.int({ defaultValue: 0 }),
+	t.prismaConnection({
+		type: 'Product',
+		cursor: 'id',
+		totalCount: async () => {
+			return prisma.product.count();
 		},
-		resolve: async (query, _, { take, offset }) => {
-			return prisma.product.findMany({
-				...query,
-				take: take ?? undefined,
-				skip: offset ?? undefined,
-			});
+		resolve: async (query) => {
+			return prisma.product.findMany({ ...query });
 		},
 	}),
 );

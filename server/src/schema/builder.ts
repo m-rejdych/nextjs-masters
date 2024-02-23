@@ -1,5 +1,6 @@
 import SchemaBuilder from '@pothos/core';
 import PluginPrisma from '@pothos/plugin-prisma';
+import PluginRelay from '@pothos/plugin-relay';
 import { DateResolver } from 'graphql-scalars';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import { prisma } from '@/utils/prisma';
@@ -10,10 +11,11 @@ export const builder = new SchemaBuilder<{
 	};
 	PrismaTypes: PrismaTypes;
 }>({
-	plugins: [PluginPrisma],
+	plugins: [PluginPrisma, PluginRelay],
 	prisma: {
 		client: prisma,
 	},
+	relayOptions: {},
 });
 
 builder.addScalarType('Date', DateResolver);
