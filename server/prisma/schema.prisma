@@ -42,21 +42,26 @@ model Image {
 }
 
 model Color {
-  id       String    @id @default(uuid())
-  name     ColorName @unique
-  products Product[]
+  id        String    @id @default(uuid())
+  name      ColorName
+  inStock   Boolean
+  productId String
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Size {
-  id       String    @id @default(uuid())
-  type     SizeType  @unique
-  products Product[]
+  id        String   @id @default(uuid())
+  type      SizeType
+  inStock   Boolean
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Detail {
-  id          String    @id @default(uuid())
+  id          String  @id @default(uuid())
   description String
-  products    Product[]
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -109,32 +114,32 @@ model OrderItem {
 }
 
 enum CategoryName {
-  Basics
-  T_shirts
-  Hoodies
-  Shirts
-  Jeans
-  Trousers
-  Shorts
-  Jackets
-  Sweaters
-  Shoes
-  Sockets
-  Underwear
+  BASICS
+  T_SHIRTS
+  HOODIES
+  SHIRTS
+  JEANS
+  TROUSERS
+  SHORTS
+  JACKETS
+  SWEATERS
+  SHOES
+  SOCKETS
+  UNDERWEAR
 }
 
 enum CollectionName {
-  Man
-  Woman
-  Baby
-  New_arrivals
-  Sport
-  Beauty
+  MAN
+  WOMAN
+  BABY
+  NEW_ARRIVALS
+  SPORT
+  BEAUTY
 }
 
 enum ColorName {
-  Black
-  Gray
+  BLACK
+  GRAY
 }
 
 enum SizeType {
@@ -145,8 +150,8 @@ enum SizeType {
 }
 
 enum OrderStatus {
-  Cancelled
-  Created
-  Fulfilled
-  Paid
+  CANCELLED
+  CREATED
+  FULFILLED
+  PAID
 }

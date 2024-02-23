@@ -5,25 +5,38 @@ const prisma = new PrismaClient();
 
 const PRODUCTS_COUNT = 100 as const;
 const CATEGORIES = [
-	'Basics',
-	'T_shirts',
-	'Hoodies',
-	'Shirts',
-	'Jeans',
-	'Trousers',
-	'Shorts',
-	'Jackets',
-	'Sweaters',
-	'Shoes',
-	'Sockets',
-	'Underwear',
+	'BASICS',
+	'T_SHIRTS',
+	'HOODIES',
+	'SHIRTS',
+	'JEANS',
+	'TROUSERS',
+	'SHORTS',
+	'JACKETS',
+	'SWEATERS',
+	'SHOES',
+	'SOCKETS',
+	'UNDERWEAR',
 ] as const;
-const COLLECTIONS = ['Man', 'Woman', 'Baby', 'New_arrivals', 'Sport', 'Beauty'] as const;
+const COLLECTIONS = [
+  'MAN',
+  'WOMAN',
+  'BABY',
+  'NEW_ARRIVALS',
+  'SPORT',
+  'BEAUTY'
+] as const;
+const COLORS = ['BLACK', 'GRAY'] as const;
+const SIZES = ['S', 'M', 'L', 'XL'] as const;
 
 const main = async () => {
 	try {
 		await prisma.category.deleteMany();
 		await prisma.collection.deleteMany();
+		await prisma.image.deleteMany();
+		await prisma.color.deleteMany();
+		await prisma.size.deleteMany();
+		await prisma.detail.deleteMany();
 		await prisma.product.deleteMany();
 
 		const categoryIds = await Promise.all(
@@ -73,15 +86,13 @@ const main = async () => {
 						rating: faker.number.int({ min: 1, max: 5 }),
 						reviews: {
 							createMany: {
-								data: [
-									{
-										title: faker.word.adjective(),
-										description: faker.lorem.paragraph({ min: 1, max: 5 }),
-										rating: faker.number.int({ min: 1, max: 5 }),
-										email: faker.internet.email({ firstName: user }),
-										author: user,
-									},
-								],
+								data: Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () => ({
+									title: faker.word.adjective(),
+									description: faker.lorem.paragraph({ min: 1, max: 5 }),
+									rating: faker.number.int({ min: 1, max: 5 }),
+									email: faker.internet.email({ firstName: user }),
+									author: user,
+								})),
 							},
 						},
 						categories: {
@@ -89,6 +100,29 @@ const main = async () => {
 						},
 						collections: {
 							connect: { id: collectionIds[Math.floor(Math.random() * collectionIds.length)] },
+						},
+						colors: {
+              createMany: {
+                data: COLORS.map(name => ({
+                  name,
+                  inStock: faker.datatype.boolean(),
+                }))
+              }
+						},
+						sizes: {
+              createMany: {
+                data: SIZES.map(type => ({
+                  type,
+                  inStock: faker.datatype.boolean(),
+                }))
+              }
+						},
+						details: {
+							createMany: {
+								data: Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () => ({
+									description: faker.lorem.paragraph(1),
+								})),
+							},
 						},
 					},
 				});

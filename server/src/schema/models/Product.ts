@@ -11,7 +11,9 @@ builder.prismaNode('Product', {
 		createdAt: t.expose('createdAt', {
 			type: 'Date',
 		}),
-		images: t.relation('images'),
+		colors: t.relation('colors'),
+		sizes: t.relation('sizes'),
+		details: t.relation('details'),
 		categories: t.relation('categories'),
 		collections: t.relation('collections'),
 		reviews: t.relation('reviews'),
