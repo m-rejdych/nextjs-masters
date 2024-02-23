@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const PRODUCTS_COUNT = 100 as const;
 const CATEGORIES = [
 	'Basics',
-	'T-shirts',
+	'T_shirts',
 	'Hoodies',
 	'Shirts',
 	'Jeans',
@@ -18,7 +18,7 @@ const CATEGORIES = [
 	'Sockets',
 	'Underwear',
 ] as const;
-const COLLECTIONS = ['Man', 'Woman', 'Baby', 'New arrivals', 'Sport', 'Beauty'] as const;
+const COLLECTIONS = ['Man', 'Woman', 'Baby', 'New_arrivals', 'Sport', 'Beauty'] as const;
 
 const main = async () => {
 	try {

@@ -22,6 +22,9 @@ model Product {
   price       Int
   rating      Float?
   images      Image[]
+  colors      Color[]
+  sizes       Size[]
+  details     Detail[]
   categories  Category[]
   collections Collection[]
   orderItems  OrderItem[]
@@ -38,22 +41,40 @@ model Image {
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model Category {
+model Color {
+  id       String    @id @default(uuid())
+  name     ColorName @unique
+  products Product[]
+}
+
+model Size {
+  id       String    @id @default(uuid())
+  type     SizeType  @unique
+  products Product[]
+}
+
+model Detail {
   id          String    @id @default(uuid())
-  name        String    @unique
   description String
   products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+}
+
+model Category {
+  id          String       @id @default(uuid())
+  name        CategoryName @unique
+  description String
+  products    Product[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Collection {
-  id          String    @id @default(uuid())
-  name        String    @unique
+  id          String         @id @default(uuid())
+  name        CollectionName @unique
   description String
   products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
 
 model Review {
@@ -85,6 +106,42 @@ model OrderItem {
   orderId   String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
+}
+
+enum CategoryName {
+  Basics
+  T_shirts
+  Hoodies
+  Shirts
+  Jeans
+  Trousers
+  Shorts
+  Jackets
+  Sweaters
+  Shoes
+  Sockets
+  Underwear
+}
+
+enum CollectionName {
+  Man
+  Woman
+  Baby
+  New_arrivals
+  Sport
+  Beauty
+}
+
+enum ColorName {
+  Black
+  Gray
+}
+
+enum SizeType {
+  S
+  M
+  L
+  XL
 }
 
 enum OrderStatus {

@@ -6,6 +6,7 @@ builder.prismaNode('Product', {
 		name: t.exposeString('name'),
 		description: t.exposeString('description'),
 		slug: t.exposeString('slug'),
+		price: t.exposeFloat('price'),
 		rating: t.exposeFloat('rating', { nullable: true }),
 		createdAt: t.expose('createdAt', {
 			type: 'Date',
