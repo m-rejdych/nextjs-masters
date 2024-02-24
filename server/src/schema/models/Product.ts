@@ -17,9 +17,13 @@ builder.prismaNode('Product', {
 		categories: t.relation('categories'),
 		collections: t.relation('collections'),
 		reviews: t.relation('reviews'),
+		reviewCount: t.int({
+			resolve: async (product) => {
+				return prisma.review.count({ where: { productId: product.id } });
+			},
+		}),
 	}),
 });
-
 
 builder.queryField('products', (t) =>
 	t.prismaConnection({
