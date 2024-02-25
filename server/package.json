@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
-    "lint": "eslint --fix src",
-    "codegen": "graphql-codegen --config .graphqlrc.ts"
+    "lint": "eslint --fix src"
   },
   "prisma": {
     "seed": "bun run prisma/seed.ts"
@@ -15,9 +14,6 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@graphql-codegen/cli": "5.0.2",
-    "@graphql-codegen/typescript": "4.0.5",
-    "@graphql-codegen/typescript-document-nodes": "4.0.4",
-    "@graphql-codegen/typescript-resolvers": "4.0.5",
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
@@ -36,7 +32,7 @@
     "@pothos/core": "^3.41.0",
     "@pothos/plugin-prisma": "^3.64.0",
     "@pothos/plugin-relay": "^3.46.0",
-    "@prisma/client": "5.9.1",
+    "@prisma/client": "^5.10.2",
     "graphql": "^16.8.1",
     "graphql-scalars": "^1.22.4",
     "prisma": "^5.9.1"
