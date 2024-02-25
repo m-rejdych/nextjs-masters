@@ -18,6 +18,7 @@ builder.prismaObject('Size', {
 			type: SizeType,
 			resolve: (size) => size.type as SizeType,
 		}),
+    inStock: t.exposeBoolean('inStock'),
 		product: t.relation('product'),
 	}),
 });

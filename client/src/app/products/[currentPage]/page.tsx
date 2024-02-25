@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
 import { ProductsList } from '@/ui/molecules/products/ProductsList';
 import { Pagination } from '@/ui/molecules/nav/Pagination';
+import { ProductGetListDocument } from '@/gql/graphql';
 import { getProducts } from '@/api/products';
+import { executeQuery } from '@/util/gql';
 
 interface Params {
 	currentPage: string;
@@ -12,26 +14,13 @@ interface Props {
 }
 
 export const generateStaticParams = async () => {
-	let hasMore = true;
-	let currentPage = 1;
-	const maxPagesCount = 20;
-	const params: Params[] = [];
+	const {
+		products: { totalCount },
+	} = await executeQuery(ProductGetListDocument, {});
 
-	while (hasMore && currentPage <= maxPagesCount) {
-		const products = await getProducts(20, (currentPage - 1) * 20);
-		if (!products) {
-			hasMore = false;
-		} else {
-			params.push({ currentPage: currentPage.toString() });
-			if (products.length < 20) {
-				hasMore = false;
-			} else {
-				currentPage++;
-			}
-		}
-	}
-
-	return params;
+	return Array.from({ length: Math.ceil(totalCount / 20) }, (_, index) => ({
+		currentPage: (index + 1).toString(),
+	}));
 };
 
 export default async function ProductsPaginated({ params: { currentPage } }: Props) {
@@ -43,8 +32,12 @@ export default async function ProductsPaginated({ params: { currentPage } }: Pro
 
 	return (
 		<main>
-			<ProductsList products={products} />
-			<Pagination currentPage={currentPage} />
+			<ProductsList products={products.data} />
+			<Pagination
+				currentPage={currentPage}
+				hasPreviousPage={products.hasPreviousPage}
+				hasNextPage={products.hasNextPage}
+			/>
 		</main>
 	);
 }

@@ -1,7 +1,7 @@
+import { DateResolver } from 'graphql-scalars';
 import SchemaBuilder from '@pothos/core';
 import PluginPrisma from '@pothos/plugin-prisma';
 import PluginRelay from '@pothos/plugin-relay';
-import { DateResolver } from 'graphql-scalars';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import { prisma } from '@/utils/prisma';
 
