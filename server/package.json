@@ -9,7 +9,7 @@
     "lint": "eslint --fix src"
   },
   "prisma": {
-    "seed": "node run prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
