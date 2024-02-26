@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { SizePickerOption } from '@/ui/atoms/products/SizePickerOption';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	sizes: ExtendedProduct['sizes'];
+	sizes: ProductFragment['sizes'];
 }
 
 export const SizePicker = ({ sizes }: Props) => {

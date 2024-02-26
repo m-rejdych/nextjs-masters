@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { ProductRating } from '@/ui/atoms/products/ProductRating';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	rating: ExtendedProduct['rating'];
-	reviewCount: ExtendedProduct['reviewCount'];
+	rating: ProductFragment['rating'];
+	reviewCount: ProductFragment['reviewCount'];
 }
 
 export const ProductReviews = ({ rating, reviewCount }: Props) => (

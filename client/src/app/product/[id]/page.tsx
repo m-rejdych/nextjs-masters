@@ -7,10 +7,10 @@ import { ProductImagesGallery } from '@/ui/molecules/products/ProductImagesGalle
 import { ProductOptionsForm } from '@/ui/organisms/ProductOptionsForm';
 import { ProductDetails } from '@/ui/molecules/products/ProductDetails';
 import { Policies } from '@/ui/organisms/Policies';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Params {
-	id: ExtendedProduct['id'];
+	id: ProductFragment['id'];
 }
 
 interface Props {

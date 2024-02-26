@@ -1,8 +1,8 @@
 import { RadioGroup } from '@headlessui/react';
 import { twMerge } from 'tailwind-merge';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
-type Color = ExtendedProduct['colors'][number];
+type Color = ProductFragment['colors'][number];
 
 interface Props {
 	color: Color;

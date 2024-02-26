@@ -1,10 +1,10 @@
 import { ProductDetailsDescription } from '@/ui/atoms/products/ProductDetailsDescription';
 import { ProductDetailsList } from '@/ui/atoms/products/ProductDetailsList';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	description: ExtendedProduct['description'];
-	details: ExtendedProduct['details'];
+	description: ProductFragment['description'];
+	details: ProductFragment['details'];
 }
 
 export const ProductDetails = ({ description, details }: Props) => (

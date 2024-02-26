@@ -1,0 +1,5 @@
+query ProductGetProduct($id: ID!) {
+  product(id: $id) {
+    ... Product
+  }
+}

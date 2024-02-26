@@ -1,10 +1,9 @@
 import { StarIcon } from '@heroicons/react/20/solid';
 import { twMerge } from 'tailwind-merge';
-
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	rating: ExtendedProduct['rating'];
+	rating: ProductFragment['rating'];
 }
 
 export const ProductRating = ({ rating: originalRating }: Props) => {

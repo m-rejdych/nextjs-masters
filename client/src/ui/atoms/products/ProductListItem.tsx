@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { formatDolars } from '@/util/currency';
-import type { Product as ProductType } from '@/types/products';
+import type { ProductListItemFragment } from '@/gql/graphql';
 
 export const ProductListItem = ({
 	id,
@@ -8,7 +8,7 @@ export const ProductListItem = ({
 	description,
 	price,
   images,
-}: ProductType) => {
+}: ProductListItemFragment) => {
   const image = images[0];
 
   return (

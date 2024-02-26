@@ -1,8 +1,8 @@
 import { twMerge } from 'tailwind-merge';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	images: ExtendedProduct['images'];
+	images: ProductFragment['images'];
 }
 
 export const ProductImagesGallery = ({ images }: Props) => (

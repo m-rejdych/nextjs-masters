@@ -182,12 +182,7 @@ export type SizeType =
   | 'S'
   | 'XL';
 
-export type ProductGetProductQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type ProductGetProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, description: string, price: number, rating?: number | null, reviewCount: number, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }> } | null };
+export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> };
 
 export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -203,6 +198,13 @@ export type ProductGetPageQueryVariables = Exact<{
 
 
 export type ProductGetPageQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null } } };
+
+export type ProductGetProductQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ProductGetProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> } | null };
 
 export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, description: string, price: number, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> };
 
@@ -233,37 +235,37 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
-export const ProductGetProductDocument = new TypedDocumentString(`
-    query ProductGetProduct($id: ID!) {
-  product(id: $id) {
+export const ProductFragmentDoc = new TypedDocumentString(`
+    fragment Product on Product {
+  ...ProductListItem
+  rating
+  reviewCount
+  colors {
     id
     name
+    inStock
+  }
+  sizes {
+    id
+    type
+    inStock
+  }
+  details {
+    id
     description
-    price
-    images {
-      id
-      url
-      alt
-    }
-    rating
-    reviewCount
-    colors {
-      id
-      name
-      inStock
-    }
-    sizes {
-      id
-      type
-      inStock
-    }
-    details {
-      id
-      description
-    }
   }
 }
-    `) as unknown as TypedDocumentString<ProductGetProductQuery, ProductGetProductQueryVariables>;
+    fragment ProductListItem on Product {
+  id
+  name
+  description
+  price
+  images {
+    id
+    url
+    alt
+  }
+}`, {"fragmentName":"Product"}) as unknown as TypedDocumentString<ProductFragment, unknown>;
 export const ProductGetListDocument = new TypedDocumentString(`
     query ProductGetList($first: Int, $after: ID) {
   products(first: $first, after: $after) {
@@ -299,3 +301,39 @@ export const ProductGetPageDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductGetPageQuery, ProductGetPageQueryVariables>;
+export const ProductGetProductDocument = new TypedDocumentString(`
+    query ProductGetProduct($id: ID!) {
+  product(id: $id) {
+    ...Product
+  }
+}
+    fragment Product on Product {
+  ...ProductListItem
+  rating
+  reviewCount
+  colors {
+    id
+    name
+    inStock
+  }
+  sizes {
+    id
+    type
+    inStock
+  }
+  details {
+    id
+    description
+  }
+}
+fragment ProductListItem on Product {
+  id
+  name
+  description
+  price
+  images {
+    id
+    url
+    alt
+  }
+}`) as unknown as TypedDocumentString<ProductGetProductQuery, ProductGetProductQueryVariables>;

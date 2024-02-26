@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { ColorPickerOption } from '@/ui/atoms/products/ColorPickerOption';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	colors: ExtendedProduct['colors'];
+	colors: ProductFragment['colors'];
 }
 
 export const ColorPicker = ({ colors }: Props) => {
