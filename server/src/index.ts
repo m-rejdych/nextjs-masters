@@ -5,7 +5,6 @@ import { schema } from '@/schema';
 (async () => {
 	const server = new ApolloServer({
 		schema,
-    introspection: true,
 	});
 
 	const { url } = await startStandaloneServer(server, {

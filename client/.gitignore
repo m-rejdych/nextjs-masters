@@ -16,10 +16,6 @@
 # production
 /build
 
-# Graphql generated code
-
-gql
-
 # misc
 .DS_Store
 *.pem
