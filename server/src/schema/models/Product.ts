@@ -1,5 +1,6 @@
 import { decodeGlobalID } from '@pothos/plugin-relay';
 import { builder } from '@/schema/builder';
+import { prisma } from '@/util/prisma';
 
 builder.prismaNode('Product', {
 	id: { field: 'id' },

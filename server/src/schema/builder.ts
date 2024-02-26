@@ -3,7 +3,7 @@ import SchemaBuilder from '@pothos/core';
 import PluginPrisma from '@pothos/plugin-prisma';
 import PluginRelay from '@pothos/plugin-relay';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
-import { prisma } from '@/utils/prisma';
+import { prisma } from '@/util/prisma';
 
 export const builder = new SchemaBuilder<{
 	Scalars: {
