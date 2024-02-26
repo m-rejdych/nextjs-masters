@@ -182,12 +182,12 @@ export type SizeType =
   | 'S'
   | 'XL';
 
-export type ProductGetQueryVariables = Exact<{
+export type ProductGetProductQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ProductGetQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, description: string, price: number, rating?: number | null, reviewCount: number, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }> } | null };
+export type ProductGetProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, description: string, price: number, rating?: number | null, reviewCount: number, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }> } | null };
 
 export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -204,6 +204,8 @@ export type ProductGetPageQueryVariables = Exact<{
 
 export type ProductGetPageQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null } } };
 
+export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, description: string, price: number, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -218,9 +220,21 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-
-export const ProductGetDocument = new TypedDocumentString(`
-    query ProductGet($id: ID!) {
+export const ProductListItemFragmentDoc = new TypedDocumentString(`
+    fragment ProductListItem on Product {
+  id
+  name
+  description
+  price
+  images {
+    id
+    url
+    alt
+  }
+}
+    `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const ProductGetProductDocument = new TypedDocumentString(`
+    query ProductGetProduct($id: ID!) {
   product(id: $id) {
     id
     name
@@ -249,7 +263,7 @@ export const ProductGetDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<ProductGetQuery, ProductGetQueryVariables>;
+    `) as unknown as TypedDocumentString<ProductGetProductQuery, ProductGetProductQueryVariables>;
 export const ProductGetListDocument = new TypedDocumentString(`
     query ProductGetList($first: Int, $after: ID) {
   products(first: $first, after: $after) {
@@ -260,20 +274,22 @@ export const ProductGetListDocument = new TypedDocumentString(`
     }
     edges {
       node {
-        id
-        name
-        description
-        price
-        images {
-          id
-          url
-          alt
-        }
+        ...ProductListItem
       }
     }
   }
 }
-    `) as unknown as TypedDocumentString<ProductGetListQuery, ProductGetListQueryVariables>;
+    fragment ProductListItem on Product {
+  id
+  name
+  description
+  price
+  images {
+    id
+    url
+    alt
+  }
+}`) as unknown as TypedDocumentString<ProductGetListQuery, ProductGetListQueryVariables>;
 export const ProductGetPageDocument = new TypedDocumentString(`
     query ProductGetPage($first: Int!) {
   products(first: $first) {

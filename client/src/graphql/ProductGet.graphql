@@ -1,14 +1,6 @@
-query ProductGet($id: ID!) {
+query ProductGetProduct($id: ID!) {
   product(id: $id) {
-    id
-    name
-    description
-    price
-    images {
-      id
-      url
-      alt
-    }
+    ... ProductListItem
     rating
     reviewCount
     colors {

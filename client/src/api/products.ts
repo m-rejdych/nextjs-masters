@@ -1,6 +1,6 @@
 import { executeQuery } from '@/util/gql';
 import type { ExtendedProduct, Product } from '@/types/products';
-import { ProductGetListDocument, ProductGetPageDocument, ProductGetDocument } from '@/gql/graphql';
+import { ProductGetListDocument, ProductGetPageDocument, ProductGetProductDocument } from '@/gql/graphql';
 
 interface GetProductsResult {
 	hasNextPage: boolean;
@@ -42,7 +42,7 @@ export const getProducts = async (
 
 export const getProduct = async (id: string): Promise<ExtendedProduct | null> => {
 	try {
-		const { product } = await executeQuery(ProductGetDocument, { id });
+		const { product } = await executeQuery(ProductGetProductDocument, { id });
 
 		return product ?? null;
 	} catch (error) {
