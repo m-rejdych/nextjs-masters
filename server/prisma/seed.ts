@@ -18,18 +18,11 @@ const CATEGORIES = [
 	'SOCKETS',
 	'UNDERWEAR',
 ] as const;
-const COLLECTIONS = [
-  'MAN',
-  'WOMAN',
-  'BABY',
-  'NEW_ARRIVALS',
-  'SPORT',
-  'BEAUTY'
-] as const;
+const COLLECTIONS = ['MAN', 'WOMAN', 'BABY', 'NEW_ARRIVALS', 'SPORT', 'BEAUTY'] as const;
 const COLORS = ['BLACK', 'GRAY'] as const;
 const SIZES = ['S', 'M', 'L', 'XL'] as const;
 
-const main = async () => {
+(async () => {
 	try {
 		await prisma.category.deleteMany();
 		await prisma.collection.deleteMany();
@@ -102,20 +95,20 @@ const main = async () => {
 							connect: { id: collectionIds[Math.floor(Math.random() * collectionIds.length)] },
 						},
 						colors: {
-              createMany: {
-                data: COLORS.map(name => ({
-                  name,
-                  inStock: faker.datatype.boolean(),
-                }))
-              }
+							createMany: {
+								data: COLORS.map((name) => ({
+									name,
+									inStock: faker.datatype.boolean(),
+								})),
+							},
 						},
 						sizes: {
-              createMany: {
-                data: SIZES.map(type => ({
-                  type,
-                  inStock: faker.datatype.boolean(),
-                }))
-              }
+							createMany: {
+								data: SIZES.map((type) => ({
+									type,
+									inStock: faker.datatype.boolean(),
+								})),
+							},
 						},
 						details: {
 							createMany: {
@@ -136,6 +129,4 @@ const main = async () => {
 		console.log(error);
 		await prisma.$disconnect();
 	}
-};
-
-await main();
+})().catch((error) => console.log(error));
