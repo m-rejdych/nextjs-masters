@@ -37,6 +37,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 				const createdCategory = await prisma.category.create({
 					data: {
 						name,
+            slug: faker.helpers.slugify(name).toLowerCase(),
 						description: faker.lorem.paragraph({ min: 2, max: 4 }),
 					},
 				});
@@ -52,6 +53,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 				const createdCollection = await prisma.collection.create({
 					data: {
 						name,
+            slug: faker.helpers.slugify(name).toLowerCase(),
 						description: faker.lorem.paragraph({ min: 2, max: 4 }),
 					},
 				});
