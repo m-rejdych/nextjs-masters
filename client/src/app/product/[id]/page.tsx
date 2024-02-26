@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getProduct } from '@/api/products';
-import { parseProduct } from '@/util/products';
 import { ProductHeading } from '@/ui/atoms/products/ProductHeading';
 import { ProductReviews } from '@/ui/molecules/products/ProductReviews';
 import { ProductImagesGallery } from '@/ui/molecules/products/ProductImagesGallery';
@@ -25,7 +24,7 @@ interface GenereateMetadataArgs {
 export const generateMetadata = async ({
 	params: { id },
 }: GenereateMetadataArgs): Promise<Metadata> => {
-	const product = await getProduct(id);
+	const product = await getProduct(decodeURIComponent(id));
 
 	if (!product) {
 		return {
@@ -41,13 +40,11 @@ export const generateMetadata = async ({
 };
 
 export default async function SingleProductPage({ params: { id } }: Props) {
-	const product = await getProduct(id);
+	const product = await getProduct(decodeURIComponent(id));
 
 	if (!product) {
 		return notFound();
 	}
-
-	const parsedProduct = parseProduct(product);
 
 	return (
 		<div className="bg-white">
@@ -55,18 +52,18 @@ export default async function SingleProductPage({ params: { id } }: Props) {
 				<div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 					<div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
 						<div className="lg:col-span-5 lg:col-start-8">
-							<ProductHeading name={parsedProduct.name} price={parsedProduct.price} />
+							<ProductHeading name={product.name} price={product.price} />
 							<ProductReviews
-								rating={parsedProduct.rating}
-								reviewCount={parsedProduct.reviewCount}
+								rating={product.rating}
+								reviewCount={product.reviewCount}
 							/>
 						</div>
-						<ProductImagesGallery images={parsedProduct.images} />
+						<ProductImagesGallery images={product.images} />
 						<div className="mt-8 lg:col-span-5">
-							<ProductOptionsForm sizes={parsedProduct.sizes} colors={parsedProduct.colors} />
+							<ProductOptionsForm sizes={product.sizes} colors={product.colors} />
 							<ProductDetails
-								description={parsedProduct.description}
-								details={parsedProduct.details}
+								description={product.description}
+								details={product.details}
 							/>
 							<Policies />
 						</div>

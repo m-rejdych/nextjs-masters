@@ -5,8 +5,8 @@ interface Props {
 
 export const ProductDetailsList = ({ details }: Props) => (
 	<ul role="list">
-		{details.map((item) => (
-			<li key={item}>{item}</li>
+		{details.map(({ id, description }) => (
+			<li key={id}>{description}</li>
 		))}
 	</ul>
 );

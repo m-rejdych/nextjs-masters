@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const SizePicker = ({ sizes }: Props) => {
-	const [selectedSize, setSelectedSize] = useState(sizes[0]?.name ?? null);
+	const [selectedSize, setSelectedSize] = useState(sizes.filter(({ inStock }) => inStock)[0]?.id ?? null);
 
 	return (
 		<div className="mt-8">
@@ -24,7 +24,7 @@ export const SizePicker = ({ sizes }: Props) => {
 				<RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
 				<div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
 					{sizes.map((size) => (
-						<SizePickerOption key={size.name} size={size} />
+						<SizePickerOption key={size.id} size={size} />
 					))}
 				</div>
 			</RadioGroup>

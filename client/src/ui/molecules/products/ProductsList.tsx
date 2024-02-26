@@ -1,8 +1,8 @@
-import type { Product as ProductType } from '@/types/products';
+import type { Product } from '@/types/products';
 import { ProductListItem } from '@/ui/atoms/products/ProductListItem';
 
 interface Props {
-	products: ProductType[];
+	products: Product[];
 }
 
 export const ProductsList = ({ products }: Props) => (

@@ -12,8 +12,12 @@ export default async function Products() {
 
 	return (
 		<main>
-			<ProductsList products={products} />
-			<Pagination currentPage={1} />
+			<ProductsList products={products.data} />
+			<Pagination
+				currentPage={1}
+				hasNextPage={products.hasNextPage}
+				hasPreviousPage={products.hasPreviousPage}
+			/>
 		</main>
 	);
 }

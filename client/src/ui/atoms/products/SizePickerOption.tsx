@@ -8,7 +8,7 @@ interface Props {
 
 export const SizePickerOption = ({ size }: Props) => (
 	<RadioGroup.Option
-		value={size.name}
+		value={size.id}
 		className={({ active, checked }) =>
 			twMerge(
 				size.inStock ? 'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
@@ -21,6 +21,6 @@ export const SizePickerOption = ({ size }: Props) => (
 		}
 		disabled={!size.inStock}
 	>
-		<RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
+		<RadioGroup.Label as="span">{size.type}</RadioGroup.Label>
 	</RadioGroup.Option>
 );

@@ -1,59 +1,50 @@
-import type { Product } from '@/types/products';
+import { executeQuery } from '@/util/gql';
+import type { ExtendedProduct, Product } from '@/types/products';
+import { ProductGetListDocument, ProductGetPageDocument, ProductGetDocument } from '@/gql/graphql';
 
-interface ApiProduct {
-	id: string;
-	title: string;
-	description: string;
-	price: number;
-	category: string;
-	rating: { rage: number; count: number };
-	image: string;
-	longDescription: string;
+interface GetProductsResult {
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
+	data: Product[];
 }
 
 export const getProducts = async (
-	take?: string | number,
-	offset?: string | number,
-): Promise<Product[] | null> => {
+	take?: number,
+	offset?: number,
+): Promise<GetProductsResult | null> => {
 	try {
-		const params = new URLSearchParams();
-		if (take) params.set('take', take.toString());
-		if (offset) params.set('offset', offset.toString());
+    // Temporary solution for offsed based pagination integration
+		let endCursor: string | null | undefined = null;
+		if (offset) {
+			const {
+				products: { pageInfo },
+			} = await executeQuery(ProductGetPageDocument, { first: offset });
+			endCursor = pageInfo.endCursor;
+		}
 
-		const response = await fetch(
-			`https://naszsklep-api.vercel.app/api/products${params.size ? `?${params.toString()}` : ''}`,
-		);
-		const data = (await response.json()) as ApiProduct[];
-		return data.map(({ id, title, description, price, image }) => ({
-			id,
-			name: title,
-			description,
-			price,
-			image: {
-				src: image,
-				alt: title,
+		const {
+			products: {
+				edges,
+				pageInfo: { hasPreviousPage, hasNextPage },
 			},
-		}));
+		} = await executeQuery(ProductGetListDocument, { first: take, after: endCursor });
+
+		return {
+			hasNextPage,
+			hasPreviousPage,
+			data: edges.map(({ node }) => node),
+		};
 	} catch (error) {
 		console.log(error);
 		return null;
 	}
 };
 
-export const getProduct = async (id: string): Promise<Product | null> => {
+export const getProduct = async (id: string): Promise<ExtendedProduct | null> => {
 	try {
-		const response = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
-		const data = (await response.json()) as ApiProduct;
-		return {
-			id: data.id,
-			name: data.title,
-			description: data.description,
-			price: data.price,
-			image: {
-				src: data.image,
-				alt: data.title,
-			},
-		};
+		const { product } = await executeQuery(ProductGetDocument, { id });
+
+		return product ?? null;
 	} catch (error) {
 		console.log(error);
 		return null;

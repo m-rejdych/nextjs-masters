@@ -13,8 +13,12 @@ export default async function Home() {
 	return (
 		<main>
 			<h2 className="sr-only">Products</h2>
-			<ProductsList products={products} />
-			<Pagination currentPage={1} />
+			<ProductsList products={products.data} />
+			<Pagination
+				currentPage={1}
+				hasPreviousPage={products.hasPreviousPage}
+				hasNextPage={products.hasNextPage}
+			/>
 		</main>
 	);
 }
