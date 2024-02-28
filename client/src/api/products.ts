@@ -1,11 +1,16 @@
 import { executeQuery } from '@/util/gql';
-import type { ExtendedProduct, Product } from '@/types/products';
-import { ProductGetListDocument, ProductGetPageDocument, ProductGetDocument } from '@/gql/graphql';
+import {
+	ProductGetListDocument,
+	ProductGetPageDocument,
+	ProductGetProductDocument,
+	ProductFragment,
+	ProductListItemFragment,
+} from '@/gql/graphql';
 
 interface GetProductsResult {
 	hasNextPage: boolean;
 	hasPreviousPage: boolean;
-	data: Product[];
+	data: ProductListItemFragment[];
 }
 
 export const getProducts = async (
@@ -13,7 +18,7 @@ export const getProducts = async (
 	offset?: number,
 ): Promise<GetProductsResult | null> => {
 	try {
-    // Temporary solution for offsed based pagination integration
+		// Temporary solution for offsed based pagination integration
 		let endCursor: string | null | undefined = null;
 		if (offset) {
 			const {
@@ -40,9 +45,9 @@ export const getProducts = async (
 	}
 };
 
-export const getProduct = async (id: string): Promise<ExtendedProduct | null> => {
+export const getProduct = async (id: string): Promise<ProductFragment | null> => {
 	try {
-		const { product } = await executeQuery(ProductGetDocument, { id });
+		const { product } = await executeQuery(ProductGetProductDocument, { id });
 
 		return product ?? null;
 	} catch (error) {

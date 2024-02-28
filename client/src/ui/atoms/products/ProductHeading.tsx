@@ -1,9 +1,9 @@
 import { formatDolars } from '@/util/currency';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	name: ExtendedProduct['name'];
-	price: ExtendedProduct['price'];
+	name: ProductFragment['name'];
+	price: ProductFragment['price'];
 }
 
 export const ProductHeading = ({ name, price }: Props) => (

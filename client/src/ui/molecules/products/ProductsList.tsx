@@ -1,8 +1,8 @@
-import type { Product } from '@/types/products';
 import { ProductListItem } from '@/ui/atoms/products/ProductListItem';
+import type { ProductListItemFragment } from '@/gql/graphql';
 
 interface Props {
-	products: Product[];
+	products: ProductListItemFragment[];
 }
 
 export const ProductsList = ({ products }: Props) => (

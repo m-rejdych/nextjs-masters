@@ -1,11 +1,10 @@
 import { ColorPicker } from '@/ui/molecules/products/ColorPicker';
 import { SizePicker } from '@/ui/molecules/products/SizePicker';
-
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	colors: ExtendedProduct['colors'];
-	sizes: ExtendedProduct['sizes'];
+	colors: ProductFragment['colors'];
+	sizes: ProductFragment['sizes'];
 }
 
 export const ProductOptionsForm = ({ colors, sizes }: Props) => (

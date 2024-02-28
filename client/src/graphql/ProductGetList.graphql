@@ -7,15 +7,7 @@ query ProductGetList($first: Int, $after: ID) {
     }
     edges {
       node {
-        id
-        name
-        description
-        price
-        images {
-          id
-          url
-          alt
-        }
+        ... ProductListItem
       }
     }
   }

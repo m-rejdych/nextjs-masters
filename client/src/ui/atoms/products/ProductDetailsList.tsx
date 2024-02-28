@@ -1,6 +1,7 @@
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
+
 interface Props {
-	details: ExtendedProduct['details'];
+	details: ProductFragment['details'];
 }
 
 export const ProductDetailsList = ({ details }: Props) => (

@@ -1,9 +1,9 @@
 import { RadioGroup } from '@headlessui/react';
 import { twMerge } from 'tailwind-merge';
-import type { ExtendedProduct } from '@/types/products';
+import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	size: ExtendedProduct['sizes'][number];
+	size: ProductFragment['sizes'][number];
 }
 
 export const SizePickerOption = ({ size }: Props) => (
