@@ -3,8 +3,8 @@ import {
 	ProductGetListDocument,
 	ProductGetPageDocument,
 	ProductGetProductDocument,
-	ProductFragment,
-	ProductListItemFragment,
+	type ProductFragment,
+	type ProductListItemFragment,
 } from '@/gql/graphql';
 
 interface GetProductsResult {
