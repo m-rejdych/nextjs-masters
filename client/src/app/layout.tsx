@@ -22,10 +22,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={twMerge('bg-neutral-50', montserrat.variable)}>
+		<html lang="en" className={twMerge('h-full bg-neutral-50', montserrat.variable)}>
 			<body>
 				<Nav />
-				<div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">{children}</div>
+				<div className="mx-auto h-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+					{children}
+				</div>
 			</body>
 		</html>
 	);
