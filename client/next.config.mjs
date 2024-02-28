@@ -4,17 +4,17 @@ const nextConfig = {
 		typedRoutes: true,
 	},
 	images: {
-		remotePatterns: [{ hostname: 'loremflickr.com' }],
+		remotePatterns: [{ hostname: 'loremflickr.com', protocol: 'https' }],
 	},
 	async redirects() {
-    return [
-      {
-        source: '/products',
-        destination: '/products/1',
-        permanent: false,
-      },
-    ];
-  }
+		return [
+			{
+				source: '/products',
+				destination: '/products/1',
+				permanent: false,
+			},
+		];
+	},
 };
 
 export default nextConfig;

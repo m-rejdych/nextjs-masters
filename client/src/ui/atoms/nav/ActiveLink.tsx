@@ -29,7 +29,7 @@ export const ActiveLink = <T extends string>({
 		<Link
 			href={href}
 			className={twMerge(className, isActive ? activeClassName : inactiveClassName)}
-			aria-current={isActive}
+			aria-current={isActive ? true : undefined}
 		>
 			{children}
 		</Link>
