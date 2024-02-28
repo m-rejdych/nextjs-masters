@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import type { ProductFragment } from '@/gql/graphql';
 
@@ -10,10 +11,12 @@ export const ProductImagesGallery = ({ images }: Props) => (
 		<h2 className="sr-only">Images</h2>
 		<div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
 			{images.map(({ id, url, alt }, index) => (
-				<img
+				<Image
 					key={id}
 					src={url}
 					alt={alt}
+					width={640}
+					height={480}
 					className={twMerge(
 						index === 0 ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
 						'rounded-lg',
