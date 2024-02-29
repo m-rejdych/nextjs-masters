@@ -1,6 +1,8 @@
 import { decodeGlobalID } from '@pothos/plugin-relay';
 import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
+import { CategoryListFilter } from '@/schema/models/Category';
+import { CollectionListFilter } from '@/schema/models/Collection';
 
 builder.prismaNode('Product', {
 	id: { field: 'id' },
@@ -24,21 +26,33 @@ builder.prismaNode('Product', {
 	}),
 });
 
+const ProductsWhere = builder.prismaWhere('Product', {
+	name: 'ProductsWhere',
+	fields: {
+		slug: 'String',
+		categories: CategoryListFilter,
+    collections: CollectionListFilter,
+	},
+});
+
 builder.queryField('products', (t) =>
 	t.prismaConnection({
 		type: 'Product',
 		edgesNullable: false,
 		cursor: 'id',
+		args: {
+			where: t.arg({ type: ProductsWhere }),
+		},
 		totalCount: async () => {
 			return prisma.product.count();
 		},
-		resolve: async (query) => {
-			return prisma.product.findMany({ ...query });
+		resolve: async (query, _, { where }) => {
+			return prisma.product.findMany({ ...query, where: where ?? undefined });
 		},
 	}),
 );
 
-builder.queryField('product', (t) =>
+builder.queryField('productById', (t) =>
 	t.prismaField({
 		type: 'Product',
 		nullable: true,

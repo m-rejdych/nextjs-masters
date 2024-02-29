@@ -20,10 +20,21 @@ export type Scalars = {
 
 export type Category = {
   __typename?: 'Category';
+  createdAt: Scalars['Date']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: CategoryName;
-  products: Array<Product>;
+  products: CategoryProductsConnection;
+  slug: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+
+export type CategoryProductsArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CategoryName =
@@ -40,12 +51,36 @@ export type CategoryName =
   | 'T_SHIRTS'
   | 'UNDERWEAR';
 
+export type CategoryProductsConnection = {
+  __typename?: 'CategoryProductsConnection';
+  edges: Array<CategoryProductsConnectionEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type CategoryProductsConnectionEdge = {
+  __typename?: 'CategoryProductsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Product;
+};
+
 export type Collection = {
   __typename?: 'Collection';
+  createdAt: Scalars['Date']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: CollectionName;
-  products: Array<Product>;
+  products: CollectionProductsConnection;
+  slug: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+
+export type CollectionProductsArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CollectionName =
@@ -55,6 +90,19 @@ export type CollectionName =
   | 'NEW_ARRIVALS'
   | 'SPORT'
   | 'WOMAN';
+
+export type CollectionProductsConnection = {
+  __typename?: 'CollectionProductsConnection';
+  edges: Array<CollectionProductsConnectionEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type CollectionProductsConnectionEdge = {
+  __typename?: 'CollectionProductsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Product;
+};
 
 export type Color = {
   __typename?: 'Color';
@@ -117,7 +165,7 @@ export type Query = {
   __typename?: 'Query';
   node?: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
-  product?: Maybe<Product>;
+  productById?: Maybe<Product>;
   products: QueryProductsConnection;
 };
 
@@ -132,7 +180,7 @@ export type QueryNodesArgs = {
 };
 
 
-export type QueryProductArgs = {
+export type QueryProductByIdArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -204,7 +252,7 @@ export type ProductGetProductQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> } | null };
+export type ProductGetProductQuery = { __typename?: 'Query', productById?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> } | null };
 
 export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, description: string, price: number, images: Array<{ __typename?: 'Image', id: string, url: string, alt: string }> };
 
@@ -303,7 +351,7 @@ export const ProductGetPageDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<ProductGetPageQuery, ProductGetPageQueryVariables>;
 export const ProductGetProductDocument = new TypedDocumentString(`
     query ProductGetProduct($id: ID!) {
-  product(id: $id) {
+  productById(id: $id) {
     ...Product
   }
 }

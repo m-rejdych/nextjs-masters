@@ -26,7 +26,27 @@ builder.prismaObject('Category', {
 			type: CategoryName,
 			resolve: (category) => category.name as CategoryName,
 		}),
+		slug: t.exposeString('slug'),
 		description: t.exposeString('description'),
-		products: t.relation('products'),
+		createdAt: t.expose('createdAt', { type: 'Date' }),
+		updatedAt: t.expose('createdAt', { type: 'Date' }),
+		products: t.relatedConnection('products', {
+			cursor: 'id',
+			edgesNullable: false,
+			totalCount: true,
+		}),
 	}),
+});
+
+const CategoryWhere = builder.prismaWhere('Category', {
+	name: 'CategoryWhere',
+	fields: {
+		name: CategoryName,
+		slug: 'String',
+	},
+});
+
+export const CategoryListFilter = builder.prismaListFilter(CategoryWhere, {
+	name: 'CategoriesFilter',
+	ops: ['some'],
 });

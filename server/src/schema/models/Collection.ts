@@ -20,7 +20,27 @@ builder.prismaObject('Collection', {
 			type: CollectionName,
 			resolve: (collection) => collection.name as CollectionName,
 		}),
+		slug: t.exposeString('slug'),
 		description: t.exposeString('description'),
-		products: t.relation('products'),
+		createdAt: t.expose('createdAt', { type: 'Date' }),
+		updatedAt: t.expose('createdAt', { type: 'Date' }),
+		products: t.relatedConnection('products', {
+			cursor: 'id',
+			edgesNullable: false,
+			totalCount: true,
+		}),
 	}),
+});
+
+const CollectionWhere = builder.prismaWhere('Collection', {
+	name: 'CollectionWhere',
+	fields: {
+		name: CollectionName,
+		slug: 'String',
+	},
+});
+
+export const CollectionListFilter = builder.prismaListFilter(CollectionWhere, {
+	name: 'CollectionsFilter',
+	ops: ['some'],
 });

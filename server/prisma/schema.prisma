@@ -6,7 +6,8 @@ generator client {
 }
 
 generator pothos {
-  provider = "prisma-pothos-types"
+  provider    = "prisma-pothos-types"
+  prismaUtils = true
 }
 
 datasource db {
@@ -18,7 +19,7 @@ model Product {
   id          String       @id @default(uuid())
   name        String
   description String
-  slug        String
+  slug        String       @unique
   price       Int
   rating      Float?
   images      Image[]
@@ -68,7 +69,7 @@ model Category {
   id          String       @id @default(uuid())
   name        CategoryName @unique
   description String
-  slug        String
+  slug        String       @unique
   products    Product[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
@@ -78,7 +79,7 @@ model Collection {
   id          String         @id @default(uuid())
   name        CollectionName @unique
   description String
-  slug        String
+  slug        String         @unique
   products    Product[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
