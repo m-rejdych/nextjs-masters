@@ -1,4 +1,5 @@
 import { builder } from '@/schema/builder';
+import { prisma } from '@/util/prisma';
 
 enum CollectionName {
 	MAN = 'MAN',
@@ -44,3 +45,15 @@ export const CollectionListFilter = builder.prismaListFilter(CollectionWhere, {
 	name: 'CollectionsFilter',
 	ops: ['some'],
 });
+
+builder.queryField('collections', (t) =>
+	t.prismaField({
+		type: ['Collection'],
+		args: {
+			where: t.arg({ type: CollectionWhere }),
+		},
+		resolve: async (query, _, { where }) => {
+			return prisma.collection.findMany({ ...query, where: where ?? undefined });
+		},
+	}),
+);

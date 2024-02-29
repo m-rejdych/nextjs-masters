@@ -1,4 +1,5 @@
 import { builder } from '@/schema/builder';
+import { prisma } from '@/util/prisma';
 
 enum CategoryName {
 	BASICS = 'BASICS',
@@ -50,3 +51,15 @@ export const CategoryListFilter = builder.prismaListFilter(CategoryWhere, {
 	name: 'CategoriesFilter',
 	ops: ['some'],
 });
+
+builder.queryField('categories', (t) =>
+	t.prismaField({
+		type: ['Category'],
+		args: {
+			where: t.arg({ type: CategoryWhere }),
+		},
+		resolve: async (query, _, { where }) => {
+			return prisma.category.findMany({ ...query, where: where ?? undefined });
+		},
+	}),
+);
