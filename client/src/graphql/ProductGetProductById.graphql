@@ -1,4 +1,4 @@
-query ProductGetProduct($id: ID!) {
+query ProductGetProductById ($id: ID!) {
   productById(id: $id) {
     ... Product
   }

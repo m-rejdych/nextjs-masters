@@ -2,7 +2,7 @@ import { executeQuery } from '@/util/gql';
 import {
 	ProductGetListDocument,
 	ProductGetPageDocument,
-	ProductGetProductDocument,
+	ProductGetProductByIdDocument,
 	type ProductFragment,
 	type ProductListItemFragment,
 } from '@/gql/graphql';
@@ -47,9 +47,9 @@ export const getProducts = async (
 
 export const getProduct = async (id: string): Promise<ProductFragment | null> => {
 	try {
-		const { product } = await executeQuery(ProductGetProductDocument, { id });
+		const { productById } = await executeQuery(ProductGetProductByIdDocument, { id });
 
-		return product ?? null;
+		return productById ?? null;
 	} catch (error) {
 		console.log(error);
 		return null;
