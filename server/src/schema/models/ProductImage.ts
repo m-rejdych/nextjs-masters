@@ -1,6 +1,6 @@
 import { builder } from '@/schema/builder';
 
-builder.prismaObject('Image', {
+builder.prismaObject('ProductImage', {
 	fields: (t) => ({
 		id: t.exposeID('id'),
 		url: t.exposeString('url'),

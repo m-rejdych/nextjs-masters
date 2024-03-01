@@ -2,12 +2,10 @@ import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
 
 enum CollectionName {
-	MAN = 'MAN',
-	WOMAN = 'WOMAN',
-	BABY = 'BABY',
 	NEW_ARRIVALS = 'NEW_ARRIVALS',
 	SPORT = 'SPORT',
 	BEAUTY = 'BEAUTY',
+  ACCESSORIES = 'ACCESSORIES',
 }
 
 builder.enumType(CollectionName, {
@@ -23,8 +21,7 @@ builder.prismaObject('Collection', {
 		}),
 		slug: t.exposeString('slug'),
 		description: t.exposeString('description'),
-		createdAt: t.expose('createdAt', { type: 'Date' }),
-		updatedAt: t.expose('createdAt', { type: 'Date' }),
+    image: t.relation('image'),
 		products: t.relatedConnection('products', {
 			cursor: 'id',
 			edgesNullable: false,

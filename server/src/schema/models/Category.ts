@@ -3,17 +3,9 @@ import { prisma } from '@/util/prisma';
 
 enum CategoryName {
 	BASICS = 'BASICS',
-	T_SHIRTS = 'T_SHIRTS',
 	HOODIES = 'HOODIES',
 	SHIRTS = 'SHIRTS',
-	JEANS = 'JEANS',
-	TROUSERS = 'TROUSERS',
-	SHORTS = 'SHORTS',
 	JACKETS = 'JACKETS',
-	SWEATERS = 'SWEATERS',
-	SHOES = 'SHOES',
-	SOCKETS = 'SOCKETS',
-	UNDERWEAR = 'UNDERWEAR',
 }
 
 builder.enumType(CategoryName, {
@@ -29,8 +21,7 @@ builder.prismaObject('Category', {
 		}),
 		slug: t.exposeString('slug'),
 		description: t.exposeString('description'),
-		createdAt: t.expose('createdAt', { type: 'Date' }),
-		updatedAt: t.expose('createdAt', { type: 'Date' }),
+    image: t.relation('image'),
 		products: t.relatedConnection('products', {
 			cursor: 'id',
 			edgesNullable: false,
