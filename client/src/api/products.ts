@@ -2,7 +2,7 @@ import { executeQuery } from '@/util/gql';
 import {
 	ProductGetListDocument,
 	ProductGetPageDocument,
-	ProductGetProductByIdDocument,
+	ProductGetByIdDocument,
 	type ProductFragment,
 	type ProductListItemFragment,
 } from '@/gql/graphql';
@@ -10,6 +10,7 @@ import {
 interface GetProductsResult {
 	hasNextPage: boolean;
 	hasPreviousPage: boolean;
+  totalCount: number;
 	data: ProductListItemFragment[];
 }
 
@@ -30,6 +31,7 @@ export const getProducts = async (
 		const {
 			products: {
 				edges,
+        totalCount,
 				pageInfo: { hasPreviousPage, hasNextPage },
 			},
 		} = await executeQuery(ProductGetListDocument, { first: take, after: endCursor });
@@ -37,6 +39,7 @@ export const getProducts = async (
 		return {
 			hasNextPage,
 			hasPreviousPage,
+      totalCount,
 			data: edges.map(({ node }) => node),
 		};
 	} catch (error) {
@@ -45,9 +48,9 @@ export const getProducts = async (
 	}
 };
 
-export const getProduct = async (id: string): Promise<ProductFragment | null> => {
+export const getProductById = async (id: string): Promise<ProductFragment | null> => {
 	try {
-		const { productById } = await executeQuery(ProductGetProductByIdDocument, { id });
+		const { productById } = await executeQuery(ProductGetByIdDocument, { id });
 
 		return productById ?? null;
 	} catch (error) {

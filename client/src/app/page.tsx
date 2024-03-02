@@ -18,6 +18,7 @@ export default async function Home() {
 				currentPage={1}
 				hasPreviousPage={products.hasPreviousPage}
 				hasNextPage={products.hasNextPage}
+        totalPages={Math.floor(products.totalCount / 20)}
 			/>
 		</main>
 	);

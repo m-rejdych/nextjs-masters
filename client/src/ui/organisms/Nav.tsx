@@ -1,25 +1,46 @@
 'use client';
 
-import { Disclosure } from '@headlessui/react';
+import { useState } from 'react';
+import { MobileMenu } from '@/ui/molecules/nav/MobileMenu';
+import { DesktopCompanyLogo } from '@/ui/atoms/nav/DesktopCompanyLogo';
+import { MobileCompanyLogo } from '@/ui/atoms/nav/MobileCompanyLogo';
+import { MobileMenuButtons } from '@/ui/molecules/nav/MobileMenuButtons';
+import { DesktopMenuButtons } from '@/ui/molecules/nav/DesktopMenuButtons';
+import { FlyoutMenus } from '@/ui/molecules/nav/FlyoutMenus';
+import type { CategoryVariant } from '@/types/common';
 
-import { NavMobileMenuButton } from '@/ui/atoms/nav/NavMobileMenuButton';
-import { NavItemsDesktop } from '@/ui/molecules/nav/NavItemsDesktop';
-import { NavItemsMobile } from '@/ui/molecules/nav/NavItemsMobile';
-import { NavProfileMenu } from '@/ui/molecules/nav/NavProfileMenu';
+interface Props {
+	flyoutMenusItems: CategoryVariant[];
+	mobileMenuPanelItems: CategoryVariant[];
+}
 
-export const Nav = () => (
-	<Disclosure as="nav" className="bg-white shadow">
-		{({ open }) => (
-			<>
-				<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-					<div className="relative flex h-16 justify-between">
-						<NavMobileMenuButton open={open} />
-						<NavItemsDesktop />
-						<NavProfileMenu />
+export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems }: Props) => {
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+	return (
+		<div className="bg-white">
+			<MobileMenu
+				open={mobileMenuOpen}
+				onClose={() => setMobileMenuOpen(false)}
+				panelItems={mobileMenuPanelItems}
+			/>
+			<header className="relative">
+				<nav aria-label="Top">
+					<div className="bg-white">
+						<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+							<div className="border-b border-gray-200">
+								<div className="flex h-16 items-center justify-between">
+									<DesktopCompanyLogo />
+									<FlyoutMenus items={flyoutMenusItems} />
+									<MobileMenuButtons onOpen={() => setMobileMenuOpen(true)} />
+									<MobileCompanyLogo />
+									<DesktopMenuButtons />
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
-				<NavItemsMobile />
-			</>
-		)}
-	</Disclosure>
-);
+				</nav>
+			</header>
+		</div>
+	);
+};

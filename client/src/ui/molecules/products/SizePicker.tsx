@@ -10,7 +10,9 @@ interface Props {
 }
 
 export const SizePicker = ({ sizes }: Props) => {
-	const [selectedSize, setSelectedSize] = useState(sizes.filter(({ inStock }) => inStock)[0]?.id ?? null);
+	const [selectedSize, setSelectedSize] = useState(
+		sizes.filter(({ inStock }) => inStock)[0]?.id ?? null,
+	);
 
 	return (
 		<div className="mt-8">

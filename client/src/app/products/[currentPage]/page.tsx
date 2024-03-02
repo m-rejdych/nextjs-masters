@@ -34,9 +34,10 @@ export default async function ProductsPaginated({ params: { currentPage } }: Pro
 		<main>
 			<ProductsList products={products.data} />
 			<Pagination
-				currentPage={currentPage}
+				currentPage={Number(currentPage)}
 				hasPreviousPage={products.hasPreviousPage}
 				hasNextPage={products.hasNextPage}
+        totalPages={Math.floor(products.totalCount / 20)}
 			/>
 		</main>
 	);

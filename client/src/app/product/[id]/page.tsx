@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getProduct } from '@/api/products';
+import { getProductById } from '@/api/products';
 import { ProductHeading } from '@/ui/atoms/products/ProductHeading';
 import { ProductReviews } from '@/ui/molecules/products/ProductReviews';
 import { ProductImagesGallery } from '@/ui/molecules/products/ProductImagesGallery';
@@ -24,7 +24,7 @@ interface GenereateMetadataArgs {
 export const generateMetadata = async ({
 	params: { id },
 }: GenereateMetadataArgs): Promise<Metadata> => {
-	const product = await getProduct(decodeURIComponent(id));
+	const product = await getProductById(decodeURIComponent(id));
 
 	if (!product) {
 		return {
@@ -40,7 +40,7 @@ export const generateMetadata = async ({
 };
 
 export default async function SingleProductPage({ params: { id } }: Props) {
-	const product = await getProduct(decodeURIComponent(id));
+	const product = await getProductById(decodeURIComponent(id));
 
 	if (!product) {
 		return notFound();
@@ -53,18 +53,12 @@ export default async function SingleProductPage({ params: { id } }: Props) {
 					<div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
 						<div className="lg:col-span-5 lg:col-start-8">
 							<ProductHeading name={product.name} price={product.price} />
-							<ProductReviews
-								rating={product.rating}
-								reviewCount={product.reviewCount}
-							/>
+							<ProductReviews rating={product.rating} reviewCount={product.reviewCount} />
 						</div>
 						<ProductImagesGallery images={product.images} />
 						<div className="mt-8 lg:col-span-5">
 							<ProductOptionsForm sizes={product.sizes} colors={product.colors} />
-							<ProductDetails
-								description={product.description}
-								details={product.details}
-							/>
+							<ProductDetails description={product.description} details={product.details} />
 							<Policies />
 						</div>
 					</div>

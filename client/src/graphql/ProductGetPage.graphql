@@ -1,7 +1,7 @@
 query ProductGetPage($first: Int!) {
-  products(first: $first) {
-    pageInfo {
-      endCursor
-    }
-  }
+	products(first: $first) {
+		pageInfo {
+			endCursor
+		}
+	}
 }

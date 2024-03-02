@@ -4,7 +4,11 @@ const nextConfig = {
 		typedRoutes: true,
 	},
 	images: {
-		remotePatterns: [{ hostname: 'loremflickr.com', protocol: 'https' }],
+    dangerouslyAllowSVG: true,
+		remotePatterns: [
+			{ hostname: 'loremflickr.com', protocol: 'https' },
+			{ hostname: 'tailwindui.com', protocol: 'https' },
+		],
 	},
 	async redirects() {
 		return [
