@@ -19,6 +19,7 @@ export default async function Home() {
 				hasPreviousPage={products.hasPreviousPage}
 				hasNextPage={products.hasNextPage}
         totalPages={Math.floor(products.totalCount / 20)}
+        directory="products"
 			/>
 		</main>
 	);

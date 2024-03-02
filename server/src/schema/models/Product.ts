@@ -15,6 +15,9 @@ builder.prismaNode('Product', {
 		createdAt: t.expose('createdAt', {
 			type: 'Date',
 		}),
+		updatedAt: t.expose('updatedAt', {
+			type: 'Date',
+		}),
 		images: t.relation('images'),
 		colors: t.relation('colors'),
 		sizes: t.relation('sizes'),
@@ -43,8 +46,8 @@ builder.queryField('products', (t) =>
 		args: {
 			where: t.arg({ type: ProductsWhere }),
 		},
-		totalCount: async () => {
-			return prisma.product.count();
+		totalCount: async (_, { where }) => {
+			return prisma.product.count({ where: where ?? undefined });
 		},
 		resolve: async (query, _, { where }) => {
 			return prisma.product.findMany({ ...query, where: where ?? undefined });

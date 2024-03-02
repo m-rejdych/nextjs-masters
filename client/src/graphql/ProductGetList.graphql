@@ -1,5 +1,5 @@
-query ProductGetList($first: Int, $after: ID) {
-	products(first: $first, after: $after) {
+query ProductGetList($first: Int, $after: ID, $where: ProductsWhere) {
+	products(first: $first, after: $after, where: $where) {
 		totalCount
 		pageInfo {
 			hasNextPage

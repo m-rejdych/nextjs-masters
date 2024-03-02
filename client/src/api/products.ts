@@ -5,18 +5,20 @@ import {
 	ProductGetByIdDocument,
 	type ProductFragment,
 	type ProductListItemFragment,
+	type ProductsWhere,
 } from '@/gql/graphql';
 
 interface GetProductsResult {
 	hasNextPage: boolean;
 	hasPreviousPage: boolean;
-  totalCount: number;
+	totalCount: number;
 	data: ProductListItemFragment[];
 }
 
 export const getProducts = async (
 	take?: number,
 	offset?: number,
+	where?: ProductsWhere,
 ): Promise<GetProductsResult | null> => {
 	try {
 		// Temporary solution for offsed based pagination integration
@@ -24,22 +26,22 @@ export const getProducts = async (
 		if (offset) {
 			const {
 				products: { pageInfo },
-			} = await executeQuery(ProductGetPageDocument, { first: offset });
+			} = await executeQuery(ProductGetPageDocument, { first: offset, where });
 			endCursor = pageInfo.endCursor;
 		}
 
 		const {
 			products: {
 				edges,
-        totalCount,
+				totalCount,
 				pageInfo: { hasPreviousPage, hasNextPage },
 			},
-		} = await executeQuery(ProductGetListDocument, { first: take, after: endCursor });
+		} = await executeQuery(ProductGetListDocument, { first: take, after: endCursor, where });
 
 		return {
 			hasNextPage,
 			hasPreviousPage,
-      totalCount,
+			totalCount,
 			data: edges.map(({ node }) => node),
 		};
 	} catch (error) {

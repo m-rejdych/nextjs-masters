@@ -21,6 +21,8 @@ builder.prismaObject('Category', {
 		}),
 		slug: t.exposeString('slug'),
 		description: t.exposeString('description'),
+    createdAt: t.expose('createdAt', { type: 'Date' }),
+    updatedAt: t.expose('updatedAt', { type: 'Date' }),
     image: t.relation('image'),
 		products: t.relatedConnection('products', {
 			cursor: 'id',

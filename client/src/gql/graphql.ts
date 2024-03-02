@@ -300,6 +300,7 @@ export type ProductGetByIdQuery = { __typename?: 'Query', productById?: { __type
 export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['ID']['input']>;
+  where?: InputMaybe<ProductsWhere>;
 }>;
 
 
@@ -307,6 +308,7 @@ export type ProductGetListQuery = { __typename?: 'Query', products: { __typename
 
 export type ProductGetPageQueryVariables = Exact<{
   first: Scalars['Int']['input'];
+  where?: InputMaybe<ProductsWhere>;
 }>;
 
 
@@ -461,8 +463,8 @@ fragment ProductListItem on Product {
   }
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductGetListDocument = new TypedDocumentString(`
-    query ProductGetList($first: Int, $after: ID) {
-  products(first: $first, after: $after) {
+    query ProductGetList($first: Int, $after: ID, $where: ProductsWhere) {
+  products(first: $first, after: $after, where: $where) {
     totalCount
     pageInfo {
       hasNextPage
@@ -487,8 +489,8 @@ export const ProductGetListDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<ProductGetListQuery, ProductGetListQueryVariables>;
 export const ProductGetPageDocument = new TypedDocumentString(`
-    query ProductGetPage($first: Int!) {
-  products(first: $first) {
+    query ProductGetPage($first: Int!, $where: ProductsWhere) {
+  products(first: $first, where: $where) {
     pageInfo {
       endCursor
     }

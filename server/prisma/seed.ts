@@ -30,6 +30,12 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						name,
 						slug: faker.helpers.slugify(name).toLowerCase().replace('_', '-'),
 						description: faker.lorem.paragraph({ min: 2, max: 4 }),
+						image: {
+							create: {
+								alt: name,
+								url: faker.image.urlLoremFlickr({ category: 'fashion', width: 400, height: 400 }),
+							},
+						},
 					},
 				});
 
@@ -46,6 +52,12 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						name,
 						slug: faker.helpers.slugify(name).toLowerCase().replace('_', '-'),
 						description: faker.lorem.paragraph({ min: 2, max: 4 }),
+						image: {
+							create: {
+								alt: name,
+								url: faker.image.urlLoremFlickr({ category: 'fashion', width: 400, height: 400 }),
+							},
+						},
 					},
 				});
 
@@ -67,7 +79,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						description: faker.commerce.productDescription(),
 						price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
 						images: {
-							create: { url: faker.image.urlLoremFlickr({ category: 'clothes' }), alt: name },
+							create: { url: faker.image.urlLoremFlickr({ category: 'fashion' }), alt: name },
 						},
 						rating: faker.number.int({ min: 1, max: 5 }),
 						reviews: {
