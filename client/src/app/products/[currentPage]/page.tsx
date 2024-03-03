@@ -26,7 +26,7 @@ export const generateStaticParams = async () => {
 export default async function ProductsPaginated({ params: { currentPage } }: Props) {
 	const products = await getProducts(20, (Number(currentPage) - 1) * 20);
 
-	if (!products) {
+	if (!products?.data.length) {
 		return notFound();
 	}
 
@@ -34,9 +34,11 @@ export default async function ProductsPaginated({ params: { currentPage } }: Pro
 		<main>
 			<ProductsList products={products.data} />
 			<Pagination
-				currentPage={currentPage}
+				currentPage={Number(currentPage)}
 				hasPreviousPage={products.hasPreviousPage}
 				hasNextPage={products.hasNextPage}
+        totalPages={Math.ceil(products.totalCount / 20)}
+        directory="products"
 			/>
 		</main>
 	);

@@ -1,7 +1,7 @@
-query ProductGetPage($first: Int!) {
-  products(first: $first) {
-    pageInfo {
-      endCursor
-    }
-  }
+query ProductGetPage($first: Int!, $where: ProductsWhere) {
+	products(first: $first, where: $where) {
+		pageInfo {
+			endCursor
+		}
+	}
 }

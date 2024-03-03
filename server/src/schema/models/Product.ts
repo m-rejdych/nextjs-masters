@@ -1,6 +1,8 @@
 import { decodeGlobalID } from '@pothos/plugin-relay';
 import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
+import { CategoryListFilter } from '@/schema/models/Category';
+import { CollectionListFilter } from '@/schema/models/Collection';
 
 builder.prismaNode('Product', {
 	id: { field: 'id' },
@@ -11,6 +13,9 @@ builder.prismaNode('Product', {
 		price: t.exposeFloat('price'),
 		rating: t.exposeFloat('rating', { nullable: true }),
 		createdAt: t.expose('createdAt', {
+			type: 'Date',
+		}),
+		updatedAt: t.expose('updatedAt', {
 			type: 'Date',
 		}),
 		images: t.relation('images'),
@@ -24,21 +29,33 @@ builder.prismaNode('Product', {
 	}),
 });
 
+const ProductsWhere = builder.prismaWhere('Product', {
+	name: 'ProductsWhere',
+	fields: {
+		slug: 'String',
+		categories: CategoryListFilter,
+    collections: CollectionListFilter,
+	},
+});
+
 builder.queryField('products', (t) =>
 	t.prismaConnection({
 		type: 'Product',
 		edgesNullable: false,
 		cursor: 'id',
-		totalCount: async () => {
-			return prisma.product.count();
+		args: {
+			where: t.arg({ type: ProductsWhere }),
 		},
-		resolve: async (query) => {
-			return prisma.product.findMany({ ...query });
+		totalCount: async (_, { where }) => {
+			return prisma.product.count({ where: where ?? undefined });
+		},
+		resolve: async (query, _, { where }) => {
+			return prisma.product.findMany({ ...query, where: where ?? undefined });
 		},
 	}),
 );
 
-builder.queryField('product', (t) =>
+builder.queryField('productById', (t) =>
 	t.prismaField({
 		type: 'Product',
 		nullable: true,

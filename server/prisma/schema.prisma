@@ -6,7 +6,8 @@ generator client {
 }
 
 generator pothos {
-  provider = "prisma-pothos-types"
+  provider    = "prisma-pothos-types"
+  prismaUtils = true
 }
 
 datasource db {
@@ -15,13 +16,13 @@ datasource db {
 }
 
 model Product {
-  id          String       @id @default(uuid())
+  id          String         @id @default(uuid())
   name        String
   description String
-  slug        String
+  slug        String         @unique
   price       Int
   rating      Float?
-  images      Image[]
+  images      ProductImage[]
   colors      Color[]
   sizes       Size[]
   details     Detail[]
@@ -29,11 +30,11 @@ model Product {
   collections Collection[]
   orderItems  OrderItem[]
   reviews     Review[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
 
-model Image {
+model ProductImage {
   id        String  @id @default(uuid())
   url       String
   alt       String
@@ -65,23 +66,41 @@ model Detail {
 }
 
 model Category {
-  id          String       @id @default(uuid())
-  name        CategoryName @unique
-  description String
-  slug        String
-  products    Product[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-}
-
-model Collection {
   id          String         @id @default(uuid())
-  name        CollectionName @unique
+  name        CategoryName   @unique
   description String
-  slug        String
+  slug        String         @unique
+  image       CategoryImage?
   products    Product[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+}
+
+model CategoryImage {
+  id         String   @id @default(uuid())
+  url        String
+  alt        String
+  categoryId String   @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Collection {
+  id          String           @id @default(uuid())
+  name        CollectionName   @unique
+  description String
+  slug        String           @unique
+  image       CollectionImage?
+  products    Product[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model CollectionImage {
+  id         String     @id @default(uuid())
+  url        String
+  alt        String
+  categoryId String     @unique
+  collection Collection @relation(fields: [categoryId], references: [id])
 }
 
 model Review {
@@ -117,26 +136,16 @@ model OrderItem {
 
 enum CategoryName {
   BASICS
-  T_SHIRTS
   HOODIES
   SHIRTS
-  JEANS
-  TROUSERS
-  SHORTS
   JACKETS
-  SWEATERS
-  SHOES
-  SOCKETS
-  UNDERWEAR
 }
 
 enum CollectionName {
-  MAN
-  WOMAN
-  BABY
   NEW_ARRIVALS
   SPORT
   BEAUTY
+  ACCESSORIES
 }
 
 enum ColorName {

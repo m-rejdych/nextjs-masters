@@ -4,41 +4,38 @@ import { faker } from '@faker-js/faker';
 const prisma = new PrismaClient();
 
 const PRODUCTS_COUNT = 100 as const;
-const CATEGORIES = [
-	'BASICS',
-	'T_SHIRTS',
-	'HOODIES',
-	'SHIRTS',
-	'JEANS',
-	'TROUSERS',
-	'SHORTS',
-	'JACKETS',
-	'SWEATERS',
-	'SHOES',
-	'SOCKETS',
-	'UNDERWEAR',
-] as const;
-const COLLECTIONS = ['MAN', 'WOMAN', 'BABY', 'NEW_ARRIVALS', 'SPORT', 'BEAUTY'] as const;
+const CATEGORIES = ['BASICS', 'HOODIES', 'SHIRTS', 'JACKETS'] as const;
+const COLLECTIONS = ['NEW_ARRIVALS', 'SPORT', 'BEAUTY', 'ACCESSORIES'] as const;
 const COLORS = ['BLACK', 'GRAY'] as const;
 const SIZES = ['S', 'M', 'L', 'XL'] as const;
 
 (async () => {
 	try {
-		await prisma.category.deleteMany();
-		await prisma.collection.deleteMany();
-		await prisma.image.deleteMany();
-		await prisma.color.deleteMany();
-		await prisma.size.deleteMany();
-		await prisma.detail.deleteMany();
-		await prisma.product.deleteMany();
+		await Promise.all([
+			prisma.category.deleteMany(),
+			prisma.collection.deleteMany(),
+			prisma.productImage.deleteMany(),
+			prisma.categoryImage.deleteMany(),
+			prisma.collectionImage.deleteMany(),
+			prisma.color.deleteMany(),
+			prisma.size.deleteMany(),
+			prisma.detail.deleteMany(),
+			prisma.product.deleteMany(),
+		]);
 
 		const categoryIds = await Promise.all(
 			CATEGORIES.map(async (name) => {
 				const createdCategory = await prisma.category.create({
 					data: {
 						name,
-            slug: faker.helpers.slugify(name).toLowerCase(),
+						slug: faker.helpers.slugify(name).toLowerCase().replace('_', '-'),
 						description: faker.lorem.paragraph({ min: 2, max: 4 }),
+						image: {
+							create: {
+								alt: name,
+								url: faker.image.urlLoremFlickr({ category: 'fashion', width: 400, height: 400 }),
+							},
+						},
 					},
 				});
 
@@ -53,8 +50,14 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 				const createdCollection = await prisma.collection.create({
 					data: {
 						name,
-            slug: faker.helpers.slugify(name).toLowerCase(),
+						slug: faker.helpers.slugify(name).toLowerCase().replace('_', '-'),
 						description: faker.lorem.paragraph({ min: 2, max: 4 }),
+						image: {
+							create: {
+								alt: name,
+								url: faker.image.urlLoremFlickr({ category: 'fashion', width: 400, height: 400 }),
+							},
+						},
 					},
 				});
 
@@ -76,7 +79,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						description: faker.commerce.productDescription(),
 						price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
 						images: {
-							create: { url: faker.image.urlLoremFlickr({ category: 'clothes' }), alt: name },
+							create: { url: faker.image.urlLoremFlickr({ category: 'fashion' }), alt: name },
 						},
 						rating: faker.number.int({ min: 1, max: 5 }),
 						reviews: {

@@ -1,19 +1,19 @@
 fragment Product on Product {
-  ... ProductListItem
-  rating
-  reviewCount
-  colors {
-    id
-    name
-    inStock
-  }
-  sizes {
-    id
-    type
-    inStock
-  }
-  details {
-    id
-    description
-  }
+	...ProductListItem
+	rating
+	reviewCount
+	colors {
+		id
+		name
+		inStock
+	}
+	sizes {
+		id
+		type
+		inStock
+	}
+	details {
+		id
+		description
+	}
 }

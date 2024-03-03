@@ -1,14 +1,14 @@
-query ProductGetList($first: Int, $after: ID) {
-  products(first: $first, after: $after) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    edges {
-      node {
-        ... ProductListItem
-      }
-    }
-  }
+query ProductGetList($first: Int, $after: ID, $where: ProductsWhere) {
+	products(first: $first, after: $after, where: $where) {
+		totalCount
+		pageInfo {
+			hasNextPage
+			hasPreviousPage
+		}
+		edges {
+			node {
+				...ProductListItem
+			}
+		}
+	}
 }
