@@ -30,6 +30,11 @@ builder.prismaNode('Product', {
 	}),
 });
 
+const StringFilter = builder.prismaFilter('String', {
+  name: 'StringFilter',
+  ops: ['contains', 'is', 'mode'],
+})
+
 const ProductWhereNot = builder.prismaWhere('Product', {
 	name: 'ProductWhereNot',
 	fields: {
@@ -42,6 +47,7 @@ const ProductWhereAnd = builder.prismaWhere('Product', {
 	fields: {
 		id: 'String',
 		slug: 'String',
+    name: StringFilter,
 		categories: CategoryListFilter,
 		collections: CollectionListFilter,
 		NOT: ProductWhereNot,
@@ -53,6 +59,7 @@ const ProductWhere = builder.prismaWhere('Product', {
 	fields: {
 		id: 'String',
 		slug: 'String',
+    name: StringFilter,
 		categories: CategoryListFilter,
 		collections: CollectionListFilter,
 		NOT: ProductWhereNot,

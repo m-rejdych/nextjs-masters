@@ -194,6 +194,7 @@ export type ProductWhere = {
   categories?: InputMaybe<CategoriesFilter>;
   collections?: InputMaybe<CollectionsFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<StringFilter>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -202,6 +203,7 @@ export type ProductWhereAnd = {
   categories?: InputMaybe<CategoriesFilter>;
   collections?: InputMaybe<CollectionsFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<StringFilter>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -290,6 +292,16 @@ export type SizeType =
   | 'M'
   | 'S'
   | 'XL';
+
+export type StringFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  is?: InputMaybe<Scalars['String']['input']>;
+  mode?: InputMaybe<StringFilterMode>;
+};
+
+export type StringFilterMode =
+  | 'Default'
+  | 'Insensitive';
 
 export type CategoryGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
