@@ -1,4 +1,4 @@
-query ProductGetList($first: Int, $after: ID, $where: ProductsWhere) {
+query ProductGetList($first: Int, $after: ID, $where: ProductWhere) {
 	products(first: $first, after: $after, where: $where) {
 		totalCount
 		pageInfo {

@@ -69,6 +69,7 @@ export type CategoryProductsConnectionEdge = {
 };
 
 export type CategoryWhere = {
+  id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<CategoryName>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
@@ -120,6 +121,7 @@ export type CollectionProductsConnectionEdge = {
 };
 
 export type CollectionWhere = {
+  id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<CollectionName>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
@@ -186,10 +188,25 @@ export type ProductImage = {
   url: Scalars['String']['output'];
 };
 
-export type ProductsWhere = {
+export type ProductWhere = {
+  AND?: InputMaybe<Array<ProductWhereAnd>>;
+  NOT?: InputMaybe<ProductWhereNot>;
   categories?: InputMaybe<CategoriesFilter>;
   collections?: InputMaybe<CollectionsFilter>;
+  id?: InputMaybe<Scalars['String']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProductWhereAnd = {
+  NOT?: InputMaybe<ProductWhereNot>;
+  categories?: InputMaybe<CategoriesFilter>;
+  collections?: InputMaybe<CollectionsFilter>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProductWhereNot = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -233,7 +250,7 @@ export type QueryProductsArgs = {
   before?: InputMaybe<Scalars['ID']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ProductsWhere>;
+  where?: InputMaybe<ProductWhere>;
 };
 
 export type QueryProductsConnection = {
@@ -288,33 +305,33 @@ export type CollectionGetListQuery = { __typename?: 'Query', collections: Array<
 
 export type CollectionListItemFragment = { __typename?: 'Collection', id: string, name: CollectionName, slug: string, image: { __typename?: 'CollectionImage', alt: string, url: string } };
 
-export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ProductGetByIdQuery = { __typename?: 'Query', productById?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } | null };
+export type ProductGetByIdQuery = { __typename?: 'Query', productById?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } | null };
 
 export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['ID']['input']>;
-  where?: InputMaybe<ProductsWhere>;
+  where?: InputMaybe<ProductWhere>;
 }>;
 
 
-export type ProductGetListQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, edges: Array<{ __typename?: 'QueryProductsConnectionEdge', node: { __typename?: 'Product', id: string, name: string, description: string, price: number, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } }> } };
+export type ProductGetListQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, edges: Array<{ __typename?: 'QueryProductsConnectionEdge', node: { __typename?: 'Product', id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } }> } };
 
 export type ProductGetPageQueryVariables = Exact<{
   first: Scalars['Int']['input'];
-  where?: InputMaybe<ProductsWhere>;
+  where?: InputMaybe<ProductWhere>;
 }>;
 
 
 export type ProductGetPageQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null } } };
 
-export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, description: string, price: number, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -358,6 +375,12 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   name
   description
   price
+  categories {
+    id
+  }
+  collections {
+    id
+  }
   images {
     id
     url
@@ -370,6 +393,12 @@ export const ProductFragmentDoc = new TypedDocumentString(`
   ...ProductListItem
   rating
   reviewCount
+  categories {
+    id
+  }
+  collections {
+    id
+  }
   colors {
     id
     name
@@ -390,6 +419,12 @@ export const ProductFragmentDoc = new TypedDocumentString(`
   name
   description
   price
+  categories {
+    id
+  }
+  collections {
+    id
+  }
   images {
     id
     url
@@ -436,6 +471,12 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   ...ProductListItem
   rating
   reviewCount
+  categories {
+    id
+  }
+  collections {
+    id
+  }
   colors {
     id
     name
@@ -456,6 +497,12 @@ fragment ProductListItem on Product {
   name
   description
   price
+  categories {
+    id
+  }
+  collections {
+    id
+  }
   images {
     id
     url
@@ -463,7 +510,7 @@ fragment ProductListItem on Product {
   }
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductGetListDocument = new TypedDocumentString(`
-    query ProductGetList($first: Int, $after: ID, $where: ProductsWhere) {
+    query ProductGetList($first: Int, $after: ID, $where: ProductWhere) {
   products(first: $first, after: $after, where: $where) {
     totalCount
     pageInfo {
@@ -482,6 +529,12 @@ export const ProductGetListDocument = new TypedDocumentString(`
   name
   description
   price
+  categories {
+    id
+  }
+  collections {
+    id
+  }
   images {
     id
     url
@@ -489,7 +542,7 @@ export const ProductGetListDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<ProductGetListQuery, ProductGetListQueryVariables>;
 export const ProductGetPageDocument = new TypedDocumentString(`
-    query ProductGetPage($first: Int!, $where: ProductsWhere) {
+    query ProductGetPage($first: Int!, $where: ProductWhere) {
   products(first: $first, where: $where) {
     pageInfo {
       endCursor

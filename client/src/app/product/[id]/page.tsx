@@ -1,5 +1,6 @@
-import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { getProductById } from '@/api/products';
 import { ProductHeading } from '@/ui/atoms/products/ProductHeading';
 import { ProductReviews } from '@/ui/molecules/products/ProductReviews';
@@ -7,6 +8,7 @@ import { ProductImagesGallery } from '@/ui/molecules/products/ProductImagesGalle
 import { ProductOptionsForm } from '@/ui/organisms/ProductOptionsForm';
 import { ProductDetails } from '@/ui/molecules/products/ProductDetails';
 import { Policies } from '@/ui/organisms/Policies';
+import { RecommendedProducts } from '@/ui/organisms/RecommendedProducts';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Params {
@@ -40,7 +42,8 @@ export const generateMetadata = async ({
 };
 
 export default async function SingleProductPage({ params: { id } }: Props) {
-	const product = await getProductById(decodeURIComponent(id));
+  const decodedId = decodeURIComponent(id);
+	const product = await getProductById(decodedId);
 
 	if (!product) {
 		return notFound();
@@ -62,6 +65,15 @@ export default async function SingleProductPage({ params: { id } }: Props) {
 							<Policies />
 						</div>
 					</div>
+					{!!product.categories[0] && !!product.collections[0] && (
+						<Suspense fallback={null}>
+							<RecommendedProducts
+								productId={decodedId}
+								categoryId={product.categories[0].id}
+								collectionId={product.collections[0].id}
+							/>
+						</Suspense>
+					)}
 				</div>
 			</div>
 		</div>

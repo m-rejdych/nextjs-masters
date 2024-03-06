@@ -35,6 +35,7 @@ builder.prismaObject('Category', {
 const CategoryWhere = builder.prismaWhere('Category', {
 	name: 'CategoryWhere',
 	fields: {
+    id: 'String',
 		name: CategoryName,
 		slug: 'String',
 	},

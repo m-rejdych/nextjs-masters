@@ -1,6 +1,7 @@
 import { decodeGlobalID } from '@pothos/plugin-relay';
 import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
+import { decodeProductWhereId } from '@/util/products';
 import { CategoryListFilter } from '@/schema/models/Category';
 import { CollectionListFilter } from '@/schema/models/Collection';
 
@@ -29,14 +30,37 @@ builder.prismaNode('Product', {
 	}),
 });
 
-const ProductsWhere = builder.prismaWhere('Product', {
-	name: 'ProductsWhere',
+const ProductWhereNot = builder.prismaWhere('Product', {
+	name: 'ProductWhereNot',
 	fields: {
-		slug: 'String',
-		categories: CategoryListFilter,
-    collections: CollectionListFilter,
+		id: 'String',
 	},
 });
+
+const ProductWhereAnd = builder.prismaWhere('Product', {
+	name: 'ProductWhereAnd',
+	fields: {
+		id: 'String',
+		slug: 'String',
+		categories: CategoryListFilter,
+		collections: CollectionListFilter,
+		NOT: ProductWhereNot,
+	},
+});
+
+const ProductWhere = builder.prismaWhere('Product', {
+	name: 'ProductWhere',
+	fields: {
+		id: 'String',
+		slug: 'String',
+		categories: CategoryListFilter,
+		collections: CollectionListFilter,
+		NOT: ProductWhereNot,
+		AND: ProductWhereAnd,
+	},
+});
+
+export type ProductWhereInput = typeof ProductWhere.$inferInput;
 
 builder.queryField('products', (t) =>
 	t.prismaConnection({
@@ -44,13 +68,16 @@ builder.queryField('products', (t) =>
 		edgesNullable: false,
 		cursor: 'id',
 		args: {
-			where: t.arg({ type: ProductsWhere }),
+			where: t.arg({ type: ProductWhere }),
 		},
 		totalCount: async (_, { where }) => {
-			return prisma.product.count({ where: where ?? undefined });
+			return prisma.product.count({ where: where ? decodeProductWhereId(where) : undefined });
 		},
 		resolve: async (query, _, { where }) => {
-			return prisma.product.findMany({ ...query, where: where ?? undefined });
+			return prisma.product.findMany({
+				...query,
+				where: where ? decodeProductWhereId(where) : undefined,
+			});
 		},
 	}),
 );
