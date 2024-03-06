@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { MobileMenu } from '@/ui/molecules/nav/MobileMenu';
 import { DesktopCompanyLogo } from '@/ui/atoms/nav/DesktopCompanyLogo';
 import { MobileCompanyLogo } from '@/ui/atoms/nav/MobileCompanyLogo';
-import { MobileMenuButtons } from '@/ui/molecules/nav/MobileMenuButtons';
-import { DesktopMenuButtons } from '@/ui/molecules/nav/DesktopMenuButtons';
+import { MobileMenuItems } from '@/ui/molecules/nav/MobileMenuItems';
+import { DesktopMenuItems } from '@/ui/molecules/nav/DesktopMenuItems';
 import { FlyoutMenus } from '@/ui/molecules/nav/FlyoutMenus';
 import type { CategoryVariant } from '@/types/common';
 
@@ -32,9 +32,9 @@ export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems }: Props) => {
 								<div className="flex h-16 items-center justify-between">
 									<DesktopCompanyLogo />
 									<FlyoutMenus items={flyoutMenusItems} />
-									<MobileMenuButtons onOpen={() => setMobileMenuOpen(true)} />
+									<MobileMenuItems onOpen={() => setMobileMenuOpen(true)} />
 									<MobileCompanyLogo />
-									<DesktopMenuButtons />
+									<DesktopMenuItems />
 								</div>
 							</div>
 						</div>

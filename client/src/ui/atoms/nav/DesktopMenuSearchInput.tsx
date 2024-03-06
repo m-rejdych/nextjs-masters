@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 
-export const DesktopMenuSearchButton = () => {
+export const DesktopMenuSearchInput = () => {
 	const [query, setQuery] = useState('');
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const searchParams = useSearchParams();

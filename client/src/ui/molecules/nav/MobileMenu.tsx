@@ -1,9 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, Suspense } from 'react';
 import { Transition, Dialog, Tab } from '@headlessui/react';
 import { MobileMenuCloseButton } from '@/ui/atoms/nav/MobileMenuCloseButton';
 import { MobileMenuCategoryNameList } from '@/ui/molecules/nav/MobileMenuCategoryNameList';
 import { MobileMenuPanels } from '@/ui/molecules/nav/MobileMenuPanels';
-import { MobileMenuSearchButton } from '@/ui/atoms/nav/MobileMenuSearchButton';
+import { MobileMenuSearchInput } from '@/ui/atoms/nav/MobileMenuSearchInput';
 import type { CategoryVariant } from '@/types/common';
 
 interface Props {
@@ -38,7 +38,9 @@ export const MobileMenu = ({ open, onClose, panelItems }: Props) => (
 				>
 					<Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
 						<MobileMenuCloseButton onClose={onClose} />
-            <MobileMenuSearchButton />
+            <Suspense fallback={null}>
+              <MobileMenuSearchInput />
+            </Suspense>
 						<Tab.Group as="div" className="mt-2">
 							<div className="border-b border-gray-200">
 								<MobileMenuCategoryNameList />
