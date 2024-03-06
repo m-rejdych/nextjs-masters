@@ -5,7 +5,7 @@ import {
 	ProductGetByIdDocument,
 	type ProductFragment,
 	type ProductListItemFragment,
-	type ProductsWhere,
+	type ProductWhere,
 } from '@/gql/graphql';
 
 interface GetProductsResult {
@@ -18,7 +18,7 @@ interface GetProductsResult {
 export const getProducts = async (
 	take?: number,
 	offset?: number,
-	where?: ProductsWhere,
+	where?: ProductWhere,
 ): Promise<GetProductsResult | null> => {
 	try {
 		// Temporary solution for offsed based pagination integration

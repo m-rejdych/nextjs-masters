@@ -3,6 +3,12 @@ fragment ProductListItem on Product {
 	name
 	description
 	price
+  categories {
+    id
+  }
+  collections {
+    id
+  }
 	images {
 		id
 		url

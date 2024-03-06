@@ -2,6 +2,12 @@ fragment Product on Product {
 	...ProductListItem
 	rating
 	reviewCount
+  categories {
+    id
+  }
+  collections {
+    id
+  }
 	colors {
 		id
 		name

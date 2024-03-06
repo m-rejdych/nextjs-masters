@@ -5,7 +5,7 @@ enum CollectionName {
 	NEW_ARRIVALS = 'NEW_ARRIVALS',
 	SPORT = 'SPORT',
 	BEAUTY = 'BEAUTY',
-  ACCESSORIES = 'ACCESSORIES',
+	ACCESSORIES = 'ACCESSORIES',
 }
 
 builder.enumType(CollectionName, {
@@ -21,9 +21,9 @@ builder.prismaObject('Collection', {
 		}),
 		slug: t.exposeString('slug'),
 		description: t.exposeString('description'),
-    createdAt: t.expose('createdAt', { type: 'Date' }),
-    updatedAt: t.expose('updatedAt', { type: 'Date' }),
-    image: t.relation('image'),
+		createdAt: t.expose('createdAt', { type: 'Date' }),
+		updatedAt: t.expose('updatedAt', { type: 'Date' }),
+		image: t.relation('image'),
 		products: t.relatedConnection('products', {
 			cursor: 'id',
 			edgesNullable: false,
@@ -35,6 +35,7 @@ builder.prismaObject('Collection', {
 const CollectionWhere = builder.prismaWhere('Collection', {
 	name: 'CollectionWhere',
 	fields: {
+		id: 'String',
 		name: CollectionName,
 		slug: 'String',
 	},

@@ -33,7 +33,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						image: {
 							create: {
 								alt: name,
-								url: faker.image.urlLoremFlickr({ category: 'fashion', width: 400, height: 400 }),
+								url: faker.image.urlLoremFlickr({ category: 'clothes', width: 400, height: 400 }),
 							},
 						},
 					},
@@ -55,7 +55,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						image: {
 							create: {
 								alt: name,
-								url: faker.image.urlLoremFlickr({ category: 'fashion', width: 400, height: 400 }),
+								url: faker.image.urlLoremFlickr({ category: 'clothes', width: 400, height: 400 }),
 							},
 						},
 					},
@@ -79,7 +79,10 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						description: faker.commerce.productDescription(),
 						price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
 						images: {
-							create: { url: faker.image.urlLoremFlickr({ category: 'fashion' }), alt: name },
+							create: {
+								url: faker.image.urlLoremFlickr({ category: 'clothes', width: 480, height: 640 }),
+								alt: name,
+							},
 						},
 						rating: faker.number.int({ min: 1, max: 5 }),
 						reviews: {
