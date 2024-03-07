@@ -3,18 +3,19 @@ import { twMerge } from 'tailwind-merge';
 import type { ProductFragment } from '@/gql/graphql';
 
 type Color = ProductFragment['colors'][number];
+type ColorName = Color['color']['name'];
 
 interface Props {
 	color: Color;
 }
 
-export const ColorPickerOption = ({ color }: Props) => {
-	const selectedColorVariants: Record<Color['name'], string> = {
+export const ColorPickerOption = ({ color: { color } }: Props) => {
+	const selectedColorVariants: Record<ColorName, string> = {
 		BLACK: 'ring-gray-900',
 		GRAY: 'ring-gray-400',
 	};
 
-	const bgColorVariants: Record<Color['name'], string> = {
+	const bgColorVariants: Record<ColorName, string> = {
 		BLACK: 'bg-gray-900',
 		GRAY: 'bg-gray-400',
 	};

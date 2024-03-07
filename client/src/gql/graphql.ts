@@ -133,14 +133,19 @@ export type CollectionsFilter = {
 export type Color = {
   __typename?: 'Color';
   id: Scalars['ID']['output'];
-  inStock: Scalars['Boolean']['output'];
   name: ColorName;
-  product: Product;
 };
 
 export type ColorName =
   | 'BLACK'
   | 'GRAY';
+
+export type ColorOnProduct = {
+  __typename?: 'ColorOnProduct';
+  color: Color;
+  inStock: Scalars['Boolean']['output'];
+  product: Product;
+};
 
 export type Detail = {
   __typename?: 'Detail';
@@ -149,8 +154,65 @@ export type Detail = {
   product: Product;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createOrder: Order;
+  createOrderItem: OrderItem;
+};
+
+
+export type MutationCreateOrderItemArgs = {
+  input: OrderItemCreate;
+};
+
 export type Node = {
   id: Scalars['ID']['output'];
+};
+
+export type Order = {
+  __typename?: 'Order';
+  createdAt: Scalars['Date']['output'];
+  id: Scalars['ID']['output'];
+  items: Array<OrderItem>;
+  itemsCount: Scalars['Int']['output'];
+  status: OrderStatus;
+  total: Scalars['Float']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+export type OrderItem = {
+  __typename?: 'OrderItem';
+  color: Color;
+  id: Scalars['ID']['output'];
+  order: Order;
+  product: Product;
+  quantity: Scalars['Int']['output'];
+  size: Size;
+};
+
+export type OrderItemConnectOrder = {
+  connect?: InputMaybe<OrderWhereUniqueId>;
+};
+
+export type OrderItemCreate = {
+  color?: InputMaybe<ColorName>;
+  order: OrderItemConnectOrder;
+  product: OrderItemCreateProduct;
+  size?: InputMaybe<SizeType>;
+};
+
+export type OrderItemCreateProduct = {
+  connect?: InputMaybe<ProductWhereId>;
+};
+
+export type OrderStatus =
+  | 'CANCELLED'
+  | 'CREATED'
+  | 'FULFILLED'
+  | 'PAID';
+
+export type OrderWhereUniqueId = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PageInfo = {
@@ -165,7 +227,7 @@ export type Product = Node & {
   __typename?: 'Product';
   categories: Array<Category>;
   collections: Array<Collection>;
-  colors: Array<Color>;
+  colors: Array<ColorOnProduct>;
   createdAt: Scalars['Date']['output'];
   description: Scalars['String']['output'];
   details: Array<Detail>;
@@ -176,7 +238,7 @@ export type Product = Node & {
   rating?: Maybe<Scalars['Float']['output']>;
   reviewCount: Scalars['Int']['output'];
   reviews: Array<Review>;
-  sizes: Array<Size>;
+  sizes: Array<SizeOnProduct>;
   slug: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
 };
@@ -207,6 +269,10 @@ export type ProductWhereAnd = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ProductWhereId = {
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ProductWhereNot = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
@@ -217,6 +283,7 @@ export type Query = {
   collections: Array<Collection>;
   node?: Maybe<Node>;
   nodes: Array<Maybe<Node>>;
+  orderById?: Maybe<Order>;
   productById?: Maybe<Product>;
   products: QueryProductsConnection;
 };
@@ -239,6 +306,11 @@ export type QueryNodeArgs = {
 
 export type QueryNodesArgs = {
   ids: Array<Scalars['ID']['input']>;
+};
+
+
+export type QueryOrderByIdArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -282,9 +354,14 @@ export type Review = {
 export type Size = {
   __typename?: 'Size';
   id: Scalars['ID']['output'];
+  type: SizeType;
+};
+
+export type SizeOnProduct = {
+  __typename?: 'SizeOnProduct';
   inStock: Scalars['Boolean']['output'];
   product: Product;
-  type: SizeType;
+  size: Size;
 };
 
 export type SizeType =
@@ -317,14 +394,14 @@ export type CollectionGetListQuery = { __typename?: 'Query', collections: Array<
 
 export type CollectionListItemFragment = { __typename?: 'Collection', id: string, name: CollectionName, slug: string, image: { __typename?: 'CollectionImage', alt: string, url: string } };
 
-export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ProductGetByIdQuery = { __typename?: 'Query', productById?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'Color', id: string, name: ColorName, inStock: boolean }>, sizes: Array<{ __typename?: 'Size', id: string, type: SizeType, inStock: boolean }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } | null };
+export type ProductGetByIdQuery = { __typename?: 'Query', productById?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } | null };
 
 export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -412,14 +489,18 @@ export const ProductFragmentDoc = new TypedDocumentString(`
     id
   }
   colors {
-    id
-    name
     inStock
+    color {
+      id
+      name
+    }
   }
   sizes {
-    id
-    type
     inStock
+    size {
+      id
+      type
+    }
   }
   details {
     id
@@ -490,14 +571,18 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     id
   }
   colors {
-    id
-    name
     inStock
+    color {
+      id
+      name
+    }
   }
   sizes {
-    id
-    type
     inStock
+    size {
+      id
+      type
+    }
   }
   details {
     id

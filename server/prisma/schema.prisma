@@ -16,22 +16,22 @@ datasource db {
 }
 
 model Product {
-  id          String         @id @default(uuid())
+  id          String           @id @default(uuid())
   name        String
   description String
-  slug        String         @unique
+  slug        String           @unique
   price       Int
   rating      Float?
   images      ProductImage[]
-  colors      Color[]
-  sizes       Size[]
+  colors      ColorOnProduct[]
+  sizes       SizeOnProduct[]
   details     Detail[]
   categories  Category[]
   collections Collection[]
   orderItems  OrderItem[]
   reviews     Review[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
 model ProductImage {
@@ -43,21 +43,37 @@ model ProductImage {
 }
 
 model Color {
-  id         String      @id @default(uuid())
-  name       ColorName
-  inStock    Boolean
-  productId  String
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  orderItems OrderItem[]
+  id        String           @id @default(uuid())
+  name      ColorName        @unique
+  products  ColorOnProduct[]
+  OrderItem OrderItem[]
 }
 
 model Size {
-  id         String      @id @default(uuid())
-  type       SizeType
-  inStock    Boolean
-  productId  String
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  orderItems OrderItem[]
+  id        String          @id @default(uuid())
+  type      SizeType        @unique
+  products  SizeOnProduct[]
+  OrderItem OrderItem[]
+}
+
+model ColorOnProduct {
+  inStock   Boolean
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  colorId   String
+  color     Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
+
+  @@id([productId, colorId])
+}
+
+model SizeOnProduct {
+  inStock   Boolean
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sizeId    String
+  size      Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+
+  @@id([productId, sizeId])
 }
 
 model Detail {
@@ -130,6 +146,7 @@ model Order {
 model OrderItem {
   id        String  @id @default(uuid())
   quantity  Int
+  total     Float
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)

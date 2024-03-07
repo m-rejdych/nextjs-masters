@@ -6,12 +6,12 @@ interface Props {
 	size: ProductFragment['sizes'][number];
 }
 
-export const SizePickerOption = ({ size }: Props) => (
+export const SizePickerOption = ({ size: { inStock, size } }: Props) => (
 	<RadioGroup.Option
 		value={size.id}
 		className={({ active, checked }) =>
 			twMerge(
-				size.inStock ? 'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
+				inStock ? 'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
 				active ? 'ring-2 ring-primary-500 ring-offset-2' : '',
 				checked
 					? 'border-transparent bg-primary-600 text-white hover:bg-primary-700'
@@ -19,7 +19,7 @@ export const SizePickerOption = ({ size }: Props) => (
 				'flex items-center justify-center rounded-md border px-3 py-3 text-sm font-medium uppercase sm:flex-1',
 			)
 		}
-		disabled={!size.inStock}
+		disabled={!inStock}
 	>
 		<RadioGroup.Label as="span">{size.type}</RadioGroup.Label>
 	</RadioGroup.Option>

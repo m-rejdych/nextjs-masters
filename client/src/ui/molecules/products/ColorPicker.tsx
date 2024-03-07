@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const ColorPicker = ({ colors }: Props) => {
-	const [selectedColor, setSelectedColor] = useState(colors[0]?.name ?? null);
+	const [selectedColor, setSelectedColor] = useState(colors[0]?.color.name ?? null);
 
 	return (
 		<div>
@@ -19,7 +19,7 @@ export const ColorPicker = ({ colors }: Props) => {
 				<RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
 				<div className="flex items-center space-x-3">
 					{colors.map((color) => (
-						<ColorPickerOption key={color.name} color={color} />
+						<ColorPickerOption key={color.color.name} color={color} />
 					))}
 				</div>
 			</RadioGroup>

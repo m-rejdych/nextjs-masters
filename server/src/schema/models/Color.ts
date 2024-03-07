@@ -16,7 +16,5 @@ builder.prismaObject('Color', {
 			type: ColorName,
 			resolve: (color) => color.name as ColorName,
 		}),
-    inStock: t.exposeBoolean('inStock'),
-		product: t.relation('product'),
 	}),
 });
