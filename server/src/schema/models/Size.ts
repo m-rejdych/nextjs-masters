@@ -1,6 +1,6 @@
 import { builder } from '@/schema/builder';
 
-enum SizeType {
+export enum SizeType {
 	S = 'S',
 	M = 'M',
 	L = 'L',

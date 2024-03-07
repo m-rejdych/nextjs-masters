@@ -43,19 +43,21 @@ model ProductImage {
 }
 
 model Color {
-  id        String    @id @default(uuid())
-  name      ColorName
-  inStock   Boolean
-  productId String
-  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id         String      @id @default(uuid())
+  name       ColorName
+  inStock    Boolean
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
 }
 
 model Size {
-  id        String   @id @default(uuid())
-  type      SizeType
-  inStock   Boolean
-  productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id         String      @id @default(uuid())
+  type       SizeType
+  inStock    Boolean
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
 }
 
 model Detail {
@@ -118,8 +120,8 @@ model Review {
 
 model Order {
   id        String      @id @default(uuid())
-  total     Int
-  status    OrderStatus
+  total     Float       @default(0)
+  status    OrderStatus @default(CREATED)
   items     OrderItem[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
@@ -132,6 +134,10 @@ model OrderItem {
   orderId   String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
+  sizeId    String
+  size      Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  colorId   String
+  color     Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
 }
 
 enum CategoryName {
