@@ -1,6 +1,6 @@
 import { builder } from '@/schema/builder';
 
-export enum ColorName {
+enum ColorName {
 	BLACK = 'BLACK',
 	GRAY = 'GRAY',
 }

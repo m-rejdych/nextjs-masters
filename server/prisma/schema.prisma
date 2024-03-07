@@ -136,7 +136,6 @@ model Review {
 
 model Order {
   id        String      @id @default(uuid())
-  total     Float       @default(0)
   status    OrderStatus @default(CREATED)
   items     OrderItem[]
   createdAt DateTime    @default(now())
@@ -145,8 +144,7 @@ model Order {
 
 model OrderItem {
   id        String  @id @default(uuid())
-  quantity  Int
-  total     Float
+  quantity  Int     @default(1)
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)

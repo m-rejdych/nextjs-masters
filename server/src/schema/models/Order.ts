@@ -12,15 +12,14 @@ builder.enumType(OrderStatus, {
 	name: 'OrderStatus',
 });
 
-export const OrderWhereUniqueId = builder.prismaWhereUnique('Order', {
-	name: 'OrderWhereUniqueId',
-	fields: { id: 'String' },
-});
-
 builder.prismaObject('Order', {
+	select: { status: true, items: { select: { product: { select: { price: true } } } } },
 	fields: (t) => ({
 		id: t.exposeID('id'),
-		total: t.exposeFloat('total'),
+		total: t.field({
+			type: 'Float',
+			resolve: (order) => order.items.reduce((acc, { product: { price } }) => acc + price, 0),
+		}),
 		status: t.field({ type: OrderStatus, resolve: (order) => order.status as OrderStatus }),
 		items: t.relation('items'),
 		itemsCount: t.relationCount('items'),

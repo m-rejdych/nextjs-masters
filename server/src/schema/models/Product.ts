@@ -35,13 +35,6 @@ const StringFilter = builder.prismaFilter('String', {
   ops: ['contains', 'is', 'mode'],
 });
 
-export const ProductWhereUniqueId = builder.prismaWhereUnique('Product', {
-   name: 'ProductWhereId',
-   fields: {
-     id: 'String',
-   },
-});
-
 const ProductWhereNot = builder.prismaWhere('Product', {
 	name: 'ProductWhereNot',
 	fields: {
