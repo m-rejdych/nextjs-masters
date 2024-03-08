@@ -60,7 +60,7 @@ export default async function SingleProductPage({ params: { id } }: Props) {
 						</div>
 						<ProductImagesGallery images={product.images} />
 						<div className="mt-8 lg:col-span-5">
-							<ProductOptionsForm sizes={product.sizes} colors={product.colors} />
+							<ProductOptionsForm sizes={product.sizes} colors={product.colors} productId={decodedId} />
 							<ProductDetails description={product.description} details={product.details} />
 							<Policies />
 						</div>

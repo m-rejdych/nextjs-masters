@@ -156,13 +156,13 @@ export type Detail = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addOrderItem: OrderItem;
   createOrder: Order;
-  createOrderItem: OrderItem;
 };
 
 
-export type MutationCreateOrderItemArgs = {
-  input: OrderItemCreate;
+export type MutationAddOrderItemArgs = {
+  input: OrderItemAddInput;
 };
 
 export type Node = {
@@ -188,21 +188,14 @@ export type OrderItem = {
   product: Product;
   quantity: Scalars['Int']['output'];
   size: Size;
+  total: Scalars['Float']['output'];
 };
 
-export type OrderItemConnectOrder = {
-  connect?: InputMaybe<OrderWhereUniqueId>;
-};
-
-export type OrderItemCreate = {
-  color?: InputMaybe<ColorName>;
-  order: OrderItemConnectOrder;
-  product: OrderItemCreateProduct;
-  size?: InputMaybe<SizeType>;
-};
-
-export type OrderItemCreateProduct = {
-  connect?: InputMaybe<ProductWhereId>;
+export type OrderItemAddInput = {
+  colorId: Scalars['String']['input'];
+  orderId: Scalars['String']['input'];
+  productId: Scalars['String']['input'];
+  sizeId: Scalars['String']['input'];
 };
 
 export type OrderStatus =
@@ -210,10 +203,6 @@ export type OrderStatus =
   | 'CREATED'
   | 'FULFILLED'
   | 'PAID';
-
-export type OrderWhereUniqueId = {
-  id?: InputMaybe<Scalars['String']['input']>;
-};
 
 export type PageInfo = {
   __typename?: 'PageInfo';
@@ -267,10 +256,6 @@ export type ProductWhereAnd = {
   id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<StringFilter>;
   slug?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ProductWhereId = {
-  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductWhereNot = {
@@ -394,6 +379,29 @@ export type CollectionGetListQuery = { __typename?: 'Query', collections: Array<
 
 export type CollectionListItemFragment = { __typename?: 'Collection', id: string, name: CollectionName, slug: string, image: { __typename?: 'CollectionImage', alt: string, url: string } };
 
+export type OrderCreateMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OrderCreateMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id: string, itemsCount: number } };
+
+export type OrderFragment = { __typename?: 'Order', id: string, itemsCount: number };
+
+export type OrderGetByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type OrderGetByIdQuery = { __typename?: 'Query', orderById?: { __typename?: 'Order', id: string, itemsCount: number } | null };
+
+export type OrderItemAddMutationVariables = Exact<{
+  input: OrderItemAddInput;
+}>;
+
+
+export type OrderItemAddMutation = { __typename?: 'Mutation', addOrderItem: { __typename?: 'OrderItem', id: string, quantity: number } };
+
+export type OrderItemFragment = { __typename?: 'OrderItem', id: string, quantity: number };
+
 export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
@@ -458,6 +466,18 @@ export const CollectionListItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"CollectionListItem"}) as unknown as TypedDocumentString<CollectionListItemFragment, unknown>;
+export const OrderFragmentDoc = new TypedDocumentString(`
+    fragment Order on Order {
+  id
+  itemsCount
+}
+    `, {"fragmentName":"Order"}) as unknown as TypedDocumentString<OrderFragment, unknown>;
+export const OrderItemFragmentDoc = new TypedDocumentString(`
+    fragment OrderItem on OrderItem {
+  id
+  quantity
+}
+    `, {"fragmentName":"OrderItem"}) as unknown as TypedDocumentString<OrderItemFragment, unknown>;
 export const ProductListItemFragmentDoc = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
@@ -554,6 +574,36 @@ export const CollectionGetListDocument = new TypedDocumentString(`
     url
   }
 }`) as unknown as TypedDocumentString<CollectionGetListQuery, CollectionGetListQueryVariables>;
+export const OrderCreateDocument = new TypedDocumentString(`
+    mutation OrderCreate {
+  createOrder {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  id
+  itemsCount
+}`) as unknown as TypedDocumentString<OrderCreateMutation, OrderCreateMutationVariables>;
+export const OrderGetByIdDocument = new TypedDocumentString(`
+    query OrderGetById($id: ID!) {
+  orderById(id: $id) {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  id
+  itemsCount
+}`) as unknown as TypedDocumentString<OrderGetByIdQuery, OrderGetByIdQueryVariables>;
+export const OrderItemAddDocument = new TypedDocumentString(`
+    mutation OrderItemAdd($input: OrderItemAddInput!) {
+  addOrderItem(input: $input) {
+    ...OrderItem
+  }
+}
+    fragment OrderItem on OrderItem {
+  id
+  quantity
+}`) as unknown as TypedDocumentString<OrderItemAddMutation, OrderItemAddMutationVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   productById(id: $id) {

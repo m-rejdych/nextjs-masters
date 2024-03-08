@@ -1,0 +1,4 @@
+fragment Order on Order {
+  id
+  itemsCount
+}

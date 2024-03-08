@@ -22,7 +22,7 @@ export const ColorPickerOption = ({ color: { color } }: Props) => {
 
 	return (
 		<RadioGroup.Option
-			value={color.name}
+			value={color.id}
 			className={({ active, checked }) =>
 				twMerge(
 					selectedColorVariants[color.name],
