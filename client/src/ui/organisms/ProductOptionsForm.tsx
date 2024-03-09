@@ -1,10 +1,11 @@
 import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
 import { AddToCartButton } from '../atoms/nav/AddToCartButton';
 import { ColorPicker } from '@/ui/molecules/products/ColorPicker';
 import { SizePicker } from '@/ui/molecules/products/SizePicker';
 import { addOrderItem } from '@/api/orderItem';
 import { createOrder } from '@/api/order';
-import { getOrderByCookieOrderId } from '@/util/order';
+import { getCookieOrderItemsCount } from '@/util/order';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
@@ -21,7 +22,7 @@ export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
 		const colorId = formData.get('colorId');
 		if (!colorId || !sizeId) return;
 
-		let order = await getOrderByCookieOrderId();
+		let order = await getCookieOrderItemsCount();
 		if (!order) {
 			order = await createOrder();
 			if (!order) return;
@@ -39,6 +40,7 @@ export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
 			colorId: colorId as string,
 			orderId: order.id,
 		});
+    revalidateTag('cart');
 	};
 
 	return (

@@ -1,4 +1,7 @@
 fragment Order on Order {
-  id
-  itemsCount
+  ... OrderItemsCount
+  total
+  items {
+    ... OrderItem
+  }
 }

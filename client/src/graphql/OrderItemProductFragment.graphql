@@ -1,0 +1,22 @@
+fragment OrderItemProduct on Product {
+  id
+  name
+  price
+  sizes {
+    inStock
+    size {
+      id
+      }
+  }
+  colors {
+    inStock
+    color {
+      id
+    }
+  }
+  images {
+    id
+    alt
+    url
+  }
+}
