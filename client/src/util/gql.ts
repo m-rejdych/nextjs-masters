@@ -14,10 +14,18 @@ type GraphQLResponse<T> =
 			errors: GraphQLError[];
 	  };
 
-export const executeQuery = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
-): Promise<TResult> => {
+type ExecuteQueryArgs<TResult, TVariables> = {
+	query: TypedDocumentString<TResult, TVariables>;
+	next?: NextFetchRequestConfig;
+  cache?: RequestCache;
+} & (TVariables extends Record<string, never> ? { variables?: never } : { variables: TVariables });
+
+export const executeQuery = async <TResult, TVariables>({
+	query,
+	next,
+  cache,
+	variables,
+}: ExecuteQueryArgs<TResult, TVariables>): Promise<TResult> => {
 	if (!process.env.GRAPHQL_URL) {
 		throw new Error('GRAPHQL_URL is not defined');
 	}
@@ -31,6 +39,8 @@ export const executeQuery = async <TResult, TVariables>(
 			query,
 			variables,
 		}),
+		next,
+    cache,
 	});
 
 	const graphqlResponse = (await resposnse.json()) as GraphQLResponse<TResult>;

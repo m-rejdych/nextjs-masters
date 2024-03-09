@@ -26,7 +26,10 @@ export const getProducts = async (
 		if (offset) {
 			const {
 				products: { pageInfo },
-			} = await executeQuery(ProductGetPageDocument, { first: offset, where });
+			} = await executeQuery({
+				query: ProductGetPageDocument,
+				variables: { first: offset, where },
+			});
 			endCursor = pageInfo.endCursor;
 		}
 
@@ -36,7 +39,10 @@ export const getProducts = async (
 				totalCount,
 				pageInfo: { hasPreviousPage, hasNextPage },
 			},
-		} = await executeQuery(ProductGetListDocument, { first: take, after: endCursor, where });
+		} = await executeQuery({
+			query: ProductGetListDocument,
+			variables: { first: take, after: endCursor, where },
+		});
 
 		return {
 			hasNextPage,
@@ -52,7 +58,10 @@ export const getProducts = async (
 
 export const getProductById = async (id: string): Promise<ProductFragment | null> => {
 	try {
-		const { productById } = await executeQuery(ProductGetByIdDocument, { id });
+		const { productById } = await executeQuery({
+			query: ProductGetByIdDocument,
+			variables: { id },
+		});
 
 		return productById ?? null;
 	} catch (error) {

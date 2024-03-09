@@ -3,7 +3,7 @@ import { executeQuery } from '@/util/gql';
 
 export const getOrderById = async (id: string): Promise<OrderFragment | null> => {
 	try {
-		const { orderById } = await executeQuery(OrderGetByIdDocument, { id });
+		const { orderById } = await executeQuery({ query: OrderGetByIdDocument, variables: { id } });
 		return orderById ?? null;
 	} catch (error) {
 		console.log(error);
@@ -13,7 +13,7 @@ export const getOrderById = async (id: string): Promise<OrderFragment | null> =>
 
 export const createOrder = async (): Promise<OrderFragment | null> => {
 	try {
-		const { createOrder } = await executeQuery(OrderCreateDocument);
+		const { createOrder } = await executeQuery({ query: OrderCreateDocument });
 		return createOrder;
 	} catch (error) {
 		console.log(error);

@@ -3,7 +3,7 @@ import { CollectionGetListDocument, type CollectionListItemFragment } from '@/gq
 
 export const getCollections = async (): Promise<CollectionListItemFragment[] | null> => {
 	try {
-		const { collections } = await executeQuery(CollectionGetListDocument);
+		const { collections } = await executeQuery({ query: CollectionGetListDocument });
 
 		return collections;
 	} catch (error) {

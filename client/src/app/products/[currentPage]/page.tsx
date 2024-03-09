@@ -16,7 +16,7 @@ interface Props {
 export const generateStaticParams = async () => {
 	const {
 		products: { totalCount },
-	} = await executeQuery(ProductGetListDocument, {});
+	} = await executeQuery({ query: ProductGetListDocument, variables: {} });
 
 	return Array.from({ length: Math.ceil(totalCount / 20) }, (_, index) => ({
 		currentPage: (index + 1).toString(),
@@ -37,8 +37,8 @@ export default async function ProductsPaginated({ params: { currentPage } }: Pro
 				currentPage={Number(currentPage)}
 				hasPreviousPage={products.hasPreviousPage}
 				hasNextPage={products.hasNextPage}
-        totalPages={Math.ceil(products.totalCount / 20)}
-        directory="products"
+				totalPages={Math.ceil(products.totalCount / 20)}
+				directory="products"
 			/>
 		</main>
 	);
