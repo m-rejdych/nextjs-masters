@@ -19,8 +19,8 @@ export const ProductListItem = ({
 					<Image
 						src={image.url}
 						alt={image.alt}
-						width={640}
-						height={480}
+						height={640}
+						width={480}
 						className="h-full w-full object-cover object-center sm:h-full sm:w-full"
 					/>
 				</div>

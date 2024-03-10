@@ -15,8 +15,8 @@ export const ProductImagesGallery = ({ images }: Props) => (
 					key={id}
 					src={url}
 					alt={alt}
-					width={640}
-					height={480}
+					height={640}
+					width={480}
 					className={twMerge(
 						index === 0 ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
 						'rounded-lg',
