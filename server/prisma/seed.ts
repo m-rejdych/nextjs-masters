@@ -23,8 +23,8 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			prisma.sizeOnProduct.deleteMany(),
 			prisma.detail.deleteMany(),
 			prisma.product.deleteMany(),
-      prisma.order.deleteMany(),
-      prisma.orderItem.deleteMany(),
+			prisma.order.deleteMany(),
+			prisma.orderItem.deleteMany(),
 		]);
 
 		const categoryIds = await Promise.all(
@@ -151,6 +151,13 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 		);
 
 		await prisma.$disconnect();
+
+		const baseUrl = process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? 'http://localhost:3000';
+		const res = await fetch(
+			process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? `${baseUrl}/api/products/revalidate`,
+			{ method: 'POST' },
+		);
+		console.log(await res.json());
 	} catch (error) {
 		console.log(error);
 		await prisma.$disconnect();

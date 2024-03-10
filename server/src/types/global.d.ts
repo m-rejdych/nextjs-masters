@@ -6,6 +6,8 @@ declare global {
       PORT: string;
       DATABASE_URL: string;
       NODE_ENV: 'production' | 'development';
+      CLIENT_URL?: string;
+      VERCEL_URL?: string;
     }
   }
 
