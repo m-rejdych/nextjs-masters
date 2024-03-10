@@ -30,12 +30,24 @@ export const CartProductsListItemQuantity = ({ id, name, quantity }: Props) => {
 	return (
 		<form className="flex items-center">
 			<p className="sr-only">Quantity, {name}</p>
-			<p className="text-sm text-neutral-900">{optimisticQuantity}</p>
+			<p className="text-sm text-neutral-900" data-testid="quantity">
+				{optimisticQuantity}
+			</p>
 			<div className="ml-2 flex flex-col">
-				<button className="m-0.5 h-5 w-5 p-0.5" type="submit" formAction={handleIncrement}>
+				<button
+					className="m-0.5 h-5 w-5 p-0.5"
+					type="submit"
+					formAction={handleIncrement}
+					data-testid="increment"
+				>
 					<ArrowUpIcon className="text-neutral-400" />
 				</button>
-				<button className="m-0.5 h-5 w-5 p-0.5" type="submit" formAction={handleDecrement}>
+				<button
+					className="m-0.5 h-5 w-5 p-0.5"
+					type="submit"
+					formAction={handleDecrement}
+					data-testid="decrement"
+				>
 					<ArrowDownIcon className="text-neutral-400" />
 				</button>
 			</div>
