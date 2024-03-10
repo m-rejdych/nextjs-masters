@@ -91,3 +91,49 @@ builder.mutationField('addOrderItem', (t) =>
 		},
 	}),
 );
+
+builder.mutationField('incrementOrderItemQuantity', (t) =>
+	t.prismaField({
+		type: 'OrderItem',
+		args: {
+			id: t.arg({ type: 'ID', required: true }),
+		},
+		resolve: async (query, _, { id }) => {
+			const orderItem = await prisma.orderItem.findUnique({ where: { id: id as string } });
+			if (!orderItem) {
+				throw new Error('Order item not found');
+			}
+
+			return prisma.orderItem.update({
+				...query,
+				where: { id: id as string },
+				data: { quantity: orderItem.quantity + 1 },
+			});
+		},
+	}),
+);
+
+builder.mutationField('decrementOrderItemQuantity', (t) =>
+	t.prismaField({
+		type: 'OrderItem',
+		args: {
+			id: t.arg({ type: 'ID', required: true }),
+		},
+		resolve: async (query, _, { id }) => {
+			const orderItem = await prisma.orderItem.findUnique({ where: { id: id as string } });
+			if (!orderItem) {
+				throw new Error('Order item not found');
+			}
+
+			if (orderItem.quantity <= 1) {
+				return prisma.orderItem.delete({ ...query, where: { id: id as string } });
+			}
+
+			return prisma.orderItem.update({
+				...query,
+				where: { id: id as string },
+				data: { quantity: orderItem.quantity - 1 },
+			});
+		},
+	}),
+);

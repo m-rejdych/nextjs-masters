@@ -12,17 +12,45 @@ builder.enumType(OrderStatus, {
 	name: 'OrderStatus',
 });
 
+const OrderItemOrderBy = builder.prismaOrderBy('OrderItem', {
+	name: 'OrderItemOrderBy',
+	fields: {
+		createdAt: true,
+		updatedAt: true,
+	},
+});
+
 builder.prismaObject('Order', {
-	select: { status: true, items: { select: { product: { select: { price: true } } } } },
+	select: {
+		id: true,
+		status: true,
+		items: { select: { quantity: true, product: { select: { price: true } } } },
+	},
 	fields: (t) => ({
 		id: t.exposeID('id'),
 		total: t.field({
 			type: 'Float',
-			resolve: (order) => order.items.reduce((acc, { product: { price } }) => acc + price, 0),
+			resolve: (order) =>
+				order.items.reduce((acc, { quantity, product: { price } }) => acc + price * quantity, 0),
 		}),
 		status: t.field({ type: OrderStatus, resolve: (order) => order.status as OrderStatus }),
-		items: t.relation('items'),
-		itemsCount: t.relationCount('items'),
+		items: t.prismaField({
+			type: ['OrderItem'],
+			args: {
+				orderBy: t.arg({ type: OrderItemOrderBy }),
+			},
+			resolve: async (query, { id }, { orderBy }) => {
+				return prisma.orderItem.findMany({
+					...query,
+					where: { orderId: id },
+					orderBy: orderBy ?? undefined,
+				});
+			},
+		}),
+		itemsCount: t.field({
+			type: 'Int',
+			resolve: (order) => order.items.reduce((acc, { quantity }) => acc + quantity, 0),
+		}),
 		createdAt: t.expose('createdAt', { type: 'Date' }),
 		updatedAt: t.expose('updatedAt', { type: 'Date' }),
 	}),

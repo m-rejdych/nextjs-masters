@@ -23,6 +23,8 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			prisma.sizeOnProduct.deleteMany(),
 			prisma.detail.deleteMany(),
 			prisma.product.deleteMany(),
+      prisma.order.deleteMany(),
+      prisma.orderItem.deleteMany(),
 		]);
 
 		const categoryIds = await Promise.all(

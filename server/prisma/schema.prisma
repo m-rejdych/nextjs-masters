@@ -153,6 +153,8 @@ model OrderItem {
   size      Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
   colorId   String
   color     Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum CategoryName {

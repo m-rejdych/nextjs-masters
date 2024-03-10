@@ -158,11 +158,23 @@ export type Mutation = {
   __typename?: 'Mutation';
   addOrderItem: OrderItem;
   createOrder: Order;
+  decrementOrderItemQuantity: OrderItem;
+  incrementOrderItemQuantity: OrderItem;
 };
 
 
 export type MutationAddOrderItemArgs = {
   input: OrderItemAddInput;
+};
+
+
+export type MutationDecrementOrderItemQuantityArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationIncrementOrderItemQuantityArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type Node = {
@@ -180,6 +192,15 @@ export type Order = {
   updatedAt: Scalars['Date']['output'];
 };
 
+
+export type OrderItemsArgs = {
+  orderBy?: InputMaybe<OrderItemOrderBy>;
+};
+
+export type OrderBy =
+  | 'Asc'
+  | 'Desc';
+
 export type OrderItem = {
   __typename?: 'OrderItem';
   color: Color;
@@ -196,6 +217,11 @@ export type OrderItemAddInput = {
   orderId: Scalars['String']['input'];
   productId: Scalars['String']['input'];
   sizeId: Scalars['String']['input'];
+};
+
+export type OrderItemOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
 };
 
 export type OrderStatus =
@@ -407,9 +433,23 @@ export type OrderItemAddMutationVariables = Exact<{
 
 export type OrderItemAddMutation = { __typename?: 'Mutation', addOrderItem: { __typename?: 'OrderItem', id: string } };
 
+export type OrderItemDecrementMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type OrderItemDecrementMutation = { __typename?: 'Mutation', decrementOrderItemQuantity: { __typename?: 'OrderItem', id: string } };
+
 export type OrderItemFragment = { __typename?: 'OrderItem', id: string, total: number, quantity: number, size: { __typename?: 'Size', id: string, type: SizeType }, color: { __typename?: 'Color', id: string, name: ColorName }, product: { __typename?: 'Product', id: string, name: string, price: number, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string } }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string } }>, images: Array<{ __typename?: 'ProductImage', id: string, alt: string, url: string }> } };
 
 export type OrderItemIdFragment = { __typename?: 'OrderItem', id: string };
+
+export type OrderItemIncrementMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type OrderItemIncrementMutation = { __typename?: 'Mutation', incrementOrderItemQuantity: { __typename?: 'OrderItem', id: string } };
 
 export type OrderItemProductFragment = { __typename?: 'Product', id: string, name: string, price: number, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string } }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string } }>, images: Array<{ __typename?: 'ProductImage', id: string, alt: string, url: string }> };
 
@@ -552,7 +592,7 @@ export const OrderFragmentDoc = new TypedDocumentString(`
     fragment Order on Order {
   ...OrderItemsCount
   total
-  items {
+  items(orderBy: {createdAt: Desc}) {
     ...OrderItem
   }
 }
@@ -718,7 +758,7 @@ export const OrderGetByIdDocument = new TypedDocumentString(`
     fragment Order on Order {
   ...OrderItemsCount
   total
-  items {
+  items(orderBy: {createdAt: Desc}) {
     ...OrderItem
   }
 }
@@ -783,6 +823,24 @@ export const OrderItemAddDocument = new TypedDocumentString(`
     fragment OrderItemId on OrderItem {
   id
 }`) as unknown as TypedDocumentString<OrderItemAddMutation, OrderItemAddMutationVariables>;
+export const OrderItemDecrementDocument = new TypedDocumentString(`
+    mutation OrderItemDecrement($id: ID!) {
+  decrementOrderItemQuantity(id: $id) {
+    ...OrderItemId
+  }
+}
+    fragment OrderItemId on OrderItem {
+  id
+}`) as unknown as TypedDocumentString<OrderItemDecrementMutation, OrderItemDecrementMutationVariables>;
+export const OrderItemIncrementDocument = new TypedDocumentString(`
+    mutation OrderItemIncrement($id: ID!) {
+  incrementOrderItemQuantity(id: $id) {
+    ...OrderItemId
+  }
+}
+    fragment OrderItemId on OrderItem {
+  id
+}`) as unknown as TypedDocumentString<OrderItemIncrementMutation, OrderItemIncrementMutationVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   productById(id: $id) {
