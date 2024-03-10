@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
-	const handleAction = async (formData: FormData) => {
+	const handleAction = async (formData: FormData): Promise<void> => {
 		'use server';
 
 		const sizeId = formData.get('sizeId');

@@ -2,6 +2,7 @@ import {
 	OrderItemAddDocument,
 	OrderItemIncrementDocument,
 	OrderItemDecrementDocument,
+  OrderItemRemoveDocument,
 	type OrderItemAddInput,
 	type OrderItemIdFragment,
 } from '@/gql/graphql';
@@ -49,3 +50,13 @@ export const decrementOrderItemQuantity = async (id: string) => {
 		return null;
 	}
 };
+
+export const removeOrderItem = async (id: string): Promise<OrderItemIdFragment | null> => {
+  try {
+    const { removeOrderItem } = await executeQuery({ query: OrderItemRemoveDocument, variables: { id } });
+    return removeOrderItem;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

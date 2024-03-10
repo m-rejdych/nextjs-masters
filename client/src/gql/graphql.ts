@@ -160,6 +160,7 @@ export type Mutation = {
   createOrder: Order;
   decrementOrderItemQuantity: OrderItem;
   incrementOrderItemQuantity: OrderItem;
+  removeOrderItem: OrderItem;
 };
 
 
@@ -174,6 +175,11 @@ export type MutationDecrementOrderItemQuantityArgs = {
 
 
 export type MutationIncrementOrderItemQuantityArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveOrderItemArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -452,6 +458,13 @@ export type OrderItemIncrementMutationVariables = Exact<{
 export type OrderItemIncrementMutation = { __typename?: 'Mutation', incrementOrderItemQuantity: { __typename?: 'OrderItem', id: string } };
 
 export type OrderItemProductFragment = { __typename?: 'Product', id: string, name: string, price: number, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string } }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string } }>, images: Array<{ __typename?: 'ProductImage', id: string, alt: string, url: string }> };
+
+export type OrderItemRemoveMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type OrderItemRemoveMutation = { __typename?: 'Mutation', removeOrderItem: { __typename?: 'OrderItem', id: string } };
 
 export type OrderItemsCountFragment = { __typename?: 'Order', id: string, itemsCount: number };
 
@@ -841,6 +854,15 @@ export const OrderItemIncrementDocument = new TypedDocumentString(`
     fragment OrderItemId on OrderItem {
   id
 }`) as unknown as TypedDocumentString<OrderItemIncrementMutation, OrderItemIncrementMutationVariables>;
+export const OrderItemRemoveDocument = new TypedDocumentString(`
+    mutation OrderItemRemove($id: ID!) {
+  removeOrderItem(id: $id) {
+    ...OrderItemId
+  }
+}
+    fragment OrderItemId on OrderItem {
+  id
+}`) as unknown as TypedDocumentString<OrderItemRemoveMutation, OrderItemRemoveMutationVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   productById(id: $id) {

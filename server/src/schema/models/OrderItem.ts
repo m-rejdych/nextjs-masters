@@ -137,3 +137,15 @@ builder.mutationField('decrementOrderItemQuantity', (t) =>
 		},
 	}),
 );
+
+builder.mutationField('removeOrderItem', (t) =>
+  t.prismaField({
+    type: 'OrderItem',
+    args: {
+      id: t.arg({ type: 'ID', required: true }),
+    },
+    resolve: async (query, _, { id }) => {
+      return prisma.orderItem.delete({ ...query, where: { id: id as string } });
+    },
+  }),
+);

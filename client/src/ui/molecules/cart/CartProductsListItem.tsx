@@ -32,7 +32,7 @@ export const CartProductsListItem = ({ id, color, size, quantity, product }: Pro
 					</div>
 					<div className="mt-4 sm:mt-0 sm:pr-9">
 						<CartProductsListItemQuantity id={id} name={product.name} quantity={quantity} />
-						<CartProductsListItemRemoveButton />
+						<CartProductsListItemRemoveButton id={id} />
 					</div>
 				</div>
 				<CartProductsListItemStockInfo

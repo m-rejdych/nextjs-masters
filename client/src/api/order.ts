@@ -15,6 +15,7 @@ export const getOrderItemsCountById = async (
 			query: OrderGetItemsCountByIdDocument,
 			variables: { id },
 			next: { tags: ['cart'] },
+      cache: 'no-store',
 		});
 		return orderById ?? null;
 	} catch (error) {
@@ -39,6 +40,7 @@ export const getOrderById = async (id: string): Promise<OrderFragment | null> =>
 			query: OrderGetByIdDocument,
 			variables: { id },
 			next: { tags: ['cart'] },
+      cache: 'no-store',
 		});
 		return orderById ?? null;
 	} catch (error) {
