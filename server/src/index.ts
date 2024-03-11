@@ -1,10 +1,12 @@
 import { ApolloServer } from '@apollo/server';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { schema } from '@/schema';
 
 (async () => {
 	const server = new ApolloServer({
 		schema,
+    plugins: [ApolloServerPluginLandingPageLocalDefault()],
 	});
 
 	const { url } = await startStandaloneServer(server, {
