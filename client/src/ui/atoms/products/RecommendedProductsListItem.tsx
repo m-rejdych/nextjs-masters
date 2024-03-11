@@ -3,18 +3,18 @@ import { RecommendedProductsListItemImage } from '@/ui/atoms/products/Recommende
 import { RecommendedProductsListItemDescription } from '@/ui/atoms/products/RecommendedProductsListItemDescription';
 
 interface Props {
-	id: ProductListItemFragment['id'];
+	slug: ProductListItemFragment['slug'];
 	name: ProductListItemFragment['name'];
 	description: ProductListItemFragment['description'];
 	price: ProductListItemFragment['price'];
 	images: ProductListItemFragment['images'];
 }
 
-export const RecommendedProductsListItem = ({ id, name, description, price, images }: Props) => (
+export const RecommendedProductsListItem = ({ slug, name, description, price, images }: Props) => (
 	<li className="group relative">
 		{images[0] && <RecommendedProductsListItemImage image={images[0]} />}
 		<RecommendedProductsListItemDescription
-			id={id}
+      slug={slug}
 			name={name}
 			description={description}
 			price={price}

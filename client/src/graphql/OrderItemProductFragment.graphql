@@ -1,5 +1,6 @@
 fragment OrderItemProduct on Product {
   id
+  slug
   name
   price
   sizes {

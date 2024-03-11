@@ -1,6 +1,7 @@
 fragment ProductListItem on Product {
 	id
 	name
+  slug
 	description
 	price
   categories {

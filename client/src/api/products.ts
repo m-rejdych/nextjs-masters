@@ -6,6 +6,7 @@ import {
 	type ProductFragment,
 	type ProductListItemFragment,
 	type ProductWhere,
+	type ProductWhereUnique,
 } from '@/gql/graphql';
 
 interface GetProductsResult {
@@ -56,14 +57,14 @@ export const getProducts = async (
 	}
 };
 
-export const getProductById = async (id: string): Promise<ProductFragment | null> => {
+export const getProduct = async (where: ProductWhereUnique): Promise<ProductFragment | null> => {
 	try {
-		const { productById } = await executeQuery({
+		const { product } = await executeQuery({
 			query: ProductGetByIdDocument,
-			variables: { id },
+			variables: { where },
 		});
 
-		return productById ?? null;
+		return product ?? null;
 	} catch (error) {
 		console.log(error);
 		return null;

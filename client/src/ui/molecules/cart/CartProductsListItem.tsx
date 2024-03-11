@@ -24,7 +24,7 @@ export const CartProductsListItem = ({ id, color, size, quantity, product }: Pro
 			<div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
 				<div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
 					<div>
-						<CartProductsListItemHeading id={product.id} name={product.name} />
+						<CartProductsListItemHeading slug={product.slug} name={product.name} />
 						<CartProductsListItemVariantInfo color={color} size={size} />
 						<p className="mt-1 text-sm font-medium text-neutral-900">
 							{formatDolars(product.price / 100)}

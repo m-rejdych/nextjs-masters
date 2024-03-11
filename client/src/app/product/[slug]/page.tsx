@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getProductById } from '@/api/products';
+import { getProduct } from '@/api/products';
 import { ProductHeading } from '@/ui/atoms/products/ProductHeading';
 import { ProductReviews } from '@/ui/molecules/products/ProductReviews';
 import { ProductImagesGallery } from '@/ui/molecules/products/ProductImagesGallery';
@@ -12,7 +12,7 @@ import { RecommendedProducts } from '@/ui/organisms/RecommendedProducts';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Params {
-	id: ProductFragment['id'];
+	slug: ProductFragment['slug'];
 }
 
 interface Props {
@@ -24,9 +24,9 @@ interface GenereateMetadataArgs {
 }
 
 export const generateMetadata = async ({
-	params: { id },
+	params: { slug },
 }: GenereateMetadataArgs): Promise<Metadata> => {
-	const product = await getProductById(decodeURIComponent(id));
+	const product = await getProduct({ slug });
 
 	if (!product) {
 		return {
@@ -41,13 +41,14 @@ export const generateMetadata = async ({
 	};
 };
 
-export default async function SingleProductPage({ params: { id } }: Props) {
-  const decodedId = decodeURIComponent(id);
-	const product = await getProductById(decodedId);
+export default async function SingleProductPage({ params: { slug } }: Props) {
+	const product = await getProduct({ slug });
 
 	if (!product) {
 		return notFound();
 	}
+
+  const decodedId = decodeURIComponent(product.id);
 
 	return (
 		<div className="bg-white">

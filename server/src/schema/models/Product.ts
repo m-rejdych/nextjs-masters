@@ -7,12 +7,20 @@ import { CollectionListFilter } from '@/schema/models/Collection';
 
 builder.prismaNode('Product', {
 	id: { field: 'id' },
+	select: { reviews: { select: { rating: true } } },
 	fields: (t) => ({
 		name: t.exposeString('name'),
 		description: t.exposeString('description'),
 		slug: t.exposeString('slug'),
 		price: t.exposeFloat('price'),
-		rating: t.exposeFloat('rating', { nullable: true }),
+		rating: t.field({
+			type: 'Float',
+			nullable: true,
+			resolve: (product) =>
+				product.reviews.length
+					? product.reviews.reduce((acc, { rating }) => acc + rating, 0) / product.reviews.length
+					: null,
+		}),
 		createdAt: t.expose('createdAt', {
 			type: 'Date',
 		}),
@@ -31,8 +39,8 @@ builder.prismaNode('Product', {
 });
 
 const StringFilter = builder.prismaFilter('String', {
-  name: 'StringFilter',
-  ops: ['contains', 'is', 'mode'],
+	name: 'StringFilter',
+	ops: ['contains', 'is', 'mode'],
 });
 
 const ProductWhereNot = builder.prismaWhere('Product', {
@@ -47,7 +55,7 @@ const ProductWhereAnd = builder.prismaWhere('Product', {
 	fields: {
 		id: 'String',
 		slug: 'String',
-    name: StringFilter,
+		name: StringFilter,
 		categories: CategoryListFilter,
 		collections: CollectionListFilter,
 		NOT: ProductWhereNot,
@@ -59,11 +67,19 @@ const ProductWhere = builder.prismaWhere('Product', {
 	fields: {
 		id: 'String',
 		slug: 'String',
-    name: StringFilter,
+		name: StringFilter,
 		categories: CategoryListFilter,
 		collections: CollectionListFilter,
 		NOT: ProductWhereNot,
 		AND: ProductWhereAnd,
+	},
+});
+
+const ProductWhereUnique = builder.prismaWhereUnique('Product', {
+	name: 'ProductWhereUnique',
+	fields: {
+		id: 'String',
+		slug: 'String',
 	},
 });
 
@@ -89,20 +105,17 @@ builder.queryField('products', (t) =>
 	}),
 );
 
-builder.queryField('productById', (t) =>
+builder.queryField('product', (t) =>
 	t.prismaField({
 		type: 'Product',
 		nullable: true,
 		args: {
-			id: t.arg({
-				type: 'ID',
-				required: true,
-			}),
+			where: t.arg({ type: ProductWhereUnique, required: true }),
 		},
-		resolve: async (query, _, args) => {
+		resolve: async (query, _, { where }) => {
 			return prisma.product.findUnique({
 				...query,
-				where: { id: decodeGlobalID(args.id as string).id },
+				where: { ...where, id: where.id ? decodeGlobalID(where.id).id : undefined },
 			});
 		},
 	}),

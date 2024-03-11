@@ -21,7 +21,6 @@ model Product {
   description String
   slug        String           @unique
   price       Int
-  rating      Float?
   images      ProductImage[]
   colors      ColorOnProduct[]
   sizes       SizeOnProduct[]

@@ -4,7 +4,7 @@ import { formatDolars } from '@/util/currency';
 import type { ProductListItemFragment } from '@/gql/graphql';
 
 export const ProductListItem = ({
-	id,
+  slug,
 	name,
 	description,
 	price,
@@ -27,7 +27,7 @@ export const ProductListItem = ({
 			)}
 			<div className="flex flex-1 flex-col space-y-2 p-4">
 				<h3 className="text-sm font-medium text-neutral-dark">
-					<Link href={`/product/${id}`}>
+					<Link href={`/product/${slug}`}>
 						<span aria-hidden="true" className="absolute inset-0" />
 						{name}
 					</Link>

@@ -1,9 +1,9 @@
 import { ImageResponse } from 'next/og';
-import { getProductById } from '@/api/products';
+import { getProduct } from '@/api/products';
 
 interface Props {
 	params: {
-		id: string;
+		slug: string;
 	};
 }
 
@@ -13,8 +13,8 @@ export const size = {
 	height: 830,
 };
 
-export default async function OpengraphProductImage({ params: { id } }: Props) {
-	const product = await getProductById(decodeURIComponent(id));
+export default async function OpengraphProductImage({ params: { slug } }: Props) {
+	const product = await getProduct({ slug });
 
 	if (!product) {
 		return new ImageResponse(<div>Product not found</div>);

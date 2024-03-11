@@ -3,17 +3,17 @@ import { formatDolars } from '@/util/currency';
 import type { ProductListItemFragment } from '@/gql/graphql';
 
 interface Props {
-	id: ProductListItemFragment['id'];
+	slug: ProductListItemFragment['slug'];
 	name: ProductListItemFragment['name'];
 	description: ProductListItemFragment['description'];
 	price: ProductListItemFragment['price'];
 }
 
-export const RecommendedProductsListItemDescription = ({ id, name, description, price }: Props) => (
+export const RecommendedProductsListItemDescription = ({ slug, name, description, price }: Props) => (
 	<div className="mt-4 flex justify-between">
 		<div>
 			<h3 className="text-sm text-neutral-700">
-				<Link href={`/product/${id}`}>
+				<Link href={`/product/${slug}`}>
 					<span aria-hidden="true" className="absolute inset-0" />
 					{name}
 				</Link>
