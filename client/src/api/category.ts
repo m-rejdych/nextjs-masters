@@ -3,7 +3,7 @@ import { CategoryGetListDocument, type CategoryListItemFragment } from '@/gql/gr
 
 export const getCategories = async (): Promise<CategoryListItemFragment[] | null> => {
 	try {
-		const { categories } = await executeQuery(CategoryGetListDocument);
+		const { categories } = await executeQuery({ query: CategoryGetListDocument });
 
 		return categories;
 	} catch (error) {

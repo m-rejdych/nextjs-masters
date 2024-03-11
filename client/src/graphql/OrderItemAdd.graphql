@@ -1,0 +1,5 @@
+mutation OrderItemAdd($input: OrderItemAddInput!) {
+  addOrderItem(input: $input) {
+    ... OrderItemId
+  }
+}

@@ -1,21 +1,53 @@
+import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
+import { AddToCartButton } from '../atoms/nav/AddToCartButton';
 import { ColorPicker } from '@/ui/molecules/products/ColorPicker';
 import { SizePicker } from '@/ui/molecules/products/SizePicker';
+import { addOrderItem } from '@/api/orderItem';
+import { createOrder } from '@/api/order';
+import { getCookieOrderItemsCount } from '@/util/order';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
 	colors: ProductFragment['colors'];
 	sizes: ProductFragment['sizes'];
+	productId: string;
 }
 
-export const ProductOptionsForm = ({ colors, sizes }: Props) => (
-	<form>
-		<ColorPicker colors={colors} />
-		<SizePicker sizes={sizes} />
-		<button
-			type="submit"
-			className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-8 py-3 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-		>
-			Add to cart
-		</button>
-	</form>
-);
+export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
+	const handleAction = async (formData: FormData): Promise<void> => {
+		'use server';
+
+		const sizeId = formData.get('sizeId');
+		const colorId = formData.get('colorId');
+		if (!colorId || !sizeId) return;
+
+		let order = await getCookieOrderItemsCount();
+		if (!order) {
+			order = await createOrder();
+			if (!order) return;
+
+			cookies().set('orderId', order.id, {
+				secure: process.env.NODE_ENV === 'production',
+				httpOnly: true,
+        sameSite: 'lax',
+			});
+		}
+
+		await addOrderItem({
+			productId,
+			sizeId: sizeId as string,
+			colorId: colorId as string,
+			orderId: order.id,
+		});
+    revalidateTag('cart');
+	};
+
+	return (
+		<form action={handleAction}>
+			<ColorPicker colors={colors} />
+			<SizePicker sizes={sizes} />
+			<AddToCartButton />
+		</form>
+	);
+};

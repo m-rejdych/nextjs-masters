@@ -1,0 +1,7 @@
+fragment Order on Order {
+  ... OrderItemsCount
+  total
+  items(orderBy: { createdAt: Desc }) {
+    ... OrderItem
+  }
+}

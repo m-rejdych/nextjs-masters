@@ -1,0 +1,5 @@
+query OrderGetItemsCountById($id: ID!) {
+  orderById(id: $id) {
+    ... OrderItemsCount
+  }
+}

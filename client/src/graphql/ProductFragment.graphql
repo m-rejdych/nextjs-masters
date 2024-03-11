@@ -9,14 +9,18 @@ fragment Product on Product {
     id
   }
 	colors {
-		id
-		name
-		inStock
+    inStock
+    color {
+      id
+      name
+    }
 	}
 	sizes {
-		id
-		type
 		inStock
+    size {
+      id
+      type
+    }
 	}
 	details {
 		id

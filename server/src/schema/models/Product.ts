@@ -33,7 +33,7 @@ builder.prismaNode('Product', {
 const StringFilter = builder.prismaFilter('String', {
   name: 'StringFilter',
   ops: ['contains', 'is', 'mode'],
-})
+});
 
 const ProductWhereNot = builder.prismaWhere('Product', {
 	name: 'ProductWhereNot',

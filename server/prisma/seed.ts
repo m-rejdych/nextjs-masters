@@ -19,8 +19,12 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			prisma.collectionImage.deleteMany(),
 			prisma.color.deleteMany(),
 			prisma.size.deleteMany(),
+			prisma.colorOnProduct.deleteMany(),
+			prisma.sizeOnProduct.deleteMany(),
 			prisma.detail.deleteMany(),
 			prisma.product.deleteMany(),
+			prisma.order.deleteMany(),
+			prisma.orderItem.deleteMany(),
 		]);
 
 		const categoryIds = await Promise.all(
@@ -67,6 +71,26 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			}),
 		);
 
+		const sizeIds = await Promise.all(
+			SIZES.map(async (type) => {
+				const createdSize = await prisma.size.create({ data: { type } });
+
+				console.log(`Created size with id: ${createdSize.id}`);
+
+				return createdSize.id;
+			}),
+		);
+
+		const colorIds = await Promise.all(
+			COLORS.map(async (name) => {
+				const createdColor = await prisma.color.create({ data: { name } });
+
+				console.log(`Created color with id: ${createdColor.id}`);
+
+				return createdColor.id;
+			}),
+		);
+
 		await Promise.all(
 			Array.from({ length: PRODUCTS_COUNT }, async () => {
 				const name = faker.commerce.productName();
@@ -104,18 +128,12 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						},
 						colors: {
 							createMany: {
-								data: COLORS.map((name) => ({
-									name,
-									inStock: faker.datatype.boolean(),
-								})),
+								data: colorIds.map((colorId) => ({ colorId, inStock: true })),
 							},
 						},
 						sizes: {
 							createMany: {
-								data: SIZES.map((type) => ({
-									type,
-									inStock: faker.datatype.boolean(),
-								})),
+								data: sizeIds.map((sizeId) => ({ sizeId, inStock: faker.datatype.boolean() })),
 							},
 						},
 						details: {
@@ -133,6 +151,13 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 		);
 
 		await prisma.$disconnect();
+
+		const baseUrl = process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? 'http://localhost:3000';
+		const res = await fetch(
+			process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? `${baseUrl}/api/products/revalidate`,
+			{ method: 'POST' },
+		);
+		console.log(await res.json());
 	} catch (error) {
 		console.log(error);
 		await prisma.$disconnect();

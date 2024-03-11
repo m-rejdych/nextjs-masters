@@ -1,0 +1,4 @@
+fragment OrderItemsCount on Order {
+  id
+  itemsCount
+}

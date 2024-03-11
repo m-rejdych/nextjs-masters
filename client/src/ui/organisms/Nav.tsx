@@ -12,9 +12,10 @@ import type { CategoryVariant } from '@/types/common';
 interface Props {
 	flyoutMenusItems: CategoryVariant[];
 	mobileMenuPanelItems: CategoryVariant[];
+	desktopCartButton: React.ReactNode;
 }
 
-export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems }: Props) => {
+export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton }: Props) => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	return (
@@ -34,7 +35,7 @@ export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems }: Props) => {
 									<FlyoutMenus items={flyoutMenusItems} />
 									<MobileMenuItems onOpen={() => setMobileMenuOpen(true)} />
 									<MobileCompanyLogo />
-									<DesktopMenuItems />
+									<DesktopMenuItems cartButton={desktopCartButton} />
 								</div>
 							</div>
 						</div>

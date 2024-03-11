@@ -5,6 +5,10 @@ import { schema } from '@/schema';
 (async () => {
 	const server = new ApolloServer({
 		schema,
+    introspection: true,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    playground: true,
 	});
 
 	const { url } = await startStandaloneServer(server, {

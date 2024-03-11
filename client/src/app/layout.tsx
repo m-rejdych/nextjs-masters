@@ -5,6 +5,7 @@ import './globals.css';
 import { Nav } from '@/ui/organisms/Nav';
 import { CategoryPopoverList } from '@/ui/molecules/nav/CategoryPopoverList';
 import { MobileMenuPanelsCategoryList } from '@/ui/molecules/nav/MobileMenuPanelsCategoryList';
+import { DesktopMenuCartButton } from '@/ui/atoms/nav/DesktopMenuCartButton';
 import type { CategoryVariant } from '@/types/common';
 
 const montserrat = Montserrat({
@@ -35,7 +36,11 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={twMerge('h-full bg-neutral-50', montserrat.variable)}>
 			<body>
-				<Nav flyoutMenusItems={flyoutMenusItems} mobileMenuPanelItems={mobileMenuPanelItems}></Nav>
+				<Nav
+					flyoutMenusItems={flyoutMenusItems}
+					mobileMenuPanelItems={mobileMenuPanelItems}
+					desktopCartButton={<DesktopMenuCartButton />}
+				/>
 				<div className="mx-auto h-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
 					{children}
 				</div>

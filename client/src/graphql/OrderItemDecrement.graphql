@@ -1,0 +1,5 @@
+mutation OrderItemDecrement($id: ID!) {
+  decrementOrderItemQuantity(id: $id) {
+    ... OrderItemId
+  }
+}

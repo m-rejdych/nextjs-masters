@@ -25,7 +25,7 @@ export const MobileMenuSearchInput = () => {
 	};
 
 	return (
-		<div className="flex flex-1 items-center justify-center px-2">
+		<div className="flex items-center justify-center px-2">
 			<div className="w-full max-w-xs">
 				<label htmlFor="search" className="sr-only">
 					Search
