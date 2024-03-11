@@ -1,5 +1,6 @@
-import { builder } from '@/schema/builder';
 import { decodeGlobalID } from '@pothos/plugin-relay';
+import { prisma } from '@/util/prisma';
+import { builder } from '@/schema/builder';
 
 builder.prismaObject('OrderItem', {
 	select: { quantity: true, product: { select: { price: true } } },
