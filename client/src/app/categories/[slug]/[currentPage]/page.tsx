@@ -27,8 +27,8 @@ export default async function CategoryPage({ params: { slug, currentPage } }: Pr
 				hasPreviousPage={products.hasPreviousPage}
 				currentPage={Number(currentPage)}
 				totalPages={Math.ceil(products.totalCount / 20)}
-        directory="categories"
-        slug={slug}
+				directory="categories"
+				slug={slug}
 			/>
 		</main>
 	);

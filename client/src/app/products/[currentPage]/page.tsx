@@ -17,7 +17,7 @@ interface Props {
 // 	const {
 // 		products: { totalCount },
 // 	} = await executeQuery({ query: ProductGetListDocument, variables: {} });
-// 
+//
 // 	return Array.from({ length: Math.ceil(totalCount / 20) }, (_, index) => ({
 // 		currentPage: (index + 1).toString(),
 // 	}));

@@ -15,7 +15,12 @@ export const ColorPicker = ({ colors }: Props) => {
 	return (
 		<div>
 			<h2 className="text-sm font-medium text-gray-900">Color</h2>
-			<RadioGroup name="colorId" value={selectedColor} onChange={(val) => setSelectedColor(val)} className="mt-2">
+			<RadioGroup
+				name="colorId"
+				value={selectedColor}
+				onChange={(val) => setSelectedColor(val)}
+				className="mt-2"
+			>
 				<RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
 				<div className="flex items-center space-x-3">
 					{colors.map((color) => (

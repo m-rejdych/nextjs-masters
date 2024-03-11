@@ -1,4 +1,4 @@
-import type{ Route } from 'next';
+import type { Route } from 'next';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid';
 import { ActiveLink } from '@/ui/atoms/nav/ActiveLink';
 
@@ -26,7 +26,8 @@ export const Pagination = ({
 	const lastPagesNumbers =
 		totalPages <= 6 ? [] : Array.from({ length: 3 }, (_, i) => totalPages - i);
 
-  const getLink = (num: number | string) => `/${directory}${slug ? `/${slug}` : ''}/${num}` as Route;
+	const getLink = (num: number | string) =>
+		`/${directory}${slug ? `/${slug}` : ''}/${num}` as Route;
 
 	return (
 		<nav

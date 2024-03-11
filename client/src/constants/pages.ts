@@ -3,14 +3,14 @@ import type { Route } from 'next';
 interface Page {
 	name: string;
 	href: Route;
-  exact?: boolean;
+	exact?: boolean;
 }
 
 export const PAGES = [
 	{
 		name: 'Home',
 		href: '/',
-    exact: true,
+		exact: true,
 	},
 	{
 		name: 'All',

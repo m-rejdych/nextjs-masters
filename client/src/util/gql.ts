@@ -17,13 +17,13 @@ type GraphQLResponse<T> =
 type ExecuteQueryArgs<TResult, TVariables> = {
 	query: TypedDocumentString<TResult, TVariables>;
 	next?: NextFetchRequestConfig;
-  cache?: RequestCache;
+	cache?: RequestCache;
 } & (TVariables extends Record<string, never> ? { variables?: never } : { variables: TVariables });
 
 export const executeQuery = async <TResult, TVariables>({
 	query,
 	next,
-  cache,
+	cache,
 	variables,
 }: ExecuteQueryArgs<TResult, TVariables>): Promise<TResult> => {
 	if (!process.env.GRAPHQL_URL) {
@@ -40,7 +40,7 @@ export const executeQuery = async <TResult, TVariables>({
 			variables,
 		}),
 		next,
-    cache,
+		cache,
 	});
 
 	const graphqlResponse = (await resposnse.json()) as GraphQLResponse<TResult>;

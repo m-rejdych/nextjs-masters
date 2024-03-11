@@ -18,7 +18,11 @@ export const MobileMenuPanels = ({ panelItems }: Props) => (
 		<div className="space-y-6 border-t border-gray-200 px-4 py-6">
 			{PAGES.map(({ name, href, exact }) => (
 				<div key={name} className="flow-root">
-					<ActiveLink href={href} exact={exact} className="-m-2 block p-2 font-medium text-gray-900">
+					<ActiveLink
+						href={href}
+						exact={exact}
+						className="-m-2 block p-2 font-medium text-gray-900"
+					>
 						{name}
 					</ActiveLink>
 				</div>

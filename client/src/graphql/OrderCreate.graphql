@@ -1,5 +1,5 @@
 mutation OrderCreate {
-  createOrder {
-    ... OrderItemsCount
-  }
+	createOrder {
+		...OrderItemsCount
+	}
 }

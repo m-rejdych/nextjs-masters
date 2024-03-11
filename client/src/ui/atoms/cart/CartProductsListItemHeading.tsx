@@ -9,7 +9,10 @@ interface Props {
 export const CartProductsListItemHeading = ({ slug, name }: Props) => (
 	<div className="flex justify-between">
 		<h3 className="text-sm">
-			<Link href={`/product/${slug}`} className="font-medium text-neutral-700 hover:text-neutral-800">
+			<Link
+				href={`/product/${slug}`}
+				className="font-medium text-neutral-700 hover:text-neutral-800"
+			>
 				{name}
 			</Link>
 		</h3>

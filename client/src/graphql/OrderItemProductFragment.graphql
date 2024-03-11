@@ -1,23 +1,23 @@
 fragment OrderItemProduct on Product {
-  id
-  slug
-  name
-  price
-  sizes {
-    inStock
-    size {
-      id
-      }
-  }
-  colors {
-    inStock
-    color {
-      id
-    }
-  }
-  images {
-    id
-    alt
-    url
-  }
+	id
+	slug
+	name
+	price
+	sizes {
+		inStock
+		size {
+			id
+		}
+	}
+	colors {
+		inStock
+		color {
+			id
+		}
+	}
+	images {
+		id
+		alt
+		url
+	}
 }

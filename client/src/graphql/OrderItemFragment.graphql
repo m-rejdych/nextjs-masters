@@ -1,16 +1,16 @@
 fragment OrderItem on OrderItem {
-  id
-  total
-  quantity
-  size {
-    id
-    type
-  }
-  color {
-    id
-    name
-  }
-  product {
-    ... OrderItemProduct
-  }
+	id
+	total
+	quantity
+	size {
+		id
+		type
+	}
+	color {
+		id
+		name
+	}
+	product {
+		...OrderItemProduct
+	}
 }

@@ -1,15 +1,15 @@
 fragment ProductListItem on Product {
 	id
 	name
-  slug
+	slug
 	description
 	price
-  categories {
-    id
-  }
-  collections {
-    id
-  }
+	categories {
+		id
+	}
+	collections {
+		id
+	}
 	images {
 		id
 		url

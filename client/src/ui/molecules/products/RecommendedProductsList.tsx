@@ -10,11 +10,11 @@ export const RecommendedProductsList = ({ products }: Props) => (
 		{products.map(({ id, slug, name, description, price, images }) => (
 			<RecommendedProductsListItem
 				key={id}
-        slug={slug}
+				slug={slug}
 				name={name}
 				description={description}
 				price={price}
-        images={images}
+				images={images}
 			/>
 		))}
 	</ul>

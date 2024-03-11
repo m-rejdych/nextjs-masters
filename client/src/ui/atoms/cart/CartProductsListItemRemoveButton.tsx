@@ -1,26 +1,30 @@
-import { revalidateTag } from 'next/cache';
+'use client';
+
+import { useFormStatus } from 'react-dom';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { removeOrderItem } from '@/api/orderItem';
+import { handleOrderItemRemoveAction } from '@/actions/orderItem';
 import type { OrderItemFragment } from '@/gql/graphql';
 
 interface Props {
-  id: OrderItemFragment['id'];
+	id: OrderItemFragment['id'];
 }
- 
+
 export const CartProductsListItemRemoveButton = ({ id }: Props) => {
-  const handleAction = async (): Promise<void> => {
-    'use server';
+	const { pending } = useFormStatus();
 
-    await removeOrderItem(id);
-    revalidateTag('cart');
-  }
+	const handleAction = async () => {
+		await handleOrderItemRemoveAction(id);
+	};
 
-  return (
-    <form className="absolute right-0 top-0" action={handleAction}>
-      <button type="submit" className="-m-2 inline-flex p-2 text-neutral-400 hover:text-neutral-500">
-        <span className="sr-only">Remove</span>
-        <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-      </button>
-    </form>
-  );
+	return (
+		<button
+			type="submit"
+			formAction={handleAction}
+			disabled={pending}
+			className="-m-2 inline-flex p-2 text-neutral-400 hover:text-neutral-500 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:text-neutral-400"
+		>
+			<span className="sr-only">Remove</span>
+			<XMarkIcon className="h-5 w-5" aria-hidden="true" />
+		</button>
+	);
 };

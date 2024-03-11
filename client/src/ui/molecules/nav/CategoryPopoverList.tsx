@@ -14,11 +14,7 @@ export const CategoryPopoverList = async ({ variant }: Props) => {
 			<div className="mx-auto max-w-7xl px-8">
 				<div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
 					{items?.map(({ id, ...rest }) => (
-						<CategoryPopoverListItem
-							key={id}
-							variant={variant}
-              {...rest}
-						/>
+						<CategoryPopoverListItem key={id} variant={variant} {...rest} />
 					))}
 				</div>
 			</div>

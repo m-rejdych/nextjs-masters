@@ -30,7 +30,7 @@ export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
 			cookies().set('orderId', order.id, {
 				secure: process.env.NODE_ENV === 'production',
 				httpOnly: true,
-        sameSite: 'lax',
+				sameSite: 'lax',
 			});
 		}
 
@@ -40,7 +40,7 @@ export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
 			colorId: colorId as string,
 			orderId: order.id,
 		});
-    revalidateTag('cart');
+		revalidateTag('cart');
 	};
 
 	return (

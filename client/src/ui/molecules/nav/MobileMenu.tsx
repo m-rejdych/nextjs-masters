@@ -38,9 +38,9 @@ export const MobileMenu = ({ open, onClose, panelItems }: Props) => (
 				>
 					<Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
 						<MobileMenuCloseButton onClose={onClose} />
-            <Suspense fallback={null}>
-              <MobileMenuSearchInput />
-            </Suspense>
+						<Suspense fallback={null}>
+							<MobileMenuSearchInput />
+						</Suspense>
 						<Tab.Group as="div" className="mt-2">
 							<div className="border-b border-gray-200">
 								<MobileMenuCategoryNameList />

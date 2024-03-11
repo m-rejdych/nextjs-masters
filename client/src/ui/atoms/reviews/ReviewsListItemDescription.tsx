@@ -1,8 +1,8 @@
-import { type ReviewListItemFragment } from "@/gql/graphql";
+import { type ReviewListItemFragment } from '@/gql/graphql';
 
 interface Props {
-  title: ReviewListItemFragment['title'];
-  description: ReviewListItemFragment['description'];
+	title: ReviewListItemFragment['title'];
+	description: ReviewListItemFragment['description'];
 }
 
 export const ReviewsListItemDescription = ({ title, description }: Props) => (

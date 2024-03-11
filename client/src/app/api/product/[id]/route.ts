@@ -9,8 +9,8 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json({ result: 'error', data: '"id" param is requried' }, { status: 400 });
 	}
 
-  revalidatePath('/');
-  revalidatePath('/products');
+	revalidatePath('/');
+	revalidatePath('/products');
 	revalidatePath(`/product/${id}`);
 
 	return NextResponse.json({ result: 'success', data: `Product ${id} revalidated` });

@@ -1,4 +1,4 @@
-import { Cart } from "@/ui/organisms/Cart";
+import { Cart } from '@/ui/organisms/Cart';
 
 export default function CartPage() {
 	return (
@@ -7,7 +7,7 @@ export default function CartPage() {
 				<h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
 					Shopping Cart
 				</h1>
-        <Cart />
+				<Cart />
 			</div>
 		</div>
 	);

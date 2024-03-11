@@ -21,7 +21,7 @@ const MONTHS = [
 ] as const;
 
 const parseTime = (dateString: string): string => {
-  const date = new Date(dateString);
+	const date = new Date(dateString);
 	const hours = date.getHours();
 	const minutes = date.getMinutes();
 	const seconds = date.getSeconds();
@@ -30,7 +30,7 @@ const parseTime = (dateString: string): string => {
 };
 
 const parseDate = (dateString: string): string => {
-  const date = new Date(dateString);
+	const date = new Date(dateString);
 	const day = date.getDate();
 	const month = MONTHS[date.getMonth()];
 	const year = date.getFullYear();

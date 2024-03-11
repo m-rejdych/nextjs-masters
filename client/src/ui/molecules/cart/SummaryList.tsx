@@ -11,7 +11,7 @@ const SHIPPING = 700 as const;
 
 export const SummaryList = ({ total }: Props) => {
 	const taxEstimate = TAX_RATE * total;
-  const shippingEstimate = total && SHIPPING;
+	const shippingEstimate = total && SHIPPING;
 
 	return (
 		<dl className="mt-6 space-y-4">

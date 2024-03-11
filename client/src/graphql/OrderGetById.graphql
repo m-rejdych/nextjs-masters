@@ -1,5 +1,5 @@
 query OrderGetById($id: ID!) {
-  orderById(id: $id) {
-    ... Order
-  }
+	orderById(id: $id) {
+		...Order
+	}
 }

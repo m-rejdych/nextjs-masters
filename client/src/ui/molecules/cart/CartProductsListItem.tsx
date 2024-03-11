@@ -2,7 +2,7 @@ import { CartProductsListItemImage } from '@/ui/atoms/cart/CartProductsListItemI
 import { CartProductsListItemHeading } from '@/ui/atoms/cart/CartProductsListItemHeading';
 import { CartProductsListItemVariantInfo } from '@/ui/atoms/cart/CartProductsListItemVariantInfo';
 import { CartProductsListItemQuantity } from '@/ui/atoms/cart/CartProductsListItemQuantity';
-import { CartProductsListItemRemoveButton } from '@/ui/atoms/cart/CartProductsListItemRemoveButton';
+import { CartProductsListItemRemoveForm } from '@/ui/atoms/cart/CartProductsListItemRemoveForm';
 import { CartProductsListItemStockInfo } from '@/ui/atoms/cart/CartProductsListItemStockInfo';
 import { formatDolars } from '@/util/currency';
 import type { OrderItemProductFragment, OrderItemFragment } from '@/gql/graphql';
@@ -11,7 +11,7 @@ interface Props {
 	id: OrderItemFragment['id'];
 	size: OrderItemFragment['size'];
 	color: OrderItemFragment['color'];
-  quantity: OrderItemFragment['quantity'];
+	quantity: OrderItemFragment['quantity'];
 	product: OrderItemProductFragment;
 }
 
@@ -32,7 +32,7 @@ export const CartProductsListItem = ({ id, color, size, quantity, product }: Pro
 					</div>
 					<div className="mt-4 sm:mt-0 sm:pr-9">
 						<CartProductsListItemQuantity id={id} name={product.name} quantity={quantity} />
-						<CartProductsListItemRemoveButton id={id} />
+						<CartProductsListItemRemoveForm id={id} />
 					</div>
 				</div>
 				<CartProductsListItemStockInfo

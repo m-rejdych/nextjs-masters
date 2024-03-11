@@ -14,7 +14,7 @@ export const RecommendedProductsListItem = ({ slug, name, description, price, im
 	<li className="group relative">
 		{images[0] && <RecommendedProductsListItemImage image={images[0]} />}
 		<RecommendedProductsListItemDescription
-      slug={slug}
+			slug={slug}
 			name={name}
 			description={description}
 			price={price}

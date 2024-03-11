@@ -27,8 +27,8 @@ export default async function CollectionPage({ params: { slug, currentPage } }: 
 				hasPreviousPage={products.hasPreviousPage}
 				currentPage={Number(currentPage)}
 				totalPages={Math.ceil(products.totalCount / 20)}
-        directory="collections"
-        slug={slug}
+				directory="collections"
+				slug={slug}
 			/>
 		</main>
 	);

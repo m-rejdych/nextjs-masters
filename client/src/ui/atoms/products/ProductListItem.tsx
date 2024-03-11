@@ -4,7 +4,7 @@ import { formatDolars } from '@/util/currency';
 import type { ProductListItemFragment } from '@/gql/graphql';
 
 export const ProductListItem = ({
-  slug,
+	slug,
 	name,
 	description,
 	price,

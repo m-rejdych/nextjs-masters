@@ -1,5 +1,5 @@
 mutation OrderItemIncrement($id: ID!) {
-  incrementOrderItemQuantity(id: $id) {
-    ... OrderItemId
-  }
+	incrementOrderItemQuantity(id: $id) {
+		...OrderItemId
+	}
 }

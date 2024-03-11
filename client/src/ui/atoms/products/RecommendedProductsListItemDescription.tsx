@@ -9,7 +9,12 @@ interface Props {
 	price: ProductListItemFragment['price'];
 }
 
-export const RecommendedProductsListItemDescription = ({ slug, name, description, price }: Props) => (
+export const RecommendedProductsListItemDescription = ({
+	slug,
+	name,
+	description,
+	price,
+}: Props) => (
 	<div className="mt-4 flex justify-between">
 		<div>
 			<h3 className="text-sm text-neutral-700">
