@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ProductRating = ({ rating: originalRating }: Props) => {
-	const rating = originalRating ?? 0;
+	const rating = originalRating ? Math.round(originalRating) : 0;
 
 	return (
 		<>

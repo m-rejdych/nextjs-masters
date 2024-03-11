@@ -9,6 +9,7 @@ import { ProductOptionsForm } from '@/ui/organisms/ProductOptionsForm';
 import { ProductDetails } from '@/ui/molecules/products/ProductDetails';
 import { Policies } from '@/ui/organisms/Policies';
 import { RecommendedProducts } from '@/ui/organisms/RecommendedProducts';
+import { Reviews } from '@/ui/organisms/Reviews';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Params {
@@ -48,7 +49,7 @@ export default async function SingleProductPage({ params: { slug } }: Props) {
 		return notFound();
 	}
 
-  const decodedId = decodeURIComponent(product.id);
+	const decodedId = decodeURIComponent(product.id);
 
 	return (
 		<div className="bg-white">
@@ -61,11 +62,18 @@ export default async function SingleProductPage({ params: { slug } }: Props) {
 						</div>
 						<ProductImagesGallery images={product.images} />
 						<div className="mt-8 lg:col-span-5">
-							<ProductOptionsForm sizes={product.sizes} colors={product.colors} productId={decodedId} />
+							<ProductOptionsForm
+								sizes={product.sizes}
+								colors={product.colors}
+								productId={decodedId}
+							/>
 							<ProductDetails description={product.description} details={product.details} />
 							<Policies />
 						</div>
 					</div>
+					<Suspense fallback={null}>
+						<Reviews productId={decodedId} />
+					</Suspense>
 					{!!product.categories[0] && !!product.collections[0] && (
 						<Suspense fallback={null}>
 							<RecommendedProducts

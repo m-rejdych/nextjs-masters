@@ -15,7 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: { input: unknown; output: unknown; }
+  Date: { input: string; output: string; }
 };
 
 export type CategoriesFilter = {
@@ -308,6 +308,7 @@ export type Query = {
   orderById?: Maybe<Order>;
   product?: Maybe<Product>;
   products: QueryProductsConnection;
+  reviewsByProductId: Array<Review>;
 };
 
 
@@ -349,6 +350,13 @@ export type QueryProductsArgs = {
   where?: InputMaybe<ProductWhere>;
 };
 
+
+export type QueryReviewsByProductIdArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<ReviewOrderBy>;
+  productId: Scalars['ID']['input'];
+};
+
 export type QueryProductsConnection = {
   __typename?: 'QueryProductsConnection';
   edges: Array<QueryProductsConnectionEdge>;
@@ -365,12 +373,18 @@ export type QueryProductsConnectionEdge = {
 export type Review = {
   __typename?: 'Review';
   author: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
   description: Scalars['String']['output'];
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   product: Product;
   rating: Scalars['Float']['output'];
   title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+export type ReviewOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
 };
 
 export type Size = {
@@ -500,6 +514,17 @@ export type ProductGetPageQueryVariables = Exact<{
 export type ProductGetPageQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null } } };
 
 export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+
+export type ReviewGetListByProductIdQueryVariables = Exact<{
+  productId: Scalars['ID']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<ReviewOrderBy>;
+}>;
+
+
+export type ReviewGetListByProductIdQuery = { __typename?: 'Query', reviewsByProductId: Array<{ __typename?: 'Review', id: string, email: string, title: string, description: string, author: string, rating: number, createdAt: string }> };
+
+export type ReviewListItemFragment = { __typename?: 'Review', id: string, email: string, title: string, description: string, author: string, rating: number, createdAt: string };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -732,6 +757,17 @@ export const ProductFragmentDoc = new TypedDocumentString(`
     alt
   }
 }`, {"fragmentName":"Product"}) as unknown as TypedDocumentString<ProductFragment, unknown>;
+export const ReviewListItemFragmentDoc = new TypedDocumentString(`
+    fragment ReviewListItem on Review {
+  id
+  email
+  title
+  description
+  author
+  rating
+  createdAt
+}
+    `, {"fragmentName":"ReviewListItem"}) as unknown as TypedDocumentString<ReviewListItemFragment, unknown>;
 export const CategoryGetListDocument = new TypedDocumentString(`
     query CategoryGetList {
   categories {
@@ -969,3 +1005,18 @@ export const ProductGetPageDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductGetPageQuery, ProductGetPageQueryVariables>;
+export const ReviewGetListByProductIdDocument = new TypedDocumentString(`
+    query ReviewGetListByProductId($productId: ID!, $limit: Int, $orderBy: ReviewOrderBy) {
+  reviewsByProductId(productId: $productId, limit: $limit, orderBy: $orderBy) {
+    ...ReviewListItem
+  }
+}
+    fragment ReviewListItem on Review {
+  id
+  email
+  title
+  description
+  author
+  rating
+  createdAt
+}`) as unknown as TypedDocumentString<ReviewGetListByProductIdQuery, ReviewGetListByProductIdQueryVariables>;

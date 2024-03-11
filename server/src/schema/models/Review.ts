@@ -11,18 +11,31 @@ builder.prismaObject('Review', {
 		description: t.exposeString('description'),
 		rating: t.exposeFloat('rating'),
 		product: t.relation('product'),
+		createdAt: t.expose('createdAt', { type: 'Date' }),
+		updatedAt: t.expose('updatedAt', { type: 'Date' }),
 	}),
 });
+
+const ReviewOrderBy = builder.prismaOrderBy('Review', {
+  name: 'ReviewOrderBy',
+  fields: {
+    createdAt: true,
+  }
+})
 
 builder.queryField('reviewsByProductId', (t) =>
 	t.prismaField({
 		type: ['Review'],
 		args: {
 			productId: t.arg({ type: 'ID', required: true }),
+			limit: t.arg({ type: 'Int' }),
+      orderBy: t.arg({ type: ReviewOrderBy }),
 		},
-		resolve: async (query, _, { productId }) => {
+		resolve: async (query, _, { productId, limit, orderBy }) => {
 			return prisma.review.findMany({
-        ...query,
+				...query,
+				take: limit ?? undefined,
+        orderBy: orderBy ?? undefined,
 				where: { productId: decodeGlobalID(productId as string).id },
 			});
 		},
