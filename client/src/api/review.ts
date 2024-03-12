@@ -14,6 +14,7 @@ export const getReviewsByProductId = async (
 		const { reviewsByProductId } = await executeQuery({
 			query: ReviewGetListByProductIdDocument,
 			variables: { productId, limit, orderBy },
+			next: { tags: ['reviews'] },
 		});
 		return reviewsByProductId;
 	} catch (error) {

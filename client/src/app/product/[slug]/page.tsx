@@ -10,6 +10,7 @@ import { ProductDetails } from '@/ui/molecules/products/ProductDetails';
 import { Policies } from '@/ui/organisms/Policies';
 import { RecommendedProducts } from '@/ui/organisms/RecommendedProducts';
 import { Reviews } from '@/ui/organisms/Reviews';
+import { ReviewForm } from '@/ui/organisms/ReviewForm';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Params {
@@ -74,6 +75,7 @@ export default async function SingleProductPage({ params: { slug } }: Props) {
 					<Suspense fallback={null}>
 						<Reviews productId={decodedId} />
 					</Suspense>
+          <ReviewForm />
 					{!!product.categories[0] && !!product.collections[0] && (
 						<Suspense fallback={null}>
 							<RecommendedProducts

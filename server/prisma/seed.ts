@@ -94,7 +94,6 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 		await Promise.all(
 			Array.from({ length: PRODUCTS_COUNT }, async () => {
 				const name = faker.commerce.productName();
-				const user = faker.person.firstName();
 
 				const createdProduct = await prisma.product.create({
 					data: {
@@ -110,13 +109,16 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						},
 						reviews: {
 							createMany: {
-								data: Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () => ({
-									title: faker.word.adjective(),
-									description: faker.lorem.paragraph({ min: 1, max: 5 }),
-									rating: faker.number.int({ min: 1, max: 5 }),
-									email: faker.internet.email({ firstName: user }),
-									author: user,
-								})),
+								data: Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () => {
+									const user = faker.person.firstName();
+									return {
+										title: faker.word.adjective(),
+										description: faker.lorem.paragraph({ min: 1, max: 5 }),
+										rating: faker.number.int({ min: 1, max: 5 }),
+										email: faker.internet.email({ firstName: user }),
+										author: user,
+									};
+								}),
 							},
 						},
 						categories: {
