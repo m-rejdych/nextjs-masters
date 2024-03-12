@@ -108,7 +108,6 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 								alt: name,
 							},
 						},
-						rating: faker.number.int({ min: 1, max: 5 }),
 						reviews: {
 							createMany: {
 								data: Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () => ({
