@@ -75,7 +75,7 @@ const ProductWhere = builder.prismaWhere('Product', {
 	},
 });
 
-const ProductWhereUnique = builder.prismaWhereUnique('Product', {
+export const ProductWhereUnique = builder.prismaWhereUnique('Product', {
 	name: 'ProductWhereUnique',
 	fields: {
 		id: 'String',
