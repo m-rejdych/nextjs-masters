@@ -62,6 +62,7 @@ export const getProduct = async (where: ProductWhereUnique): Promise<ProductFrag
 		const { product } = await executeQuery({
 			query: ProductGetByIdDocument,
 			variables: { where },
+      next: { tags: ['product'] },
 		});
 
 		return product ?? null;

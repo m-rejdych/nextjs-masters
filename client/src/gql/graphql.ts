@@ -158,6 +158,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addOrderItem: OrderItem;
   createOrder: Order;
+  createReview: Review;
   decrementOrderItemQuantity: OrderItem;
   incrementOrderItemQuantity: OrderItem;
   removeOrderItem: OrderItem;
@@ -166,6 +167,11 @@ export type Mutation = {
 
 export type MutationAddOrderItemArgs = {
   input: OrderItemAddInput;
+};
+
+
+export type MutationCreateReviewArgs = {
+  input: ReviewCreateInput;
 };
 
 
@@ -383,8 +389,21 @@ export type Review = {
   updatedAt: Scalars['Date']['output'];
 };
 
+export type ReviewCreateInput = {
+  author: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  product: ReviewProductConnectInput;
+  rating: Scalars['Int']['input'];
+  title: Scalars['String']['input'];
+};
+
 export type ReviewOrderBy = {
   createdAt?: InputMaybe<OrderBy>;
+};
+
+export type ReviewProductConnectInput = {
+  connect?: InputMaybe<ProductWhereUnique>;
 };
 
 export type Size = {
@@ -514,6 +533,13 @@ export type ProductGetPageQueryVariables = Exact<{
 export type ProductGetPageQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null } } };
 
 export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+
+export type ReviewCreateMutationVariables = Exact<{
+  input: ReviewCreateInput;
+}>;
+
+
+export type ReviewCreateMutation = { __typename?: 'Mutation', createReview: { __typename?: 'Review', id: string, email: string, title: string, description: string, author: string, rating: number, createdAt: string } };
 
 export type ReviewGetListByProductIdQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
@@ -1005,6 +1031,21 @@ export const ProductGetPageDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductGetPageQuery, ProductGetPageQueryVariables>;
+export const ReviewCreateDocument = new TypedDocumentString(`
+    mutation ReviewCreate($input: ReviewCreateInput!) {
+  createReview(input: $input) {
+    ...ReviewListItem
+  }
+}
+    fragment ReviewListItem on Review {
+  id
+  email
+  title
+  description
+  author
+  rating
+  createdAt
+}`) as unknown as TypedDocumentString<ReviewCreateMutation, ReviewCreateMutationVariables>;
 export const ReviewGetListByProductIdDocument = new TypedDocumentString(`
     query ReviewGetListByProductId($productId: ID!, $limit: Int, $orderBy: ReviewOrderBy) {
   reviewsByProductId(productId: $productId, limit: $limit, orderBy: $orderBy) {

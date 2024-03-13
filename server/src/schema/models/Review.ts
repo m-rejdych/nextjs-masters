@@ -25,14 +25,14 @@ const ReviewOrderBy = builder.prismaOrderBy('Review', {
 });
 
 const ReviewProductConnectInput = builder.prismaCreateRelation('Review', 'product', {
-	name: 'CreateReviewProductInput',
+	name: 'ReviewProductConnectInput',
 	fields: {
 		connect: ProductWhereUnique,
 	},
 });
 
 const ReviewCreateInput = builder.prismaCreate('Review', {
-	name: 'CreateReviewInput',
+	name: 'ReviewCreateInput',
 	fields: {
 		author: 'String',
 		email: 'String',
@@ -69,7 +69,18 @@ builder.mutationField('createReview', (t) =>
 			input: t.arg({ type: ReviewCreateInput, required: true }),
 		},
 		resolve: async (query, _, { input }) => {
-			return prisma.review.create({ ...query, data: input });
+			return prisma.review.create({
+				...query,
+				data: {
+					...input,
+					product: {
+						connect: {
+							...input.product.connect,
+							id: input.product.connect?.id && decodeGlobalID(input.product.connect.id).id,
+						},
+					},
+				},
+			});
 		},
 	}),
 );

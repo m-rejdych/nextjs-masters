@@ -75,7 +75,7 @@ export default async function SingleProductPage({ params: { slug } }: Props) {
 					<Suspense fallback={null}>
 						<Reviews productId={decodedId} />
 					</Suspense>
-          <ReviewForm />
+					<ReviewForm productId={decodedId} />
 					{!!product.categories[0] && !!product.collections[0] && (
 						<Suspense fallback={null}>
 							<RecommendedProducts
