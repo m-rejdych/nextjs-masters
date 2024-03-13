@@ -1,43 +1,34 @@
-import { revalidateTag } from 'next/cache';
+'use client';
+
+import { useRef } from 'react';
 import { ReviewFormNameInput } from '@/ui/atoms/reviews/ReviewFormNameInput';
 import { ReviewFormEmailInput } from '@/ui/atoms/reviews/ReviewFormEmailInput';
 import { ReviewFormTitleInput } from '@/ui/atoms/reviews/ReviewFromTitleInput';
 import { ReviewFormDescriptionInput } from '@/ui/atoms/reviews/ReviewFormDescriptionInput';
 import { ReviewFormAddButton } from '@/ui/atoms/reviews/ReviewFormAddButton';
 import { ReviewFormRatingInput } from '@/ui/atoms/reviews/ReviewFormRatingInput';
-import { createReview } from '@/api/review';
+import { handleCreateReviewAction } from '@/actions/review';
 
 interface Props {
 	productId: string;
 }
 
 export const ReviewFormFields = ({ productId }: Props) => {
-	const handleAction = async (formData: FormData) => {
-		'use server';
+  const formRef = useRef<HTMLFormElement>(null);
 
-		const author = formData.get('author');
-		const email = formData.get('email');
-		const title = formData.get('title');
-		const description = formData.get('description');
-		const rating = Number(formData.get('rating'));
-		if (!author || !email || !title || !description || !rating) return;
-
-		await createReview({
-			author: author as string,
-			email: email as string,
-			title: title as string,
-			description: description as string,
-			rating,
-			product: { connect: { id: productId } },
-		});
-		revalidateTag('reviews');
-		revalidateTag('product');
+	const handleAction = async (formData: FormData): Promise<void> => {
+    const isAdded = await handleCreateReviewAction(formData, productId);
+    if (isAdded && formRef.current) {
+      formRef.current.reset();
+    }
 	};
 
 	return (
 		<form
 			className="bg-white shadow-sm ring-1 ring-neutral-900/5 sm:rounded-xl md:col-span-2"
 			action={handleAction}
+      ref={formRef}
+      data-testid="add-review-form"
 		>
 			<div className="px-4 py-6 sm:p-8">
 				<div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
