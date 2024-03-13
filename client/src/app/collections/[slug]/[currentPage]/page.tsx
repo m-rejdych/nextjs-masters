@@ -1,18 +1,37 @@
 import { notFound } from 'next/navigation';
 import { ProductsList } from '@/ui/molecules/products/ProductsList';
 import { Pagination } from '@/ui/molecules/nav/Pagination';
+import { ProductsHero } from '@/ui/organisms/ProductsHero';
 import { getProducts } from '@/api/products';
+import { capitalize, removeDashes } from '@/util/formatStr';
+import { getOrderBy, type SortOrderParam, type SortTypeParam } from '@/util/products';
 
-interface Props {
-	params: {
-		slug: string;
-		currentPage: string;
-	};
+interface Params {
+	slug: string;
+	currentPage: string;
 }
 
-export default async function CollectionPage({ params: { slug, currentPage } }: Props) {
-	const products = await getProducts(20, 20 * (Number(currentPage) - 1), {
-		collections: { some: { slug } },
+interface SearchParams {
+	sortBy?: SortTypeParam;
+	sortOrder?: SortOrderParam;
+}
+
+interface Props {
+	params: Params;
+	searchParams: SearchParams;
+}
+
+export default async function CollectionPage({
+	params: { slug, currentPage },
+	searchParams: { sortBy, sortOrder },
+}: Props) {
+	const products = await getProducts({
+		take: 20,
+		offset: (Number(currentPage) - 1) * 20,
+		where: {
+			collections: { some: { slug } },
+		},
+		orderBy: getOrderBy(sortBy, sortOrder),
 	});
 
 	if (!products?.data.length) {
@@ -21,6 +40,7 @@ export default async function CollectionPage({ params: { slug, currentPage } }: 
 
 	return (
 		<main>
+			<ProductsHero title={capitalize(removeDashes(slug))} />
 			<ProductsList products={products.data} />
 			<Pagination
 				hasNextPage={products.hasNextPage}

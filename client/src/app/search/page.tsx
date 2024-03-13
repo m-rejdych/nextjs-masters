@@ -7,8 +7,11 @@ interface Props {
 
 export default async function SearchPage({ searchParams }: Props) {
 	const query = searchParams.query;
-	const products = await getProducts(20, undefined, {
-		name: { contains: query, mode: 'Insensitive' },
+	const products = await getProducts({
+		take: 20,
+		where: {
+			name: { contains: query, mode: 'Insensitive' },
+		},
 	});
 
 	return (

@@ -8,10 +8,13 @@ interface Props {
 }
 
 export const RecommendedProducts = async ({ productId, categoryId, collectionId }: Props) => {
-	const products = await getProducts(4, undefined, {
-		categories: { some: { id: categoryId } },
-		collections: { some: { id: collectionId } },
-		NOT: { id: productId },
+	const products = await getProducts({
+		take: 4,
+		where: {
+			categories: { some: { id: categoryId } },
+			collections: { some: { id: collectionId } },
+			NOT: { id: productId },
+		},
 	});
 
 	if (!products?.data.length) return null;

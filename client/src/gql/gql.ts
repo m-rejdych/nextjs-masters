@@ -32,8 +32,8 @@ const documents = {
     "fragment OrderItemsCount on Order {\n  id\n  itemsCount\n}": types.OrderItemsCountFragmentDoc,
     "fragment Product on Product {\n  ...ProductListItem\n  rating\n  reviewCount\n  categories {\n    id\n  }\n  collections {\n    id\n  }\n  colors {\n    inStock\n    color {\n      id\n      name\n    }\n  }\n  sizes {\n    inStock\n    size {\n      id\n      type\n    }\n  }\n  details {\n    id\n    description\n  }\n}": types.ProductFragmentDoc,
     "query ProductGetById($where: ProductWhereUnique!) {\n  product(where: $where) {\n    ...Product\n  }\n}": types.ProductGetByIdDocument,
-    "query ProductGetList($first: Int, $after: ID, $where: ProductWhere) {\n  products(first: $first, after: $after, where: $where) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      node {\n        ...ProductListItem\n      }\n    }\n  }\n}": types.ProductGetListDocument,
-    "query ProductGetPage($first: Int!, $where: ProductWhere) {\n  products(first: $first, where: $where) {\n    pageInfo {\n      endCursor\n    }\n  }\n}": types.ProductGetPageDocument,
+    "query ProductGetList($first: Int, $after: ID, $where: ProductWhere, $orderBy: ProductOrderBy) {\n  products(first: $first, after: $after, where: $where, orderBy: $orderBy) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      node {\n        ...ProductListItem\n      }\n    }\n  }\n}": types.ProductGetListDocument,
+    "query ProductGetPage($first: Int!, $where: ProductWhere, $orderBy: ProductOrderBy) {\n  products(first: $first, where: $where, orderBy: $orderBy) {\n    pageInfo {\n      endCursor\n    }\n  }\n}": types.ProductGetPageDocument,
     "fragment ProductListItem on Product {\n  id\n  name\n  slug\n  description\n  price\n  categories {\n    id\n  }\n  collections {\n    id\n  }\n  images {\n    id\n    url\n    alt\n  }\n}": types.ProductListItemFragmentDoc,
     "mutation ReviewCreate($input: ReviewCreateInput!) {\n  createReview(input: $input) {\n    ...ReviewListItem\n  }\n}": types.ReviewCreateDocument,
     "query ReviewGetListByProductId($productId: ID!, $limit: Int, $orderBy: ReviewOrderBy) {\n  reviewsByProductId(productId: $productId, limit: $limit, orderBy: $orderBy) {\n    ...ReviewListItem\n  }\n}": types.ReviewGetListByProductIdDocument,
@@ -115,11 +115,11 @@ export function graphql(source: "query ProductGetById($where: ProductWhereUnique
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductGetList($first: Int, $after: ID, $where: ProductWhere) {\n  products(first: $first, after: $after, where: $where) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      node {\n        ...ProductListItem\n      }\n    }\n  }\n}"): typeof import('./graphql').ProductGetListDocument;
+export function graphql(source: "query ProductGetList($first: Int, $after: ID, $where: ProductWhere, $orderBy: ProductOrderBy) {\n  products(first: $first, after: $after, where: $where, orderBy: $orderBy) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      node {\n        ...ProductListItem\n      }\n    }\n  }\n}"): typeof import('./graphql').ProductGetListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductGetPage($first: Int!, $where: ProductWhere) {\n  products(first: $first, where: $where) {\n    pageInfo {\n      endCursor\n    }\n  }\n}"): typeof import('./graphql').ProductGetPageDocument;
+export function graphql(source: "query ProductGetPage($first: Int!, $where: ProductWhere, $orderBy: ProductOrderBy) {\n  products(first: $first, where: $where, orderBy: $orderBy) {\n    pageInfo {\n      endCursor\n    }\n  }\n}"): typeof import('./graphql').ProductGetPageDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -7,6 +7,7 @@ import {
 	type ProductListItemFragment,
 	type ProductWhere,
 	type ProductWhereUnique,
+	type ProductOrderBy,
 } from '@/gql/graphql';
 
 interface GetProductsResult {
@@ -16,11 +17,19 @@ interface GetProductsResult {
 	data: ProductListItemFragment[];
 }
 
-export const getProducts = async (
-	take?: number,
-	offset?: number,
-	where?: ProductWhere,
-): Promise<GetProductsResult | null> => {
+interface GetProductsArgs {
+	take?: number;
+	offset?: number;
+	where?: ProductWhere;
+	orderBy?: ProductOrderBy;
+}
+
+export const getProducts = async ({
+	take,
+	offset,
+	where,
+	orderBy,
+}: GetProductsArgs): Promise<GetProductsResult | null> => {
 	try {
 		// Temporary solution for offsed based pagination integration
 		let endCursor: string | null | undefined = null;
@@ -29,7 +38,7 @@ export const getProducts = async (
 				products: { pageInfo },
 			} = await executeQuery({
 				query: ProductGetPageDocument,
-				variables: { first: offset, where },
+				variables: { first: offset, where, orderBy },
 			});
 			endCursor = pageInfo.endCursor;
 		}
@@ -42,7 +51,7 @@ export const getProducts = async (
 			},
 		} = await executeQuery({
 			query: ProductGetListDocument,
-			variables: { first: take, after: endCursor, where },
+			variables: { first: take, after: endCursor, where, orderBy },
 		});
 
 		return {
@@ -62,7 +71,7 @@ export const getProduct = async (where: ProductWhereUnique): Promise<ProductFrag
 		const { product } = await executeQuery({
 			query: ProductGetByIdDocument,
 			variables: { where },
-      next: { tags: ['product'] },
+			next: { tags: ['product'] },
 		});
 
 		return product ?? null;

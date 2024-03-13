@@ -6,7 +6,7 @@ type ListItem = CategoryListItemFragment | CollectionListItemFragment;
 
 interface Props {
 	image: ListItem['image'];
-	name: ListItem['name'];
+	name: string;
 	slug: ListItem['slug'];
 	variant: 'categories' | 'collections';
 }

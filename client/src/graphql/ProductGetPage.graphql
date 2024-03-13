@@ -1,5 +1,5 @@
-query ProductGetPage($first: Int!, $where: ProductWhere) {
-	products(first: $first, where: $where) {
+query ProductGetPage($first: Int!, $where: ProductWhere, $orderBy: ProductOrderBy) {
+	products(first: $first, where: $where, orderBy: $orderBy) {
 		pageInfo {
 			endCursor
 		}

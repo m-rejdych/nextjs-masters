@@ -277,6 +277,10 @@ export type ProductImage = {
   url: Scalars['String']['output'];
 };
 
+export type ProductOrderBy = {
+  price?: InputMaybe<OrderBy>;
+};
+
 export type ProductWhere = {
   AND?: InputMaybe<Array<ProductWhereAnd>>;
   NOT?: InputMaybe<ProductWhereNot>;
@@ -353,6 +357,7 @@ export type QueryProductsArgs = {
   before?: InputMaybe<Scalars['ID']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<ProductOrderBy>;
   where?: InputMaybe<ProductWhere>;
 };
 
@@ -519,6 +524,7 @@ export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['ID']['input']>;
   where?: InputMaybe<ProductWhere>;
+  orderBy?: InputMaybe<ProductOrderBy>;
 }>;
 
 
@@ -527,6 +533,7 @@ export type ProductGetListQuery = { __typename?: 'Query', products: { __typename
 export type ProductGetPageQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   where?: InputMaybe<ProductWhere>;
+  orderBy?: InputMaybe<ProductOrderBy>;
 }>;
 
 
@@ -990,8 +997,8 @@ fragment ProductListItem on Product {
   }
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductGetListDocument = new TypedDocumentString(`
-    query ProductGetList($first: Int, $after: ID, $where: ProductWhere) {
-  products(first: $first, after: $after, where: $where) {
+    query ProductGetList($first: Int, $after: ID, $where: ProductWhere, $orderBy: ProductOrderBy) {
+  products(first: $first, after: $after, where: $where, orderBy: $orderBy) {
     totalCount
     pageInfo {
       hasNextPage
@@ -1023,8 +1030,8 @@ export const ProductGetListDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<ProductGetListQuery, ProductGetListQueryVariables>;
 export const ProductGetPageDocument = new TypedDocumentString(`
-    query ProductGetPage($first: Int!, $where: ProductWhere) {
-  products(first: $first, where: $where) {
+    query ProductGetPage($first: Int!, $where: ProductWhere, $orderBy: ProductOrderBy) {
+  products(first: $first, where: $where, orderBy: $orderBy) {
     pageInfo {
       endCursor
     }
