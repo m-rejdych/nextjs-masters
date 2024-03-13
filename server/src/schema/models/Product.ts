@@ -83,6 +83,13 @@ export const ProductWhereUnique = builder.prismaWhereUnique('Product', {
 	},
 });
 
+const ProductOrderBy = builder.prismaOrderBy('Product', {
+	name: 'ProductOrderBy',
+	fields: {
+		price: true,
+	},
+});
+
 export type ProductWhereInput = typeof ProductWhere.$inferInput;
 
 builder.queryField('products', (t) =>
@@ -92,13 +99,18 @@ builder.queryField('products', (t) =>
 		cursor: 'id',
 		args: {
 			where: t.arg({ type: ProductWhere }),
+			orderBy: t.arg({ type: ProductOrderBy }),
 		},
-		totalCount: async (_, { where }) => {
-			return prisma.product.count({ where: where ? decodeProductWhereId(where) : undefined });
+		totalCount: async (_, { where, orderBy }) => {
+			return prisma.product.count({
+				orderBy: orderBy ?? undefined,
+				where: where ? decodeProductWhereId(where) : undefined,
+			});
 		},
-		resolve: async (query, _, { where }) => {
+		resolve: async (query, _, { where, orderBy }) => {
 			return prisma.product.findMany({
 				...query,
+				orderBy: orderBy ?? undefined,
 				where: where ? decodeProductWhereId(where) : undefined,
 			});
 		},
