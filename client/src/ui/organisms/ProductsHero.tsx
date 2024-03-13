@@ -2,12 +2,12 @@ import { ProductsHeroHeading } from '@/ui/atoms/products/ProductsHeroHeading';
 import { ProductsSortOptions } from '@/ui/molecules/products/ProductsSortOptions';
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 export const ProductsHero = ({ title }: Props) => (
-	<>
-		<ProductsHeroHeading title={title} />
-		<ProductsSortOptions />
-	</>
+  <>
+    <ProductsHeroHeading title={title} />
+    <ProductsSortOptions />
+  </>
 );

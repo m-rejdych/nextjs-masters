@@ -14,79 +14,79 @@ import { ReviewForm } from '@/ui/organisms/ReviewForm';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Params {
-	slug: ProductFragment['slug'];
+  slug: ProductFragment['slug'];
 }
 
 interface Props {
-	params: Params;
+  params: Params;
 }
 
 interface GenereateMetadataArgs {
-	params: Params;
+  params: Params;
 }
 
 export const generateMetadata = async ({
-	params: { slug },
+  params: { slug },
 }: GenereateMetadataArgs): Promise<Metadata> => {
-	const product = await getProduct({ slug });
+  const product = await getProduct({ slug });
 
-	if (!product) {
-		return {
-			title: 'Product not found',
-			description: 'Product not found',
-		};
-	}
+  if (!product) {
+    return {
+      title: 'Product not found',
+      description: 'Product not found',
+    };
+  }
 
-	return {
-		title: product.name,
-		description: product.description,
-	};
+  return {
+    title: product.name,
+    description: product.description,
+  };
 };
 
 export default async function SingleProductPage({ params: { slug } }: Props) {
-	const product = await getProduct({ slug });
+  const product = await getProduct({ slug });
 
-	if (!product) {
-		return notFound();
-	}
+  if (!product) {
+    return notFound();
+  }
 
-	const decodedId = decodeURIComponent(product.id);
+  const decodedId = decodeURIComponent(product.id);
 
-	return (
-		<div className="bg-white">
-			<div className="pb-16 pt-6 sm:pb-24">
-				<div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-					<div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
-						<div className="lg:col-span-5 lg:col-start-8">
-							<ProductHeading name={product.name} price={product.price} />
-							<ProductReviews rating={product.rating} reviewCount={product.reviewCount} />
-						</div>
-						<ProductImagesGallery images={product.images} />
-						<div className="mt-8 lg:col-span-5">
-							<ProductOptionsForm
-								sizes={product.sizes}
-								colors={product.colors}
-								productId={decodedId}
-							/>
-							<ProductDetails description={product.description} details={product.details} />
-							<Policies />
-						</div>
-					</div>
-					<Suspense fallback={null}>
-						<Reviews productId={decodedId} />
-					</Suspense>
-					<ReviewForm productId={decodedId} />
-					{!!product.categories[0] && !!product.collections[0] && (
-						<Suspense fallback={null}>
-							<RecommendedProducts
-								productId={decodedId}
-								categoryId={product.categories[0].id}
-								collectionId={product.collections[0].id}
-							/>
-						</Suspense>
-					)}
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className="bg-white">
+      <div className="pb-16 pt-6 sm:pb-24">
+        <div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
+            <div className="lg:col-span-5 lg:col-start-8">
+              <ProductHeading name={product.name} price={product.price} />
+              <ProductReviews rating={product.rating} reviewCount={product.reviewCount} />
+            </div>
+            <ProductImagesGallery images={product.images} />
+            <div className="mt-8 lg:col-span-5">
+              <ProductOptionsForm
+                sizes={product.sizes}
+                colors={product.colors}
+                productId={decodedId}
+              />
+              <ProductDetails description={product.description} details={product.details} />
+              <Policies />
+            </div>
+          </div>
+          <Suspense fallback={null}>
+            <Reviews productId={decodedId} />
+          </Suspense>
+          <ReviewForm productId={decodedId} />
+          {!!product.categories[0] && !!product.collections[0] && (
+            <Suspense fallback={null}>
+              <RecommendedProducts
+                productId={decodedId}
+                categoryId={product.categories[0].id}
+                collectionId={product.collections[0].id}
+              />
+            </Suspense>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -1,5 +1,5 @@
 query ProductGetById($where: ProductWhereUnique!) {
-	product(where: $where) {
-		...Product
-	}
+  product(where: $where) {
+    ...Product
+  }
 }

@@ -1,5 +1,5 @@
 mutation OrderItemRemove($id: ID!) {
-	removeOrderItem(id: $id) {
-		...OrderItemId
-	}
+  removeOrderItem(id: $id) {
+    ...OrderItemId
+  }
 }

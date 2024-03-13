@@ -1,20 +1,20 @@
 fragment ProductListItem on Product {
-	id
-	name
-	slug
-	description
-	price
+  id
+  name
+  slug
+  description
+  price
   rating
   reviewCount
-	categories {
-		id
-	}
-	collections {
-		id
-	}
-	images {
-		id
-		url
-		alt
-	}
+  categories {
+    id
+  }
+  collections {
+    id
+  }
+  images {
+    id
+    url
+    alt
+  }
 }

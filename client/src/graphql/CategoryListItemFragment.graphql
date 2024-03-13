@@ -1,9 +1,9 @@
 fragment CategoryListItem on Category {
-	id
-	name
-	slug
-	image {
-		alt
-		url
-	}
+  id
+  name
+  slug
+  image {
+    alt
+    url
+  }
 }

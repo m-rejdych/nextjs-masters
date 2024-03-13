@@ -1,4 +1,4 @@
 export interface CategoryVariant {
-	variant: 'collections' | 'categories';
-	node: React.ReactNode;
+  variant: 'collections' | 'categories';
+  node: React.ReactNode;
 }

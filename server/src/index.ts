@@ -4,15 +4,15 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { schema } from '@/schema';
 
 (async () => {
-	const server = new ApolloServer({
-		schema,
+  const server = new ApolloServer({
+    schema,
     introspection: true,
     plugins: [ApolloServerPluginLandingPageLocalDefault()],
-	});
+  });
 
-	const { url } = await startStandaloneServer(server, {
-		listen: { port: Number(process.env.PORT) },
-	});
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: Number(process.env.PORT) },
+  });
 
-	console.log(`Listening on ${url}`);
+  console.log(`Listening on ${url}`);
 })().catch((error) => console.log(error));

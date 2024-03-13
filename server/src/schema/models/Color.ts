@@ -1,20 +1,20 @@
 import { builder } from '@/schema/builder';
 
 enum ColorName {
-	BLACK = 'BLACK',
-	GRAY = 'GRAY',
+  BLACK = 'BLACK',
+  GRAY = 'GRAY',
 }
 
 builder.enumType(ColorName, {
-	name: 'ColorName',
+  name: 'ColorName',
 });
 
 builder.prismaObject('Color', {
-	fields: (t) => ({
-		id: t.exposeID('id'),
-		name: t.field({
-			type: ColorName,
-			resolve: (color) => color.name as ColorName,
-		}),
-	}),
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    name: t.field({
+      type: ColorName,
+      resolve: (color) => color.name as ColorName,
+    }),
+  }),
 });

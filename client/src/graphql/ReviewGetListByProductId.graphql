@@ -1,5 +1,5 @@
 query ReviewGetListByProductId($productId: ID!, $limit: Int, $orderBy: ReviewOrderBy) {
-	reviewsByProductId(productId: $productId, limit: $limit, orderBy: $orderBy) {
-		...ReviewListItem
-	}
+  reviewsByProductId(productId: $productId, limit: $limit, orderBy: $orderBy) {
+    ...ReviewListItem
+  }
 }

@@ -1,9 +1,9 @@
 fragment ReviewListItem on Review {
-	id
-	email
-	title
-	description
-	author
-	rating
-	createdAt
+  id
+  email
+  title
+  description
+  author
+  rating
+  createdAt
 }

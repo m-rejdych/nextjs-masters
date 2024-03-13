@@ -1,9 +1,9 @@
 fragment CollectionListItem on Collection {
-	id
-	name
-	slug
-	image {
-		alt
-		url
-	}
+  id
+  name
+  slug
+  image {
+    alt
+    url
+  }
 }

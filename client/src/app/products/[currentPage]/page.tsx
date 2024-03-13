@@ -8,17 +8,17 @@ import { getOrderBy, type SortOrderParam, type SortTypeParam } from '@/util/prod
 // import { executeQuery } from '@/util/gql';
 
 interface Params {
-	currentPage: string;
+  currentPage: string;
 }
 
 interface SearchParams {
-	sortBy?: SortTypeParam;
-	sortOrder?: SortOrderParam;
+  sortBy?: SortTypeParam;
+  sortOrder?: SortOrderParam;
 }
 
 interface Props {
-	params: Params;
-	searchParams: SearchParams;
+  params: Params;
+  searchParams: SearchParams;
 }
 
 // export const generateStaticParams = async () => {
@@ -32,30 +32,30 @@ interface Props {
 // };
 
 export default async function ProductsPaginated({
-	params: { currentPage },
-	searchParams: { sortBy, sortOrder },
+  params: { currentPage },
+  searchParams: { sortBy, sortOrder },
 }: Props) {
-	const products = await getProducts({
-		take: 20,
-		offset: (Number(currentPage) - 1) * 20,
-		orderBy: getOrderBy(sortBy, sortOrder),
-	});
+  const products = await getProducts({
+    take: 20,
+    offset: (Number(currentPage) - 1) * 20,
+    orderBy: getOrderBy(sortBy, sortOrder),
+  });
 
-	if (!products?.data.length) {
-		return notFound();
-	}
+  if (!products?.data.length) {
+    return notFound();
+  }
 
-	return (
-		<main>
-			<ProductsHero title="All you need" />
-			<ProductsList products={products.data} />
-			<Pagination
-				currentPage={Number(currentPage)}
-				hasPreviousPage={products.hasPreviousPage}
-				hasNextPage={products.hasNextPage}
-				totalPages={Math.ceil(products.totalCount / 20)}
-				directory="products"
-			/>
-		</main>
-	);
+  return (
+    <main>
+      <ProductsHero title="All you need" />
+      <ProductsList products={products.data} />
+      <Pagination
+        currentPage={Number(currentPage)}
+        hasPreviousPage={products.hasPreviousPage}
+        hasNextPage={products.hasNextPage}
+        totalPages={Math.ceil(products.totalCount / 20)}
+        directory="products"
+      />
+    </main>
+  );
 }
