@@ -30,7 +30,7 @@ export const ReviewFormRatingInput = () => {
 					</button>
 				))}
 			</div>
-			<input hidden readOnly name="rating" id="rating" type="number" value={rating} />
+			<input name="rating" id="rating" type="number" value={rating} readOnly className="w-0.5 h-0.5" />
 		</div>
 	);
 };
