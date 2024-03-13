@@ -17,7 +17,7 @@ export const handleCreateReviewAction = async (formData: FormData, productId: st
 			title: title as string,
 			description: description as string,
 			rating,
-			product: { connect: { id: productId } },
+			productId,
 		});
 		revalidateTag('reviews');
 		revalidateTag('product');

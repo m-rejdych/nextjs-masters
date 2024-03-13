@@ -1,7 +1,6 @@
 import { decodeGlobalID } from '@pothos/plugin-relay';
 import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
-import { ProductWhereUnique } from '@/schema/models/Product';
 
 builder.prismaObject('Review', {
 	fields: (t) => ({
@@ -24,23 +23,15 @@ const ReviewOrderBy = builder.prismaOrderBy('Review', {
 	},
 });
 
-const ReviewProductConnectInput = builder.prismaCreateRelation('Review', 'product', {
-	name: 'ReviewProductConnectInput',
-	fields: {
-		connect: ProductWhereUnique,
-	},
-});
-
-const ReviewCreateInput = builder.prismaCreate('Review', {
-	name: 'ReviewCreateInput',
-	fields: {
-		author: 'String',
-		email: 'String',
-		title: 'String',
-		description: 'String',
-		rating: 'Int',
-		product: ReviewProductConnectInput,
-	},
+const ReviewCreateInput = builder.inputType('ReviewCreateInput', {
+	fields: (t) => ({
+		author: t.string({ required: true }),
+		email: t.string({ required: true }),
+		title: t.string({ required: true }),
+		description: t.string({ required: true }),
+		rating: t.int({ required: true }),
+		productId: t.id({ required: true }),
+	}),
 });
 
 builder.queryField('reviewsByProductId', (t) =>
@@ -68,19 +59,29 @@ builder.mutationField('createReview', (t) =>
 		args: {
 			input: t.arg({ type: ReviewCreateInput, required: true }),
 		},
-		resolve: async (query, _, { input }) => {
-			return prisma.review.create({
+		resolve: async (query, _, { input: { productId, ...input } }) => {
+			const decodedId = decodeGlobalID(productId as string).id;
+			const product = await prisma.product.findUnique({
+				where: { id: decodedId },
+				select: { rating: true, reviews: { select: { rating: true } } },
+			});
+			if (!product) throw new Error('Product not found');
+
+			const review = await prisma.review.create({
 				...query,
+				data: { ...input, product: { connect: { id: decodedId } } },
+			});
+
+			await prisma.product.update({
+				where: { id: decodedId },
 				data: {
-					...input,
-					product: {
-						connect: {
-							...input.product.connect,
-							id: input.product.connect?.id && decodeGlobalID(input.product.connect.id).id,
-						},
-					},
+					rating:
+						(product.reviews.reduce((acc, { rating }) => acc + rating, 0) + review.rating) /
+						(product.reviews.length + 1),
 				},
 			});
+
+			return review;
 		},
 	}),
 );

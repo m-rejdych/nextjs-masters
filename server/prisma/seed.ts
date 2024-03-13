@@ -22,6 +22,7 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			prisma.colorOnProduct.deleteMany(),
 			prisma.sizeOnProduct.deleteMany(),
 			prisma.detail.deleteMany(),
+      prisma.review.deleteMany(),
 			prisma.product.deleteMany(),
 			prisma.order.deleteMany(),
 			prisma.orderItem.deleteMany(),
@@ -95,11 +96,16 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			Array.from({ length: PRODUCTS_COUNT }, async () => {
 				const name = faker.commerce.productName();
 
+				const ratings = Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () =>
+					faker.number.int({ min: 1, max: 5 }),
+				);
+
 				const createdProduct = await prisma.product.create({
 					data: {
 						name,
 						slug: faker.helpers.slugify(name).toLowerCase(),
 						description: faker.commerce.productDescription(),
+						rating: ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length,
 						price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
 						images: {
 							create: {
@@ -109,12 +115,12 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						},
 						reviews: {
 							createMany: {
-								data: Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () => {
+								data: ratings.map((rating) => {
 									const user = faker.person.firstName();
 									return {
+										rating,
 										title: faker.word.adjective(),
 										description: faker.lorem.paragraph({ min: 1, max: 5 }),
-										rating: faker.number.int({ min: 1, max: 5 }),
 										email: faker.internet.email({ firstName: user }),
 										author: user,
 									};

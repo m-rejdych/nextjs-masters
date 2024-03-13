@@ -262,7 +262,7 @@ export type Product = Node & {
   images: Array<ProductImage>;
   name: Scalars['String']['output'];
   price: Scalars['Float']['output'];
-  rating?: Maybe<Scalars['Float']['output']>;
+  rating: Scalars['Float']['output'];
   reviewCount: Scalars['Int']['output'];
   reviews: Array<Review>;
   sizes: Array<SizeOnProduct>;
@@ -279,6 +279,7 @@ export type ProductImage = {
 
 export type ProductOrderBy = {
   price?: InputMaybe<OrderBy>;
+  rating?: InputMaybe<OrderBy>;
 };
 
 export type ProductWhere = {
@@ -398,17 +399,13 @@ export type ReviewCreateInput = {
   author: Scalars['String']['input'];
   description: Scalars['String']['input'];
   email: Scalars['String']['input'];
-  product: ReviewProductConnectInput;
+  productId: Scalars['ID']['input'];
   rating: Scalars['Int']['input'];
   title: Scalars['String']['input'];
 };
 
 export type ReviewOrderBy = {
   createdAt?: InputMaybe<OrderBy>;
-};
-
-export type ReviewProductConnectInput = {
-  connect?: InputMaybe<ProductWhereUnique>;
 };
 
 export type Size = {
@@ -511,14 +508,14 @@ export type OrderItemRemoveMutation = { __typename?: 'Mutation', removeOrderItem
 
 export type OrderItemsCountFragment = { __typename?: 'Order', id: string, itemsCount: number };
 
-export type ProductFragment = { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+export type ProductFragment = { __typename?: 'Product', rating: number, reviewCount: number, id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   where: ProductWhereUnique;
 }>;
 
 
-export type ProductGetByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', rating?: number | null, reviewCount: number, id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } | null };
+export type ProductGetByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', rating: number, reviewCount: number, id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } | null };
 
 export type ProductGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -528,7 +525,7 @@ export type ProductGetListQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetListQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, edges: Array<{ __typename?: 'QueryProductsConnectionEdge', node: { __typename?: 'Product', id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } }> } };
+export type ProductGetListQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean }, edges: Array<{ __typename?: 'QueryProductsConnectionEdge', node: { __typename?: 'Product', id: string, name: string, slug: string, description: string, price: number, rating: number, reviewCount: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> } }> } };
 
 export type ProductGetPageQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -539,7 +536,7 @@ export type ProductGetPageQueryVariables = Exact<{
 
 export type ProductGetPageQuery = { __typename?: 'Query', products: { __typename?: 'QueryProductsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null } } };
 
-export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
+export type ProductListItemFragment = { __typename?: 'Product', id: string, name: string, slug: string, description: string, price: number, rating: number, reviewCount: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
 export type ReviewCreateMutationVariables = Exact<{
   input: ReviewCreateInput;
@@ -729,6 +726,8 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   slug
   description
   price
+  rating
+  reviewCount
   categories {
     id
   }
@@ -778,6 +777,8 @@ export const ProductFragmentDoc = new TypedDocumentString(`
   slug
   description
   price
+  rating
+  reviewCount
   categories {
     id
   }
@@ -984,6 +985,8 @@ fragment ProductListItem on Product {
   slug
   description
   price
+  rating
+  reviewCount
   categories {
     id
   }
@@ -1017,6 +1020,8 @@ export const ProductGetListDocument = new TypedDocumentString(`
   slug
   description
   price
+  rating
+  reviewCount
   categories {
     id
   }

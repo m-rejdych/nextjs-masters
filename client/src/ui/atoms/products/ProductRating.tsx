@@ -13,7 +13,7 @@ export const ProductRating = ({ rating: originalRating }: Props) => {
 		<>
 			<p className="text-sm text-gray-700">
 				{rating}
-				<span className="sr-only"> out of 5 stars</span>
+        <span className="sr-only"> out of 5 stars</span>
 			</p>
 			<div className="ml-1 flex items-center">
 				{[0, 1, 2, 3, 4].map((ratingItem) => (

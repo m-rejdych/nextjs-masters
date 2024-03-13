@@ -1,7 +1,7 @@
 import { capitalize } from '@/util/formatStr';
 import type { ProductOrderBy } from '@/gql/graphql';
 
-export type SortTypeParam = 'price';
+export type SortTypeParam = 'price' | 'rating';
 export type SortOrderParam = 'desc' | 'asc';
 type SortOrder = 'Desc' | 'Asc';
 
@@ -17,6 +17,8 @@ export const getOrderBy = (
 	switch (sortType) {
 		case 'price':
 			return { price: parseSortOrderParam(sortOrder) };
+		case 'rating':
+			return { rating: parseSortOrderParam(sortOrder) };
 		default:
 			return undefined;
 	}

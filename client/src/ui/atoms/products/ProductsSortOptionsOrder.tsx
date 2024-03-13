@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import type { Route } from 'next';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -8,26 +9,32 @@ import { twMerge } from 'tailwind-merge';
 export const ProductsSortOptionsOrder = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
+	const [show, setShow] = useState(false);
+
+	useEffect(() => {
+		setInterval(() => {
+			setShow(true);
+		}, 50);
+	}, []);
 
 	const hasDescParam = searchParams.get('sortOrder') === 'desc';
 	const hasAscParam = searchParams.get('sortOrder') === 'asc';
 
 	const getDescSearchParams = (): string => {
 		const params = new URLSearchParams(searchParams);
-    if (hasDescParam) params.delete('sortOrder');
-    else params.set('sortOrder', 'desc');
+		if (hasDescParam) params.delete('sortOrder');
+		else params.set('sortOrder', 'desc');
 		return `?${params.toString()}`;
 	};
 
 	const getAscSearchParams = (): string => {
 		const params = new URLSearchParams(searchParams);
-    if (hasAscParam) params.delete('sortOrder');
-    else params.set('sortOrder', 'asc');
+		if (hasAscParam) params.delete('sortOrder');
+		else params.set('sortOrder', 'asc');
 		return `?${params.toString()}`;
 	};
 
-
-	return (
+	return show && (
 		<div className="flex items-center">
 			<p className="mr-4 text-sm font-medium text-neutral-700">Sort order:</p>
 			<span className="isolate inline-flex rounded-md shadow-sm">

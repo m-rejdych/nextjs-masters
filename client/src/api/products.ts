@@ -52,6 +52,7 @@ export const getProducts = async ({
 		} = await executeQuery({
 			query: ProductGetListDocument,
 			variables: { first: take, after: endCursor, where, orderBy },
+      next: { revalidate: 60 * 60 * 1 },
 		});
 
 		return {

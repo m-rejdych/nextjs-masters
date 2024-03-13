@@ -13,14 +13,7 @@ builder.prismaNode('Product', {
 		description: t.exposeString('description'),
 		slug: t.exposeString('slug'),
 		price: t.exposeFloat('price'),
-		rating: t.field({
-			type: 'Float',
-			nullable: true,
-			resolve: (product) =>
-				product.reviews.length
-					? product.reviews.reduce((acc, { rating }) => acc + rating, 0) / product.reviews.length
-					: null,
-		}),
+		rating: t.exposeFloat('rating'),
 		createdAt: t.expose('createdAt', {
 			type: 'Date',
 		}),
@@ -87,6 +80,7 @@ const ProductOrderBy = builder.prismaOrderBy('Product', {
 	name: 'ProductOrderBy',
 	fields: {
 		price: true,
+    rating: true,
 	},
 });
 
