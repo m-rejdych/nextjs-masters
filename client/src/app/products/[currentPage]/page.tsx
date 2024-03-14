@@ -21,6 +21,11 @@ interface Props {
   searchParams: SearchParams;
 }
 
+export const metadata = {
+  title: 'All products',
+  description: 'All you need',
+}
+
 // export const generateStaticParams = async () => {
 // 	const {
 // 		products: { totalCount },

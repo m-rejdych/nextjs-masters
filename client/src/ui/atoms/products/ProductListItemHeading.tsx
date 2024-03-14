@@ -7,10 +7,10 @@ interface Props {
 }
 
 export const ProductListItemHeading = ({ name, slug }: Props) => (
-  <h3 className="text-sm font-medium text-neutral-dark">
-    <Link href={`/product/${slug}`}>
+  <Link href={`/product/${slug}`}>
+    <h3 className="text-sm font-medium text-neutral-dark">
       <span aria-hidden="true" className="absolute inset-0" />
       {name}
-    </Link>
-  </h3>
+    </h3>
+  </Link>
 );

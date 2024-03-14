@@ -14,6 +14,11 @@ interface Props {
   searchParams: SearchParams;
 }
 
+export const metadata = {
+  title: 'Home',
+  description: 'All you need',
+}
+
 export default async function Home({ searchParams: { sortOrder, sortBy } }: Props) {
   const products = await getProducts({ take: 20, orderBy: getOrderBy(sortBy, sortOrder) });
 

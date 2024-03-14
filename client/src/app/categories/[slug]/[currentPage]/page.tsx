@@ -21,6 +21,11 @@ interface Props {
   searchParams: SearchParams;
 }
 
+export const generateMetadata = ({ params: { slug } }: Props) => ({
+  title: capitalize(removeDashes(slug)),
+  description: `All products in the ${capitalize(removeDashes(slug))} category`,
+});
+
 export default async function CategoryPage({
   params: { slug, currentPage },
   searchParams: { sortOrder, sortBy },
