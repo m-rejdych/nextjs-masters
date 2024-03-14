@@ -24,9 +24,9 @@ export const CheckoutForm = ({ total, items }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
   const searchParams = useSearchParams();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [, setErrorMessage] = useState<string | null>(null);
+  const [, setMessage] = useState<string | null>(null);
+  const [, setLoading] = useState(false);
 
   const taxEstimate = TAX_RATE * total;
   const shippingEstimate = total && SHIPPING;
