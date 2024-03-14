@@ -14,6 +14,7 @@ export const DesktopMenuItems = ({ cartButton }: Props) => (
       </Suspense>
       {cartButton}
     </div>
+    {/* Hidden links workaround for tests match */}
     <ActiveLink
       href="/collections/beauty"
       className="fixed left-0 top-0 h-1 w-1 opacity-0"
@@ -36,5 +37,6 @@ export const DesktopMenuItems = ({ cartButton }: Props) => (
       activeClassName="bg-red"
       inactiveClassName="bg-black"
     />
+    {/* Hidden links workaround for tests match */}
   </>
 );

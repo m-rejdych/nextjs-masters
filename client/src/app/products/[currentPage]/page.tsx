@@ -24,7 +24,7 @@ interface Props {
 export const metadata = {
   title: 'All products',
   description: 'All you need',
-}
+};
 
 // export const generateStaticParams = async () => {
 // 	const {
