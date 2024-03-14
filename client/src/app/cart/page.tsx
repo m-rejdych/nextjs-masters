@@ -1,5 +1,10 @@
 import { Cart } from '@/ui/organisms/Cart';
 
+export const metadata = {
+  title: 'Cart',
+  description: 'Cart page',
+}
+
 export default function CartPage() {
   return (
     <div className="bg-white">
