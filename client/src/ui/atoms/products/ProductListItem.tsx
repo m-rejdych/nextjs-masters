@@ -1,42 +1,33 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import { ProductListItemImage } from '@/ui/atoms/products/ProductListItemImage';
+import { ProductListItemHeading } from '@/ui/atoms/products/ProductListItemHeading';
+import { ProductListItemRating } from '@/ui/atoms/products/ProductListItemRating';
 import { formatDolars } from '@/util/currency';
 import type { ProductListItemFragment } from '@/gql/graphql';
 
 export const ProductListItem = ({
-	id,
-	name,
-	description,
-	price,
-	images,
+  slug,
+  name,
+  description,
+  price,
+  images,
+  rating,
+  reviewCount,
 }: ProductListItemFragment) => {
-	const image = images[0];
+  const image = images[0];
 
-	return (
-		<li className="group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border border-neutral-light bg-white">
-			{image && (
-				<div className="aspect-h-4 aspect-w-3 bg-neutral-light sm:aspect-none group-hover:opacity-75 sm:h-96">
-					<Image
-						src={image.url}
-						alt={image.alt}
-						height={640}
-						width={480}
-						className="h-full w-full object-cover object-center sm:h-full sm:w-full"
-					/>
-				</div>
-			)}
-			<div className="flex flex-1 flex-col space-y-2 p-4">
-				<h3 className="text-sm font-medium text-neutral-dark">
-					<Link href={`/product/${id}`}>
-						<span aria-hidden="true" className="absolute inset-0" />
-						{name}
-					</Link>
-				</h3>
-				<p className="text-sm text-neutral-main">{description}</p>
-				<div className="flex flex-1 flex-col justify-end">
-					<p className="text-base font-medium text-neutral-dark">{formatDolars(price / 100)}</p>
-				</div>
-			</div>
-		</li>
-	);
+  return (
+    <li className="group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border border-neutral-light bg-white">
+      {image && <ProductListItemImage url={image.url} alt={image.alt} />}
+      <div className="flex flex-1 flex-col space-y-2 p-4">
+        <ProductListItemHeading name={name} slug={slug} />
+        <ProductListItemRating rating={rating} reviewCount={reviewCount} />
+        <p className="text-sm text-neutral-main">{description}</p>
+        <div className="flex flex-1 flex-col justify-end">
+          <p data-testid="product-price" className="text-base font-medium text-neutral-dark">
+            {formatDolars(price / 100)}
+          </p>
+        </div>
+      </div>
+    </li>
+  );
 };

@@ -9,45 +9,45 @@ import { getCookieOrderItemsCount } from '@/util/order';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
-	colors: ProductFragment['colors'];
-	sizes: ProductFragment['sizes'];
-	productId: string;
+  colors: ProductFragment['colors'];
+  sizes: ProductFragment['sizes'];
+  productId: string;
 }
 
 export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
-	const handleAction = async (formData: FormData): Promise<void> => {
-		'use server';
+  const handleAction = async (formData: FormData): Promise<void> => {
+    'use server';
 
-		const sizeId = formData.get('sizeId');
-		const colorId = formData.get('colorId');
-		if (!colorId || !sizeId) return;
+    const sizeId = formData.get('sizeId');
+    const colorId = formData.get('colorId');
+    if (!colorId || !sizeId) return;
 
-		let order = await getCookieOrderItemsCount();
-		if (!order) {
-			order = await createOrder();
-			if (!order) return;
+    let order = await getCookieOrderItemsCount();
+    if (!order) {
+      order = await createOrder();
+      if (!order) return;
 
-			cookies().set('orderId', order.id, {
-				secure: process.env.NODE_ENV === 'production',
-				httpOnly: true,
+      cookies().set('orderId', order.id, {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
         sameSite: 'lax',
-			});
-		}
+      });
+    }
 
-		await addOrderItem({
-			productId,
-			sizeId: sizeId as string,
-			colorId: colorId as string,
-			orderId: order.id,
-		});
+    await addOrderItem({
+      productId,
+      sizeId: sizeId as string,
+      colorId: colorId as string,
+      orderId: order.id,
+    });
     revalidateTag('cart');
-	};
+  };
 
-	return (
-		<form action={handleAction}>
-			<ColorPicker colors={colors} />
-			<SizePicker sizes={sizes} />
-			<AddToCartButton />
-		</form>
-	);
+  return (
+    <form action={handleAction}>
+      <ColorPicker colors={colors} />
+      <SizePicker sizes={sizes} />
+      <AddToCartButton />
+    </form>
+  );
 };

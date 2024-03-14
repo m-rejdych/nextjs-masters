@@ -11,6 +11,6 @@ fragment OrderItem on OrderItem {
     name
   }
   product {
-    ... OrderItemProduct
+    ...OrderItemProduct
   }
 }

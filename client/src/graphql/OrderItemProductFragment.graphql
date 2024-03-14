@@ -1,12 +1,13 @@
 fragment OrderItemProduct on Product {
   id
+  slug
   name
   price
   sizes {
     inStock
     size {
       id
-      }
+    }
   }
   colors {
     inStock

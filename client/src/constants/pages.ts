@@ -1,19 +1,19 @@
 import type { Route } from 'next';
 
 interface Page {
-	name: string;
-	href: Route;
+  name: string;
+  href: Route;
   exact?: boolean;
 }
 
 export const PAGES = [
-	{
-		name: 'Home',
-		href: '/',
+  {
+    name: 'Home',
+    href: '/',
     exact: true,
-	},
-	{
-		name: 'All',
-		href: '/products',
-	},
+  },
+  {
+    name: 'All',
+    href: '/products',
+  },
 ] satisfies Page[];

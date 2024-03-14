@@ -21,7 +21,7 @@ model Product {
   description String
   slug        String           @unique
   price       Int
-  rating      Float?
+  rating      Float            @default(0)
   images      ProductImage[]
   colors      ColorOnProduct[]
   sizes       SizeOnProduct[]
@@ -143,16 +143,16 @@ model Order {
 }
 
 model OrderItem {
-  id        String  @id @default(uuid())
-  quantity  Int     @default(1)
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id        String   @id @default(uuid())
+  quantity  Int      @default(1)
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   sizeId    String
-  size      Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  size      Size     @relation(fields: [sizeId], references: [id], onDelete: Cascade)
   colorId   String
-  color     Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  color     Color    @relation(fields: [colorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -1,5 +1,5 @@
-query ProductGetById($id: ID!) {
-	productById(id: $id) {
-		...Product
-	}
+query ProductGetById($where: ProductWhereUnique!) {
+  product(where: $where) {
+    ...Product
+  }
 }
