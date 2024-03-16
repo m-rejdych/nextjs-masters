@@ -5,6 +5,8 @@ enum OrderStatus {
   CANCELLED = 'CANCELLED',
   CREATED = 'CREATED',
   FULFILLED = 'FULFILLED',
+  PROCESSING_PAYMENT = 'PROCESSING_PAYMENT',
+  FAILED = 'FAILED',
   PAID = 'PAID',
 }
 
@@ -74,6 +76,19 @@ builder.mutationField('createOrder', (t) =>
     type: 'Order',
     resolve: async (query) => {
       return prisma.order.create({ ...query, data: {} });
+    },
+  }),
+);
+
+builder.mutationField('updateOrderStatus', (t) =>
+  t.prismaField({
+    type: 'Order',
+    args: {
+      id: t.arg({ type: 'ID', required: true }),
+      status: t.arg({ type: OrderStatus, required: true }),
+    },
+    resolve: async (query, _, { id, status }) => {
+      return prisma.order.update({ ...query, where: { id: id as string }, data: { status } });
     },
   }),
 );
