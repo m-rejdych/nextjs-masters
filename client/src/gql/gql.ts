@@ -30,6 +30,7 @@ const documents = {
     "fragment OrderItemProduct on Product {\n  id\n  slug\n  name\n  price\n  sizes {\n    inStock\n    size {\n      id\n    }\n  }\n  colors {\n    inStock\n    color {\n      id\n    }\n  }\n  images {\n    id\n    alt\n    url\n  }\n}": types.OrderItemProductFragmentDoc,
     "mutation OrderItemRemove($id: ID!) {\n  removeOrderItem(id: $id) {\n    ...OrderItemId\n  }\n}": types.OrderItemRemoveDocument,
     "fragment OrderItemsCount on Order {\n  id\n  itemsCount\n}": types.OrderItemsCountFragmentDoc,
+    "mutation OrderUpdateStatus($id: ID!, $status: OrderStatus!) {\n  updateOrderStatus(id: $id, status: $status) {\n    ...Order\n  }\n}": types.OrderUpdateStatusDocument,
     "fragment Product on Product {\n  ...ProductListItem\n  rating\n  reviewCount\n  categories {\n    id\n  }\n  collections {\n    id\n  }\n  colors {\n    inStock\n    color {\n      id\n      name\n    }\n  }\n  sizes {\n    inStock\n    size {\n      id\n      type\n    }\n  }\n  details {\n    id\n    description\n  }\n}": types.ProductFragmentDoc,
     "query ProductGetById($where: ProductWhereUnique!) {\n  product(where: $where) {\n    ...Product\n  }\n}": types.ProductGetByIdDocument,
     "query ProductGetList($first: Int, $after: ID, $where: ProductWhere, $orderBy: ProductOrderBy) {\n  products(first: $first, after: $after, where: $where, orderBy: $orderBy) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      node {\n        ...ProductListItem\n      }\n    }\n  }\n}": types.ProductGetListDocument,
@@ -104,6 +105,10 @@ export function graphql(source: "mutation OrderItemRemove($id: ID!) {\n  removeO
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "fragment OrderItemsCount on Order {\n  id\n  itemsCount\n}"): typeof import('./graphql').OrderItemsCountFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation OrderUpdateStatus($id: ID!, $status: OrderStatus!) {\n  updateOrderStatus(id: $id, status: $status) {\n    ...Order\n  }\n}"): typeof import('./graphql').OrderUpdateStatusDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

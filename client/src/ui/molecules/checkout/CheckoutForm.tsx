@@ -5,17 +5,13 @@ import { useSearchParams } from 'next/navigation';
 import { Disclosure } from '@headlessui/react';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { formatDolars } from '@/util/currency';
+import { getErrorMessage } from '@/util/error';
 import type { OrderItemFragment, OrderFragment } from '@/gql/graphql';
 
 interface Props {
   total: OrderFragment['total'];
   items: OrderItemFragment[];
 }
-
-const getErrorMessage = (error: unknown): string =>
-  typeof error === 'object' && error && 'message' in error && typeof error.message === 'string'
-    ? error.message
-    : 'Something went wrong :(';
 
 const TAX_RATE = 0.12 as const;
 const SHIPPING = 700 as const;

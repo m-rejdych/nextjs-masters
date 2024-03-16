@@ -162,6 +162,7 @@ export type Mutation = {
   decrementOrderItemQuantity: OrderItem;
   incrementOrderItemQuantity: OrderItem;
   removeOrderItem: OrderItem;
+  updateOrderStatus: Order;
 };
 
 
@@ -187,6 +188,12 @@ export type MutationIncrementOrderItemQuantityArgs = {
 
 export type MutationRemoveOrderItemArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateOrderStatusArgs = {
+  id: Scalars['ID']['input'];
+  status: OrderStatus;
 };
 
 export type Node = {
@@ -239,8 +246,10 @@ export type OrderItemOrderBy = {
 export type OrderStatus =
   | 'CANCELLED'
   | 'CREATED'
+  | 'FAILED'
   | 'FULFILLED'
-  | 'PAID';
+  | 'PAID'
+  | 'PROCESSING_PAYMENT';
 
 export type PageInfo = {
   __typename?: 'PageInfo';
@@ -507,6 +516,14 @@ export type OrderItemRemoveMutationVariables = Exact<{
 export type OrderItemRemoveMutation = { __typename?: 'Mutation', removeOrderItem: { __typename?: 'OrderItem', id: string } };
 
 export type OrderItemsCountFragment = { __typename?: 'Order', id: string, itemsCount: number };
+
+export type OrderUpdateStatusMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  status: OrderStatus;
+}>;
+
+
+export type OrderUpdateStatusMutation = { __typename?: 'Mutation', updateOrderStatus: { __typename?: 'Order', total: number, id: string, itemsCount: number, items: Array<{ __typename?: 'OrderItem', id: string, total: number, quantity: number, size: { __typename?: 'Size', id: string, type: SizeType }, color: { __typename?: 'Color', id: string, name: ColorName }, product: { __typename?: 'Product', id: string, slug: string, name: string, price: number, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string } }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string } }>, images: Array<{ __typename?: 'ProductImage', id: string, alt: string, url: string }> } }> } };
 
 export type ProductFragment = { __typename?: 'Product', rating: number, reviewCount: number, id: string, name: string, slug: string, description: string, price: number, categories: Array<{ __typename?: 'Category', id: string }>, collections: Array<{ __typename?: 'Collection', id: string }>, colors: Array<{ __typename?: 'ColorOnProduct', inStock: boolean, color: { __typename?: 'Color', id: string, name: ColorName } }>, sizes: Array<{ __typename?: 'SizeOnProduct', inStock: boolean, size: { __typename?: 'Size', id: string, type: SizeType } }>, details: Array<{ __typename?: 'Detail', id: string, description: string }>, images: Array<{ __typename?: 'ProductImage', id: string, url: string, alt: string }> };
 
@@ -944,6 +961,62 @@ export const OrderItemRemoveDocument = new TypedDocumentString(`
     fragment OrderItemId on OrderItem {
   id
 }`) as unknown as TypedDocumentString<OrderItemRemoveMutation, OrderItemRemoveMutationVariables>;
+export const OrderUpdateStatusDocument = new TypedDocumentString(`
+    mutation OrderUpdateStatus($id: ID!, $status: OrderStatus!) {
+  updateOrderStatus(id: $id, status: $status) {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  ...OrderItemsCount
+  total
+  items(orderBy: {createdAt: Desc}) {
+    ...OrderItem
+  }
+}
+fragment OrderItem on OrderItem {
+  id
+  total
+  quantity
+  size {
+    id
+    type
+  }
+  color {
+    id
+    name
+  }
+  product {
+    ...OrderItemProduct
+  }
+}
+fragment OrderItemProduct on Product {
+  id
+  slug
+  name
+  price
+  sizes {
+    inStock
+    size {
+      id
+    }
+  }
+  colors {
+    inStock
+    color {
+      id
+    }
+  }
+  images {
+    id
+    alt
+    url
+  }
+}
+fragment OrderItemsCount on Order {
+  id
+  itemsCount
+}`) as unknown as TypedDocumentString<OrderUpdateStatusMutation, OrderUpdateStatusMutationVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($where: ProductWhereUnique!) {
   product(where: $where) {

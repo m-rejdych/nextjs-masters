@@ -1,14 +1,14 @@
 import { redirect } from 'next/navigation';
-import Stripe from 'stripe';
 import { StripeForm } from '@/ui/organisms/StripeForm';
 import { getCookieOrder } from '@/util/order';
-
-const stripe = new Stripe(process.env.STRIPE_SK as string);
+import { stripe } from '@/util/stripe';
 
 export const metadata = {
   title: 'Checkout',
   description: 'Checkout page',
 }
+
+export const dynamic = 'force-dynamic';
 
 export default async function CheckoutPage() {
   const order = await getCookieOrder();
