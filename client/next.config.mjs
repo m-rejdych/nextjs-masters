@@ -8,6 +8,8 @@ const nextConfig = {
 		remotePatterns: [
 			{ hostname: 'loremflickr.com', protocol: 'https' },
 			{ hostname: 'tailwindui.com', protocol: 'https' },
+			{ hostname: 'fakestoreapi.com', protocol: 'https' },
+			{ hostname: 'cdn.dummyjson.com', protocol: 'https' },
 		],
 	},
 	async redirects() {

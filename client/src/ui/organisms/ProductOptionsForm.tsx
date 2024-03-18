@@ -47,7 +47,7 @@ export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
     <form action={handleAction}>
       <ColorPicker colors={colors} />
       <SizePicker sizes={sizes} />
-      <AddToCartButton />
+      <AddToCartButton sizes={sizes} colors={colors} />
     </form>
   );
 };

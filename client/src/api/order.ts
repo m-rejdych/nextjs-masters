@@ -39,7 +39,7 @@ export const getOrderById = async (id: string): Promise<OrderFragment | null> =>
     const { orderById } = await executeQuery({
       query: OrderGetByIdDocument,
       variables: { id },
-      next: { tags: ['cart'] },
+      next: { tags: ['cart', 'order'] },
       cache: 'no-store',
     });
     return orderById ?? null;

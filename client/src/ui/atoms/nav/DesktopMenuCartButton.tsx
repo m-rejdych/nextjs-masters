@@ -3,7 +3,11 @@ import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { getCookieOrderItemsCount } from '@/util/order';
 
 export const DesktopMenuCartButton = async () => {
-  const order = await getCookieOrderItemsCount();
+  let order = await getCookieOrderItemsCount();
+
+  if (order && ['PAID', 'FULFILLED'].includes(order.status)) {
+    order = null;
+  }
 
   return (
     <div className="ml-4 flow-root lg:ml-8">

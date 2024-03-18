@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { MobileMenu } from '@/ui/molecules/nav/MobileMenu';
 import { DesktopCompanyLogo } from '@/ui/atoms/nav/DesktopCompanyLogo';
 import { MobileCompanyLogo } from '@/ui/atoms/nav/MobileCompanyLogo';
@@ -15,8 +16,21 @@ interface Props {
   desktopCartButton: React.ReactNode;
 }
 
+const wasCookieCleared = (responseResult: unknown) => responseResult && typeof responseResult === 'object' && 'data' in responseResult && responseResult.data === true;
+
 export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton }: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch(`${window.location.origin}/api/order/clear-cookie`, {
+      method: 'POST',
+    }).then(res => res.json()).then(result => {
+      if (wasCookieCleared(result)) {
+        router.refresh();
+      }
+    }).catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className="bg-white">

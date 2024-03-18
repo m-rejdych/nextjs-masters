@@ -7,6 +7,7 @@ export const getCookieOrderItemsCount = async (): Promise<OrderItemsCountFragmen
   if (!orderId) return null;
 
   const order = await getOrderItemsCountById(orderId);
+
   return order;
 };
 

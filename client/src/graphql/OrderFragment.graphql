@@ -1,6 +1,7 @@
 fragment Order on Order {
   ...OrderItemsCount
   total
+  status
   items(orderBy: { createdAt: Desc }) {
     ...OrderItem
   }
