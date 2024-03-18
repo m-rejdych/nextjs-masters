@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MobileMenu } from '@/ui/molecules/nav/MobileMenu';
 import { DesktopCompanyLogo } from '@/ui/atoms/nav/DesktopCompanyLogo';
 import { MobileCompanyLogo } from '@/ui/atoms/nav/MobileCompanyLogo';
@@ -17,6 +17,12 @@ interface Props {
 
 export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton }: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    fetch(`${window.location.origin}/api/order/clear-cookie`, {
+      method: 'POST',
+    }).catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className="bg-white">

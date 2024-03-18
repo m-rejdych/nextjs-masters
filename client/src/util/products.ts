@@ -5,6 +5,9 @@ export type SortTypeParam = 'price' | 'rating';
 export type SortOrderParam = 'desc' | 'asc';
 type SortOrder = 'Desc' | 'Asc';
 
+export const TAX_RATE = 12 as const;
+export const SHIPPING = 700 as const;
+
 const parseSortOrderParam = (param?: SortOrderParam): SortOrder =>
   param ? (capitalize(param) as SortOrder) : 'Desc';
 
@@ -23,3 +26,9 @@ export const getOrderBy = (
       return undefined;
   }
 };
+
+export const getTaxValue = (amount: number) => amount * (TAX_RATE / 100);
+
+export const getShippingValue = () => SHIPPING;
+
+export const getTotalOrderValue = (amount: number) => amount + getTaxValue(amount) + getShippingValue();

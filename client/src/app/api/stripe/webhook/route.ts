@@ -1,9 +1,9 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { executeQuery } from '@/util/gql';
 import { getErrorMessage } from '@/util/error';
 import { stripe } from '@/util/stripe';
 import { OrderUpdateStatusDocument } from '@/gql/graphql';
-import Stripe from 'stripe';
 
 export const POST = async (req: NextRequest) => {
   if (!process.env.STRIPE_WEBHOOK_SECRET) {
@@ -33,34 +33,44 @@ export const POST = async (req: NextRequest) => {
       return Response.json({ result: 'failure', data: 'No orderId metadata' }, { status: 400 });
     }
 
+    let response: NextResponse<{ result: string, data: string }>;
+
     switch (event.type) {
       case 'payment_intent.canceled':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'CANCELLED' },
         });
-        return NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 201 });
+        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        break;
       case 'payment_intent.payment_failed':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'FAILED' },
         });
-        return NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 201 });
+        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        break;
       case 'payment_intent.processing':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'PROCESSING_PAYMENT' },
         });
-        return NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 201 });
+        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        break;
       case 'payment_intent.succeeded':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'PAID' },
         });
-        return NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 201 });
+        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        break;
       default:
-        return NextResponse.json({ result: 'failure', data: 'Unexpected event' }, { status: 400 });
+        response = NextResponse.json({ result: 'failure', data: 'Unexpected event' }, { status: 400 });
     }
+
+    revalidatePath(`/order/${orderId}`);
+
+    return response;
   } catch (error) {
     console.log(error);
     return NextResponse.json({ result: 'failure', data: getErrorMessage(error) }, { status: 400 });

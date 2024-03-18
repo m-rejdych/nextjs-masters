@@ -31,6 +31,7 @@ export default async function CheckoutPage() {
   return (
     <StripeForm
       clientSecret={paymentIntent.client_secret}
+      id={order.id}
       items={order.items}
       total={order.total}
     />
