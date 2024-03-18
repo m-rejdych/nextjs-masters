@@ -28,6 +28,10 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 			prisma.orderItem.deleteMany(),
 		]);
 
+    const fakeStoreProducts = await (await fetch('https://fakestoreapi.com/products')).json() as Array<{ image: string }>;
+    const dummyJsonProducts = await (await fetch('https://dummyjson.com/products')).json() as { products: Array<{ images: string[] }> };
+    const images = [...fakeStoreProducts.map(({ image }) => image), ...dummyJsonProducts.products.map(({ images }) => images)].flat();
+
 		const categoryIds = await Promise.all(
 			CATEGORIES.map(async (name) => {
 				const createdCategory = await prisma.category.create({
@@ -38,7 +42,8 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						image: {
 							create: {
 								alt: name,
-								url: faker.image.urlLoremFlickr({ category: 'clothes', width: 400, height: 400 }),
+								//url: faker.image.urlLoremFlickr({ category: 'clothes', width: 400, height: 400 }),
+								url: images[Math.floor(Math.random() * images.length)] as string,
 							},
 						},
 					},
@@ -60,7 +65,8 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						image: {
 							create: {
 								alt: name,
-								url: faker.image.urlLoremFlickr({ category: 'clothes', width: 400, height: 400 }),
+								// url: faker.image.urlLoremFlickr({ category: 'clothes', width: 400, height: 400 }),
+								url: images[Math.floor(Math.random() * images.length)] as string,
 							},
 						},
 					},
@@ -109,7 +115,8 @@ const SIZES = ['S', 'M', 'L', 'XL'] as const;
 						price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
 						images: {
 							create: {
-								url: faker.image.urlLoremFlickr({ category: 'clothes', width: 480, height: 640 }),
+								//url: faker.image.urlLoremFlickr({ category: 'clothes', width: 480, height: 640 }),
+								url: images[Math.floor(Math.random() * images.length)] as string,
 								alt: name,
 							},
 						},
