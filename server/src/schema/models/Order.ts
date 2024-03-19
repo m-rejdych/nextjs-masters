@@ -74,8 +74,11 @@ builder.queryField('orderById', (t) =>
 builder.mutationField('createOrder', (t) =>
   t.prismaField({
     type: 'Order',
-    resolve: async (query) => {
-      return prisma.order.create({ ...query, data: {} });
+    args: {
+      userId: t.arg({ type: 'String' }),
+    },
+    resolve: async (query, _, { userId }) => {
+      return prisma.order.create({ ...query, data: { userId: userId ?? undefined } });
     },
   }),
 );

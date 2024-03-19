@@ -24,9 +24,9 @@ export const getOrderItemsCountById = async (
   }
 };
 
-export const createOrder = async (): Promise<OrderItemsCountFragment | null> => {
+export const createOrder = async (userId?: string): Promise<OrderItemsCountFragment | null> => {
   try {
-    const { createOrder } = await executeQuery({ query: OrderCreateDocument });
+    const { createOrder } = await executeQuery({ query: OrderCreateDocument, variables: { userId } });
     return createOrder;
   } catch (error) {
     console.log(error);

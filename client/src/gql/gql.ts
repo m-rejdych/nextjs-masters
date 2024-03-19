@@ -18,7 +18,7 @@ const documents = {
     "fragment CategoryListItem on Category {\n  id\n  name\n  slug\n  image {\n    alt\n    url\n  }\n}": types.CategoryListItemFragmentDoc,
     "query CollectionGetList {\n  collections {\n    ...CollectionListItem\n  }\n}": types.CollectionGetListDocument,
     "fragment CollectionListItem on Collection {\n  id\n  name\n  slug\n  image {\n    alt\n    url\n  }\n}": types.CollectionListItemFragmentDoc,
-    "mutation OrderCreate {\n  createOrder {\n    ...OrderItemsCount\n  }\n}": types.OrderCreateDocument,
+    "mutation OrderCreate($userId: String) {\n  createOrder(userId: $userId) {\n    ...OrderItemsCount\n  }\n}": types.OrderCreateDocument,
     "fragment Order on Order {\n  ...OrderItemsCount\n  total\n  status\n  items(orderBy: {createdAt: Desc}) {\n    ...OrderItem\n  }\n}": types.OrderFragmentDoc,
     "query OrderGetById($id: ID!) {\n  orderById(id: $id) {\n    ...Order\n  }\n}": types.OrderGetByIdDocument,
     "query OrderGetItemsCountById($id: ID!) {\n  orderById(id: $id) {\n    ...OrderItemsCount\n  }\n}": types.OrderGetItemsCountByIdDocument,
@@ -60,7 +60,7 @@ export function graphql(source: "fragment CollectionListItem on Collection {\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation OrderCreate {\n  createOrder {\n    ...OrderItemsCount\n  }\n}"): typeof import('./graphql').OrderCreateDocument;
+export function graphql(source: "mutation OrderCreate($userId: String) {\n  createOrder(userId: $userId) {\n    ...OrderItemsCount\n  }\n}"): typeof import('./graphql').OrderCreateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

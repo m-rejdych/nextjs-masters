@@ -171,6 +171,11 @@ export type MutationAddOrderItemArgs = {
 };
 
 
+export type MutationCreateOrderArgs = {
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type MutationCreateReviewArgs = {
   input: ReviewCreateInput;
 };
@@ -460,7 +465,9 @@ export type CollectionGetListQuery = { __typename?: 'Query', collections: Array<
 
 export type CollectionListItemFragment = { __typename?: 'Collection', id: string, name: CollectionName, slug: string, image: { __typename?: 'CollectionImage', alt: string, url: string } };
 
-export type OrderCreateMutationVariables = Exact<{ [key: string]: never; }>;
+export type OrderCreateMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']['input']>;
+}>;
 
 
 export type OrderCreateMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id: string, itemsCount: number, status: OrderStatus } };
@@ -853,8 +860,8 @@ export const CollectionGetListDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<CollectionGetListQuery, CollectionGetListQueryVariables>;
 export const OrderCreateDocument = new TypedDocumentString(`
-    mutation OrderCreate {
-  createOrder {
+    mutation OrderCreate($userId: String) {
+  createOrder(userId: $userId) {
     ...OrderItemsCount
   }
 }
