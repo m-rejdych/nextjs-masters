@@ -14,11 +14,12 @@ interface Props {
   flyoutMenusItems: CategoryVariant[];
   mobileMenuPanelItems: CategoryVariant[];
   desktopCartButton: React.ReactNode;
+  desktopAuthButton: React.ReactNode;
 }
 
 const wasCookieCleared = (responseResult: unknown) => responseResult && typeof responseResult === 'object' && 'data' in responseResult && responseResult.data === true;
 
-export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton }: Props) => {
+export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopAuthButton, desktopCartButton }: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -43,13 +44,13 @@ export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton 
         <nav aria-label="Top">
           <div className="bg-white">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="border-b border-gray-200">
+              <div className="border-b border-neutral-200">
                 <div className="flex h-16 items-center justify-between">
                   <DesktopCompanyLogo />
                   <FlyoutMenus items={flyoutMenusItems} />
                   <MobileMenuItems onOpen={() => setMobileMenuOpen(true)} />
                   <MobileCompanyLogo />
-                  <DesktopMenuItems cartButton={desktopCartButton} />
+                  <DesktopMenuItems cartButton={desktopCartButton} authButton={desktopAuthButton} />
                 </div>
               </div>
             </div>

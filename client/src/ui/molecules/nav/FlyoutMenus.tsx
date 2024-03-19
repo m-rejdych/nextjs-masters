@@ -16,7 +16,7 @@ export const FlyoutMenus = ({ items }: Props) => (
             key={name}
             href={href}
             exact={exact}
-            className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+            className="flex items-center text-sm font-medium text-neutral-700 hover:text-neutral-800"
           >
             {name}
           </ActiveLink>

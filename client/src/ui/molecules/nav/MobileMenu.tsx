@@ -42,7 +42,7 @@ export const MobileMenu = ({ open, onClose, panelItems }: Props) => (
               <MobileMenuSearchInput />
             </Suspense>
             <Tab.Group as="div" className="mt-2">
-              <div className="border-b border-gray-200">
+              <div className="border-b border-neutral-200">
                 <MobileMenuCategoryNameList />
               </div>
               <MobileMenuPanels panelItems={panelItems} />

@@ -4,14 +4,16 @@ import { ActiveLink } from '@/ui/atoms/nav/ActiveLink';
 
 interface Props {
   cartButton: React.ReactNode;
+  authButton: React.ReactNode;
 }
 
-export const DesktopMenuItems = ({ cartButton }: Props) => (
+export const DesktopMenuItems = ({ authButton, cartButton }: Props) => (
   <>
     <div className="flex flex-1 items-center justify-end">
       <Suspense fallback={null}>
         <DesktopMenuSearchInput />
       </Suspense>
+      {authButton}
       {cartButton}
     </div>
     {/* Hidden links workaround for tests match */}

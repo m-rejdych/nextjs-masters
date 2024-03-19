@@ -6,8 +6,8 @@ interface Props {
 
 export const ProductDetailsDescription = ({ description }: Props) => (
   <div className="mt-10">
-    <h2 className="text-sm font-medium text-gray-900">Description</h2>
-    <div className="prose prose-sm mt-4 text-gray-500">
+    <h2 className="text-sm font-medium text-neutral-900">Description</h2>
+    <div className="prose prose-sm mt-4 text-neutral-500">
       <p>{description}</p>
     </div>
   </div>

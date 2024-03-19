@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 
 export const POST = async () => {
   revalidatePath('/');
-  revalidateTag('products');
+  revalidatePath('products/[currentPage]');
 
   return NextResponse.json({ result: 'success', data: 'Products revalidated' });
 };
