@@ -8,6 +8,11 @@ import { MobileMenuPanelsCategoryList } from '@/ui/molecules/nav/MobileMenuPanel
 import { DesktopMenuCartButton } from '@/ui/atoms/nav/DesktopMenuCartButton';
 import type { CategoryVariant } from '@/types/common';
 
+interface Props {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}
+
 const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
@@ -21,9 +26,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  modal
+}: Props) {
   const flyoutMenusItems: CategoryVariant[] = [
     { variant: 'categories', node: <CategoryPopoverList variant="categories" /> },
     { variant: 'collections', node: <CategoryPopoverList variant="collections" /> },
@@ -44,6 +48,7 @@ export default function RootLayout({
         <div className="mx-auto h-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           {children}
         </div>
+        {modal}
       </body>
     </html>
   );
