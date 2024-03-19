@@ -24,7 +24,7 @@ export const Pagination = ({
     (_, i) => i + 1,
   );
   const lastPagesNumbers =
-    totalPages <= 6 ? [] : Array.from({ length: 3 }, (_, i) => totalPages - i);
+    totalPages <= 6 ? [] : Array.from({ length: 3 }, (_, i) => totalPages - i).toReversed();
 
   const getLink = (num: number | string) =>
     `/${directory}${slug ? `/${slug}` : ''}/${num}` as Route;
