@@ -10,11 +10,10 @@ publicRoutes: [
   '/categories(.*)',
   '/collections',
   '/collections(.*)',
-  '/search',
   '/search(.*)',
   '/checkout',
   '/cart',
-  '/order(.*)',
+  '/order/(.*)',
   '/api(.*)'
 ]});
 

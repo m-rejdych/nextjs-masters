@@ -39,6 +39,7 @@ export const getProducts = async ({
       } = await executeQuery({
         query: ProductGetPageDocument,
         variables: { first: offset, where, orderBy },
+        next: { revalidate: 60 * 60 * 4 },
       });
       endCursor = pageInfo.endCursor;
     }

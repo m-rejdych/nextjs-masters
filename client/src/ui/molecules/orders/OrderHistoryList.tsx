@@ -4,13 +4,15 @@ import { getOrders } from '@/api/order';
 
 export const OrdersHistoryList = async () => {
   const { userId } = auth();
-  const orders = await getOrders({ userId, NOT: { status: 'CREATED' } });
+  const orders = userId ? await getOrders({ userId, NOT: { status: 'CREATED' } }) : [];
 
   return (
-    <ul className="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
-      {orders.map((order) => (
-        <OrdersHistoryListItem key={order.id} {...order} />
-      ))}
-    </ul>
+    userId && (
+      <ul className="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
+        {orders.map((order) => (
+          <OrdersHistoryListItem key={order.id} {...order} />
+        ))}
+      </ul>
+    )
   );
 };
