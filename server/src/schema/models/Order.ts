@@ -75,7 +75,7 @@ const OrderWhere = builder.prismaWhere('Order', {
   },
 });
 
-builder.queryField('orderById', (t) =>
+builder.queryField('order', (t) =>
   t.prismaField({
     type: 'Order',
     args: {

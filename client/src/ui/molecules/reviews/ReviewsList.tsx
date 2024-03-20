@@ -1,5 +1,5 @@
 import { ReviewsListItem } from '@/ui/molecules/reviews/ReviewsListItem';
-import { getReviewsByProductId } from '@/api/review';
+import { getReviews } from '@/api/review';
 import type { ProductFragment } from '@/gql/graphql';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ReviewsList = async ({ productId }: Props) => {
-  const reviews = (await getReviewsByProductId(productId, 5, { createdAt: 'Desc' })) ?? [];
+  const reviews = (await getReviews({ productId }, 5, { createdAt: 'Desc' })) ?? [];
 
   return (
     <ul className="mt-6 space-y-10 divide-y divide-neutral-200 border-b border-t border-neutral-200 pb-10">

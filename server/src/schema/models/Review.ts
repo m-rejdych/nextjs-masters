@@ -23,6 +23,18 @@ const ReviewOrderBy = builder.prismaOrderBy('Review', {
   },
 });
 
+const ReviewWhere = builder.prismaWhere('Review', {
+  name: 'ReviewWhere',
+  fields: {
+    productId: 'String',
+    author: 'String',
+    email: 'String',
+    title: 'String',
+    description: 'String',
+    rating: 'Float',
+  },
+});
+
 const ReviewCreateInput = builder.inputType('ReviewCreateInput', {
   fields: (t) => ({
     author: t.string({ required: true }),
@@ -34,20 +46,23 @@ const ReviewCreateInput = builder.inputType('ReviewCreateInput', {
   }),
 });
 
-builder.queryField('reviewsByProductId', (t) =>
+builder.queryField('reviews', (t) =>
   t.prismaField({
     type: ['Review'],
     args: {
-      productId: t.arg({ type: 'ID', required: true }),
+      where: t.arg({ type: ReviewWhere, required: true }),
       limit: t.arg({ type: 'Int' }),
       orderBy: t.arg({ type: ReviewOrderBy }),
     },
-    resolve: async (query, _, { productId, limit, orderBy }) => {
+    resolve: async (query, _, { where, limit, orderBy }) => {
       return prisma.review.findMany({
         ...query,
         take: limit ?? undefined,
         orderBy: orderBy ?? undefined,
-        where: { productId: decodeGlobalID(productId as string).id },
+        where: {
+          ...where,
+          productId: where.productId ? decodeGlobalID(where.productId as string).id : undefined,
+        },
       });
     },
   }),

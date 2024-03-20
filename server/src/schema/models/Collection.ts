@@ -38,6 +38,7 @@ const CollectionWhere = builder.prismaWhere('Collection', {
     id: 'String',
     name: CollectionName,
     slug: 'String',
+    description: 'String',
   },
 });
 
