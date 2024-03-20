@@ -58,6 +58,23 @@ builder.prismaObject('Order', {
   }),
 });
 
+const OrderWhereNot = builder.prismaWhere('Order', {
+  name: 'OrderWhereNot',
+  fields: {
+    status: OrderStatus,
+    userId: 'String',
+  },
+});
+
+const OrderWhere = builder.prismaWhere('Order', {
+  name: 'OrderWhere',
+  fields: {
+    status: OrderStatus,
+    userId: 'String',
+    NOT: OrderWhereNot,
+  },
+});
+
 builder.queryField('orderById', (t) =>
   t.prismaField({
     type: 'Order',
@@ -67,6 +84,18 @@ builder.queryField('orderById', (t) =>
     nullable: true,
     resolve: async (query, _, { id }) => {
       return prisma.order.findUnique({ ...query, where: { id: id as string } });
+    },
+  }),
+);
+
+builder.queryField('orders', (t) =>
+  t.prismaField({
+    type: ['Order'],
+    args: {
+      where: t.arg({ type: OrderWhere }),
+    },
+    resolve: async (query, _, { where }) => {
+      return prisma.order.findMany({ ...query, where: where ?? undefined });
     },
   }),
 );

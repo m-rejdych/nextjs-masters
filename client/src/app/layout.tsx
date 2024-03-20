@@ -8,6 +8,7 @@ import { CategoryPopoverList } from '@/ui/molecules/nav/CategoryPopoverList';
 import { MobileMenuPanelsCategoryList } from '@/ui/molecules/nav/MobileMenuPanelsCategoryList';
 import { DesktopMenuCartButton } from '@/ui/atoms/nav/DesktopMenuCartButton';
 import { DesktopMenuAuthButton } from '@/ui/atoms/nav/DesktopMenuAuthButton';
+import { DesktopMenuOrdersButton } from '@/ui/atoms/nav/DesktopMenuOrdersButton';
 import type { CategoryVariant } from '@/types/common';
 
 interface Props {
@@ -45,8 +46,9 @@ export default function RootLayout({ children, modal }: Props) {
             mobileMenuPanelItems={mobileMenuPanelItems}
             desktopCartButton={<DesktopMenuCartButton />}
             desktopAuthButton={<DesktopMenuAuthButton />}
+            desktopOrdersButton={<DesktopMenuOrdersButton />}
           />
-          <div className="mx-auto h-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="mx-auto h-full max-w-7xl px-4 py-32 sm:px-6 sm:py-40 lg:px-8">
             {children}
           </div>
           {modal}

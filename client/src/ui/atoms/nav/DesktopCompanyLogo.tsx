@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const DesktopCompanyLogo = () => (
-  <div className="hidden lg:flex lg:flex-1 lg:items-center">
+  <div className="hidden lg:flex items-center mr-4">
     <Link href="/">
       <span className="sr-only">Your Company</span>
       <Image
