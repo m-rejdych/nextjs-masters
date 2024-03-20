@@ -1,0 +1,5 @@
+query ReviewGetList($where: ReviewWhere!, $limit: Int, $orderBy: ReviewOrderBy) {
+  reviews(where: $where, limit: $limit, orderBy: $orderBy) {
+    ...ReviewListItem
+  }
+}

@@ -1,0 +1,5 @@
+query OrderGetList($where: OrderWhere) {
+  orders(where: $where) {
+    ...OrderListItem
+  }
+}

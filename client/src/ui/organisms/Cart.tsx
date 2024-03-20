@@ -10,7 +10,7 @@ export const Cart = async () => {
     <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
       <section aria-labelledby="cart-heading" className="lg:col-span-7">
         <CartHeading />
-        {order ? (
+        {order?.items.length ? (
           <CartProductsList items={order.items} />
         ) : (
           <div className="flex h-[300px] items-center justify-center">
@@ -18,7 +18,7 @@ export const Cart = async () => {
           </div>
         )}
       </section>
-      <Summary total={order?.total ?? 0} />
+      <Summary hasItems={!!order?.items.length} total={order?.total ?? 0} />
     </div>
   );
 };

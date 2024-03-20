@@ -1,24 +1,25 @@
 import { executeQuery } from '@/util/gql';
 import {
-  ReviewGetListByProductIdDocument,
+  ReviewGetListDocument,
   ReviewCreateDocument,
   type ReviewListItemFragment,
   type ReviewOrderBy,
   type ReviewCreateInput,
+  type ReviewWhere,
 } from '@/gql/graphql';
 
-export const getReviewsByProductId = async (
-  productId: string,
+export const getReviews = async (
+  where: ReviewWhere,
   limit?: number,
   orderBy?: ReviewOrderBy,
 ): Promise<ReviewListItemFragment[] | null> => {
   try {
-    const { reviewsByProductId } = await executeQuery({
-      query: ReviewGetListByProductIdDocument,
-      variables: { productId, limit, orderBy },
+    const { reviews } = await executeQuery({
+      query: ReviewGetListDocument,
+      variables: { where, limit, orderBy },
       next: { tags: ['reviews'] },
     });
-    return reviewsByProductId;
+    return reviews;
   } catch (error) {
     console.log(error);
     return null;

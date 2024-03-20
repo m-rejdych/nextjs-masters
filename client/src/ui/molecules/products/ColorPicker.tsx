@@ -14,7 +14,7 @@ export const ColorPicker = ({ colors }: Props) => {
 
   return (
     <div>
-      <h2 className="text-sm font-medium text-gray-900">Color</h2>
+      <h2 className="text-sm font-medium text-neutral-900">Color</h2>
       <RadioGroup
         name="colorId"
         value={selectedColor}

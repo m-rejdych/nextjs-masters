@@ -1,0 +1,6 @@
+fragment OrderListItemItem on OrderItem {
+  ...OrderItem
+  product {
+    ...OrderListItemItemProduct
+  }
+}

@@ -38,6 +38,7 @@ const CategoryWhere = builder.prismaWhere('Category', {
     id: 'String',
     name: CategoryName,
     slug: 'String',
+    description: 'String',
   },
 });
 

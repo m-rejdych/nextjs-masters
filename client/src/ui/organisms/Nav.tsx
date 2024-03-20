@@ -14,22 +14,37 @@ interface Props {
   flyoutMenusItems: CategoryVariant[];
   mobileMenuPanelItems: CategoryVariant[];
   desktopCartButton: React.ReactNode;
+  desktopAuthButton: React.ReactNode;
+  desktopOrdersButton: React.ReactNode;
 }
 
-const wasCookieCleared = (responseResult: unknown) => responseResult && typeof responseResult === 'object' && 'data' in responseResult && responseResult.data === true;
+const wasCookieCleared = (responseResult: unknown) =>
+  responseResult &&
+  typeof responseResult === 'object' &&
+  'data' in responseResult &&
+  responseResult.data === true;
 
-export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton }: Props) => {
+export const Nav = ({
+  flyoutMenusItems,
+  mobileMenuPanelItems,
+  desktopOrdersButton,
+  desktopAuthButton,
+  desktopCartButton,
+}: Props) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     fetch(`${window.location.origin}/api/order/clear-cookie`, {
       method: 'POST',
-    }).then(res => res.json()).then(result => {
-      if (wasCookieCleared(result)) {
-        router.refresh();
-      }
-    }).catch((error) => console.log(error));
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (wasCookieCleared(result)) {
+          router.refresh();
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -39,17 +54,21 @@ export const Nav = ({ flyoutMenusItems, mobileMenuPanelItems, desktopCartButton 
         onClose={() => setMobileMenuOpen(false)}
         panelItems={mobileMenuPanelItems}
       />
-      <header className="relative">
+      <header className="fixed z-10 w-full">
         <nav aria-label="Top">
           <div className="bg-white">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="border-b border-gray-200">
-                <div className="flex h-16 items-center justify-between">
+              <div className="border-b border-neutral-200">
+                <div className="flex h-16 items-center">
                   <DesktopCompanyLogo />
                   <FlyoutMenus items={flyoutMenusItems} />
                   <MobileMenuItems onOpen={() => setMobileMenuOpen(true)} />
                   <MobileCompanyLogo />
-                  <DesktopMenuItems cartButton={desktopCartButton} />
+                  <DesktopMenuItems
+                    cartButton={desktopCartButton}
+                    authButton={desktopAuthButton}
+                    ordersButton={desktopOrdersButton}
+                  />
                 </div>
               </div>
             </div>

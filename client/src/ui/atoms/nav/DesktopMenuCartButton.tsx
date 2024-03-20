@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { getCookieOrderItemsCount } from '@/util/order';
 
 export const DesktopMenuCartButton = async () => {
@@ -11,8 +11,8 @@ export const DesktopMenuCartButton = async () => {
 
   return (
     <div className="ml-4 flow-root lg:ml-8">
-      <Link href="/cart" className="group -m-2 flex items-center p-2">
-        <ShoppingBagIcon
+      <Link href="/cart" className="group -m-2 flex items-center p-2" scroll={false}>
+        <ShoppingCartIcon
           className="h-6 w-6 flex-shrink-0 text-neutral-400 group-hover:text-neutral-500"
           aria-hidden="true"
         />

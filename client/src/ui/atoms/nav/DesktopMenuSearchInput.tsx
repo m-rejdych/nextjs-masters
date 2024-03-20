@@ -25,7 +25,7 @@ export const DesktopMenuSearchInput = () => {
   };
 
   return (
-    <div className="hidden flex-1 items-center justify-center px-2 lg:ml-6 lg:flex lg:justify-end">
+    <div className="hidden flex-1 items-center justify-center px-2 lg:ml-4 lg:flex lg:justify-end">
       <div className="w-full max-w-xs">
         <label htmlFor="search" className="sr-only">
           Search

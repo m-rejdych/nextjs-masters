@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { revalidateTag } from 'next/cache';
-import { AddToCartButton } from '../atoms/nav/AddToCartButton';
+import { auth } from '@clerk/nextjs';
+import { AddToCartButton } from '@/ui/atoms/nav/AddToCartButton';
 import { ColorPicker } from '@/ui/molecules/products/ColorPicker';
 import { SizePicker } from '@/ui/molecules/products/SizePicker';
 import { addOrderItem } from '@/api/orderItem';
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
+  const { userId } = auth();
+
   const handleAction = async (formData: FormData): Promise<void> => {
     'use server';
 
@@ -24,7 +27,7 @@ export const ProductOptionsForm = ({ colors, sizes, productId }: Props) => {
 
     let order = await getCookieOrderItemsCount();
     if (!order) {
-      order = await createOrder();
+      order = await createOrder(userId ?? undefined);
       if (!order) return;
 
       cookies().set('orderId', order.id, {

@@ -136,6 +136,7 @@ model Review {
 
 model Order {
   id        String      @id @default(uuid())
+  userId    String?
   status    OrderStatus @default(CREATED)
   items     OrderItem[]
   createdAt DateTime    @default(now())

@@ -1,0 +1,9 @@
+fragment OrderListItem on Order {
+  id 
+  total
+  status
+  createdAt
+  items {
+    ...OrderListItemItem
+  }
+}

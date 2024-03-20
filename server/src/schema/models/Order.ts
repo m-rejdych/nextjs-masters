@@ -58,7 +58,24 @@ builder.prismaObject('Order', {
   }),
 });
 
-builder.queryField('orderById', (t) =>
+const OrderWhereNot = builder.prismaWhere('Order', {
+  name: 'OrderWhereNot',
+  fields: {
+    status: OrderStatus,
+    userId: 'String',
+  },
+});
+
+const OrderWhere = builder.prismaWhere('Order', {
+  name: 'OrderWhere',
+  fields: {
+    status: OrderStatus,
+    userId: 'String',
+    NOT: OrderWhereNot,
+  },
+});
+
+builder.queryField('order', (t) =>
   t.prismaField({
     type: 'Order',
     args: {
@@ -71,11 +88,26 @@ builder.queryField('orderById', (t) =>
   }),
 );
 
+builder.queryField('orders', (t) =>
+  t.prismaField({
+    type: ['Order'],
+    args: {
+      where: t.arg({ type: OrderWhere }),
+    },
+    resolve: async (query, _, { where }) => {
+      return prisma.order.findMany({ ...query, where: where ?? undefined });
+    },
+  }),
+);
+
 builder.mutationField('createOrder', (t) =>
   t.prismaField({
     type: 'Order',
-    resolve: async (query) => {
-      return prisma.order.create({ ...query, data: {} });
+    args: {
+      userId: t.arg({ type: 'String' }),
+    },
+    resolve: async (query, _, { userId }) => {
+      return prisma.order.create({ ...query, data: { userId: userId ?? undefined } });
     },
   }),
 );

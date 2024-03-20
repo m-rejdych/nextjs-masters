@@ -1,42 +1,10 @@
+import { parseDate, parseTime } from '@/util/date';
 import type { ReviewListItemFragment } from '@/gql/graphql';
 
 interface Props {
   author: ReviewListItemFragment['author'];
   createdAt: ReviewListItemFragment['createdAt'];
 }
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-] as const;
-
-const parseTime = (dateString: string): string => {
-  const date = new Date(dateString);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-
-  return `${hours}:${minutes}:${seconds}`;
-};
-
-const parseDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = MONTHS[date.getMonth()];
-  const year = date.getFullYear();
-
-  return `${month} ${day}, ${year}`;
-};
 
 export const ReviewsListItemMeta = ({ author, createdAt }: Props) => (
   <div className="mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">

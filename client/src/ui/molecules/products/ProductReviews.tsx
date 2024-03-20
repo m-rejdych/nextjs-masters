@@ -12,7 +12,7 @@ export const ProductReviews = ({ rating, reviewCount }: Props) => (
     <h2 className="sr-only">Reviews</h2>
     <div className="flex items-center">
       <ProductRating rating={rating} />
-      <div aria-hidden="true" className="ml-4 text-sm text-gray-300">
+      <div aria-hidden="true" className="ml-4 text-sm text-neutral-300">
         ·
       </div>
       <div className="ml-4 flex">

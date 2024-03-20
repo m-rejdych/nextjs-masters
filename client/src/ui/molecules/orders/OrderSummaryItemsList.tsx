@@ -1,4 +1,4 @@
-import { OrderSummaryItemsListItem } from '@/ui/atoms/order/OrderSummaryItemsListItem';
+import { OrderSummaryItemsListItem } from '@/ui/atoms/orders/OrderSummaryItemsListItem';
 import type { OrderItemFragment } from '@/gql/graphql';
 
 interface Props {
