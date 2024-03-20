@@ -1,9 +1,9 @@
 import type { PaymentIntent } from '@stripe/stripe-js';
-import { OrderSummaryItemsList } from '@/ui/molecules/order/OrderSummaryItemsList';
-import { OrderSummaryHeading } from '@/ui/atoms/order/OrderSummaryHeading';
-import { OrderSummaryTrackingNumber } from '@/ui/atoms/order/OrderSummaryTrackingNumber';
-import { OrderSummaryPaymentDetails } from '@/ui/molecules/order/OrderSummaryPaymentDetails';
-import { OrderSummaryReturnLink } from '@/ui/atoms/order/OrderSummaryReturnLink';
+import { OrderSummaryItemsList } from '@/ui/molecules/orders/OrderSummaryItemsList';
+import { OrderSummaryHeading } from '@/ui/atoms/orders/OrderSummaryHeading';
+import { OrderSummaryTrackingNumber } from '@/ui/atoms/orders/OrderSummaryTrackingNumber';
+import { OrderSummaryPaymentDetails } from '@/ui/molecules/orders/OrderSummaryPaymentDetails';
+import { OrderSummaryReturnLink } from '@/ui/atoms/orders/OrderSummaryReturnLink';
 import type { OrderFragment, OrderStatus } from '@/gql/graphql';
 
 interface Props {

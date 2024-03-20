@@ -1,0 +1,11 @@
+fragment OrderListItemItemProduct on Product {
+  id
+  name
+  slug
+  description
+  images {
+    id
+    url
+    alt
+  }
+}

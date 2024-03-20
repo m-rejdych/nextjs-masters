@@ -22,6 +22,7 @@ const documents = {
     "fragment Order on Order {\n  ...OrderItemsCount\n  total\n  status\n  items(orderBy: {createdAt: Desc}) {\n    ...OrderItem\n  }\n}": types.OrderFragmentDoc,
     "query OrderGetById($id: ID!) {\n  orderById(id: $id) {\n    ...Order\n  }\n}": types.OrderGetByIdDocument,
     "query OrderGetItemsCountById($id: ID!) {\n  orderById(id: $id) {\n    ...OrderItemsCount\n  }\n}": types.OrderGetItemsCountByIdDocument,
+    "query OrderGetList($where: OrderWhere) {\n  orders(where: $where) {\n    ...OrderListItem\n  }\n}": types.OrderGetListDocument,
     "mutation OrderItemAdd($input: OrderItemAddInput!) {\n  addOrderItem(input: $input) {\n    ...OrderItemId\n  }\n}": types.OrderItemAddDocument,
     "mutation OrderItemDecrement($id: ID!) {\n  decrementOrderItemQuantity(id: $id) {\n    ...OrderItemId\n  }\n}": types.OrderItemDecrementDocument,
     "fragment OrderItem on OrderItem {\n  id\n  total\n  quantity\n  size {\n    id\n    type\n  }\n  color {\n    id\n    name\n  }\n  product {\n    ...OrderItemProduct\n  }\n}": types.OrderItemFragmentDoc,
@@ -30,6 +31,9 @@ const documents = {
     "fragment OrderItemProduct on Product {\n  id\n  slug\n  name\n  price\n  sizes {\n    inStock\n    size {\n      id\n    }\n  }\n  colors {\n    inStock\n    color {\n      id\n    }\n  }\n  images {\n    id\n    alt\n    url\n  }\n}": types.OrderItemProductFragmentDoc,
     "mutation OrderItemRemove($id: ID!) {\n  removeOrderItem(id: $id) {\n    ...OrderItemId\n  }\n}": types.OrderItemRemoveDocument,
     "fragment OrderItemsCount on Order {\n  id\n  itemsCount\n  status\n}": types.OrderItemsCountFragmentDoc,
+    "fragment OrderListItem on Order {\n  id\n  total\n  status\n  createdAt\n  items {\n    ...OrderListItemItem\n  }\n}": types.OrderListItemFragmentDoc,
+    "fragment OrderListItemItem on OrderItem {\n  ...OrderItem\n  product {\n    ...OrderListItemItemProduct\n  }\n}": types.OrderListItemItemFragmentDoc,
+    "fragment OrderListItemItemProduct on Product {\n  id\n  name\n  slug\n  description\n  images {\n    id\n    url\n    alt\n  }\n}": types.OrderListItemItemProductFragmentDoc,
     "mutation OrderUpdateStatus($id: ID!, $status: OrderStatus!) {\n  updateOrderStatus(id: $id, status: $status) {\n    ...Order\n  }\n}": types.OrderUpdateStatusDocument,
     "fragment Product on Product {\n  ...ProductListItem\n  rating\n  reviewCount\n  categories {\n    id\n  }\n  collections {\n    id\n  }\n  colors {\n    inStock\n    color {\n      id\n      name\n    }\n  }\n  sizes {\n    inStock\n    size {\n      id\n      type\n    }\n  }\n  details {\n    id\n    description\n  }\n}": types.ProductFragmentDoc,
     "query ProductGetById($where: ProductWhereUnique!) {\n  product(where: $where) {\n    ...Product\n  }\n}": types.ProductGetByIdDocument,
@@ -76,6 +80,10 @@ export function graphql(source: "query OrderGetItemsCountById($id: ID!) {\n  ord
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "query OrderGetList($where: OrderWhere) {\n  orders(where: $where) {\n    ...OrderListItem\n  }\n}"): typeof import('./graphql').OrderGetListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "mutation OrderItemAdd($input: OrderItemAddInput!) {\n  addOrderItem(input: $input) {\n    ...OrderItemId\n  }\n}"): typeof import('./graphql').OrderItemAddDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -105,6 +113,18 @@ export function graphql(source: "mutation OrderItemRemove($id: ID!) {\n  removeO
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "fragment OrderItemsCount on Order {\n  id\n  itemsCount\n  status\n}"): typeof import('./graphql').OrderItemsCountFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "fragment OrderListItem on Order {\n  id\n  total\n  status\n  createdAt\n  items {\n    ...OrderListItemItem\n  }\n}"): typeof import('./graphql').OrderListItemFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "fragment OrderListItemItem on OrderItem {\n  ...OrderItem\n  product {\n    ...OrderListItemItemProduct\n  }\n}"): typeof import('./graphql').OrderListItemItemFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "fragment OrderListItemItemProduct on Product {\n  id\n  name\n  slug\n  description\n  images {\n    id\n    url\n    alt\n  }\n}"): typeof import('./graphql').OrderListItemItemProductFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
