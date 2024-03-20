@@ -5,6 +5,7 @@ publicRoutes: [
   '/',
   '/products',
   '/products(.*)',
+  '/product(.*)',
   '/categories',
   '/categories(.*)',
   '/collections',
@@ -13,6 +14,7 @@ publicRoutes: [
   '/search(.*)',
   '/checkout',
   '/cart',
+  '/order(.*)',
   '/api(.*)'
 ]});
 
