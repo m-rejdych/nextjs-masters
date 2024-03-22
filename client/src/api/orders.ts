@@ -64,7 +64,6 @@ export const getOrders = async (
     const { orders } = await executeQuery({
       query: OrderGetListDocument,
       variables: { where, orderBy },
-      next: { tags: ['orders'] },
     });
     return orders;
   } catch (error) {

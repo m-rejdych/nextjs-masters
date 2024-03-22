@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { executeQuery } from '@/util/gql';
 import { getErrorMessage } from '@/util/error';
 import { stripe } from '@/util/stripe';
@@ -84,7 +84,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     revalidatePath(`/order/${orderId}`);
-    revalidateTag('orders');
+    revalidatePath('/orders');
 
     return response;
   } catch (error) {

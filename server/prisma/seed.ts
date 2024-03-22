@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 const prisma = new PrismaClient();
 
 const CLIENT_URL = process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? 'http://localhost:4000';
-const STATIC_URL = `${process.env.SERVER_URL}/static` as const;
+const STATIC_URL = `${process.env.SERVER_URL ?? 'http://localhost:4000'}/static` as const;
 const COLORS = ['BLACK', 'GRAY'] as const;
 const SIZES = ['S', 'M', 'L', 'XL'] as const;
 const PRODUCTS_COUNT = 200 as const;
