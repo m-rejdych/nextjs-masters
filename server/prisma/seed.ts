@@ -5,8 +5,8 @@ import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
-const BASE_URL = process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? 'http://localhost:4000';
-const STATIC_URL = `${BASE_URL}/static` as const;
+const CLIENT_URL = process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? 'http://localhost:4000';
+const STATIC_URL = `${process.env.SERVER_URL}/static` as const;
 const COLORS = ['BLACK', 'GRAY'] as const;
 const SIZES = ['S', 'M', 'L', 'XL'] as const;
 const PRODUCTS_COUNT = 100 as const;
@@ -220,7 +220,7 @@ const COLLECTIONS = [
     await prisma.$disconnect();
 
     const res = await fetch(
-      process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? `${BASE_URL}/api/products/revalidate`,
+      process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? `${CLIENT_URL}/api/products/revalidate`,
       { method: 'POST' },
     );
     console.log(await res.json());
@@ -229,7 +229,7 @@ const COLLECTIONS = [
     await prisma.$disconnect();
 
     const res = await fetch(
-      process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? `${BASE_URL}/api/products/revalidate`,
+      process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? `${CLIENT_URL}/api/products/revalidate`,
       { method: 'POST' },
     );
     console.log(await res.json());
