@@ -57,7 +57,11 @@ export const getOrderById = async (id: string): Promise<OrderFragment | null> =>
 
 export const getOrders = async (where?: OrderWhere): Promise<OrderListItemFragment[]> => {
   try {
-    const { orders } = await executeQuery({ query: OrderGetListDocument, variables: { where } });
+    const { orders } = await executeQuery({
+      query: OrderGetListDocument,
+      variables: { where },
+      next: { tags: ['orders'] },
+    });
     return orders;
   } catch (error) {
     console.log(error);

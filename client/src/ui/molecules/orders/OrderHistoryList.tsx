@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs';
 import { OrdersHistoryListItem } from '@/ui/molecules/orders/OrdersHistoryListItem';
-import { getOrders } from '@/api/order';
+import { getOrders } from '@/api/orders';
 
 export const OrdersHistoryList = async () => {
   const { userId } = auth();
