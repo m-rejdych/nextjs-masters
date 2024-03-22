@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 
 export const POST = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
@@ -11,7 +11,9 @@ export const POST = async (req: NextRequest) => {
 
   revalidatePath('/');
   revalidatePath(`/product/${id}`);
-  revalidateTag('products');
+  revalidatePath('/products/[currentPage]', 'page');
+  revalidatePath('/categories/[slug]/[currentPage]', 'page');
+  revalidatePath('/collections/[slug]/[currentPage]', 'page');
 
   return NextResponse.json({ result: 'success', data: `Product ${id} revalidated` });
 };
