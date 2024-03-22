@@ -5,6 +5,8 @@ export const metadata = {
   description: 'Check the status of recent orders, manage returns, and discover similar products.',
 };
 
+export const dynamic = 'force-dynamic'
+
 export default function OrdersPage() {
   return (
     <div className="bg-white">
