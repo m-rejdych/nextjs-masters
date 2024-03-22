@@ -6,18 +6,21 @@ import { ActiveLink } from '@/ui/atoms/nav/ActiveLink';
 
 interface Props {
   panelItems: CategoryVariant[];
+  onClose: () => void;
 }
 
-export const MobileMenuPanels = ({ panelItems }: Props) => (
+export const MobileMenuPanels = ({ panelItems, onClose }: Props) => (
   <Tab.Panels as={Fragment}>
     {panelItems.map(({ variant, node }) => (
       <Tab.Panel key={variant} className="space-y-12 px-4 py-6">
-        {node}
+        <div role="button" onClick={onClose}>
+          {node}
+        </div>
       </Tab.Panel>
     ))}
     <div className="space-y-6 border-t border-neutral-200 px-4 py-6">
       {PAGES.map(({ name, href, exact }) => (
-        <div key={name} className="flow-root">
+        <div key={name} className="flow-root" onClick={onClose} role="button">
           <ActiveLink
             href={href}
             exact={exact}

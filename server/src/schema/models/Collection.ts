@@ -2,10 +2,10 @@ import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
 
 enum CollectionName {
+  SUMMER = 'SUMMER',
+  WINTER = 'WINTER',
   NEW_ARRIVALS = 'NEW_ARRIVALS',
-  SPORT = 'SPORT',
-  BEAUTY = 'BEAUTY',
-  ACCESSORIES = 'ACCESSORIES',
+  BEST_SELLERS = 'BEST_SELLERS',
 }
 
 builder.enumType(CollectionName, {

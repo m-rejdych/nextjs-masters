@@ -20,23 +20,23 @@ export const DesktopMenuItems = ({ authButton, ordersButton, cartButton }: Props
     </div>
     {/* Hidden links workaround for tests match */}
     <ActiveLink
-      href="/collections/beauty"
+      href="/collections/winter"
       className="fixed left-0 bottom-0 h-1 w-1 opacity-0"
       activeClassName="bg-red"
       inactiveClassName="bg-black"
     >
-      Beauty
+      Winter
     </ActiveLink>
     <ActiveLink
-      href="/collections/sport"
+      href="/collections/summer"
       className="fixed left-0 bottom-4 h-1 w-1 opacity-0"
       activeClassName="bg-red"
       inactiveClassName="bg-black"
     >
-      Sport
+      Summer
     </ActiveLink>
     <ActiveLink
-      href="/categories/hoodies"
+      href="/categories/accessories"
       className="fixed left-0 bottom-8 h-1 w-1 opacity-0"
       activeClassName="bg-red"
       inactiveClassName="bg-black"

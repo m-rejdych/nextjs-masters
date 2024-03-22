@@ -31,7 +31,7 @@ export default async function CategoryPage({
   searchParams: { sortOrder, sortBy },
 }: Props) {
   const products = await getProducts({
-    take: 20,
+    take: 18,
     offset: (Number(currentPage) - 1) * 20,
     where: {
       categories: { some: { slug } },

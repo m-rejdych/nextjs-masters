@@ -45,7 +45,7 @@ export const MobileMenu = ({ open, onClose, panelItems }: Props) => (
               <div className="border-b border-neutral-200">
                 <MobileMenuCategoryNameList />
               </div>
-              <MobileMenuPanels panelItems={panelItems} />
+              <MobileMenuPanels panelItems={panelItems} onClose={onClose} />
             </Tab.Group>
           </Dialog.Panel>
         </Transition.Child>
