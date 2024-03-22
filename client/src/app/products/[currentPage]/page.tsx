@@ -30,7 +30,7 @@ export default async function ProductsPaginated({
 }: Props) {
   const products = await getProducts({
     take: 18,
-    offset: (Number(currentPage) - 1) * 20,
+    offset: (Number(currentPage) - 1) * 18,
     orderBy: getOrderBy(sortBy, sortOrder),
   });
 

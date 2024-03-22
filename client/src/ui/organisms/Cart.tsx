@@ -13,7 +13,7 @@ export const Cart = async () => {
         {order?.items.length ? (
           <CartProductsList items={order.items} />
         ) : (
-          <div className="flex h-[300px] items-center justify-center">
+          <div className="flex min-h-[450px] items-center justify-center">
             <h3 className="text-2xl text-neutral-600">No items in your cart</h3>
           </div>
         )}

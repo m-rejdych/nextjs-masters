@@ -32,7 +32,7 @@ export default async function CollectionPage({
 }: Props) {
   const products = await getProducts({
     take: 18,
-    offset: (Number(currentPage) - 1) * 20,
+    offset: (Number(currentPage) - 1) * 18,
     where: {
       collections: { some: { slug } },
     },
@@ -51,7 +51,7 @@ export default async function CollectionPage({
         hasNextPage={products.hasNextPage}
         hasPreviousPage={products.hasPreviousPage}
         currentPage={Number(currentPage)}
-        totalPages={Math.ceil(products.totalCount / 20)}
+        totalPages={Math.ceil(products.totalCount / 18)}
         directory="collections"
         slug={slug}
       />

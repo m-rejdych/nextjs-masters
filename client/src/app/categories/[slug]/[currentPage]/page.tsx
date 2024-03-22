@@ -32,7 +32,7 @@ export default async function CategoryPage({
 }: Props) {
   const products = await getProducts({
     take: 18,
-    offset: (Number(currentPage) - 1) * 20,
+    offset: (Number(currentPage) - 1) * 18,
     where: {
       categories: { some: { slug } },
     },
@@ -51,7 +51,7 @@ export default async function CategoryPage({
         hasNextPage={products.hasNextPage}
         hasPreviousPage={products.hasPreviousPage}
         currentPage={Number(currentPage)}
-        totalPages={Math.ceil(products.totalCount / 20)}
+        totalPages={Math.ceil(products.totalCount / 18)}
         directory="categories"
         slug={slug}
       />
