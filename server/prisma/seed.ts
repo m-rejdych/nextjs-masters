@@ -9,7 +9,7 @@ const CLIENT_URL = process.env.CLIENT_URL ?? process.env.VERCEL_URL ?? 'http://l
 const STATIC_URL = `${process.env.SERVER_URL}/static` as const;
 const COLORS = ['BLACK', 'GRAY'] as const;
 const SIZES = ['S', 'M', 'L', 'XL'] as const;
-const PRODUCTS_COUNT = 100 as const;
+const PRODUCTS_COUNT = 200 as const;
 const CATEGORIES = [
   {
     name: 'CLOTHING',
@@ -149,73 +149,150 @@ const COLLECTIONS = [
       }),
     );
 
-    await Promise.all(
-      Array.from({ length: PRODUCTS_COUNT }, async () => {
-        const name = faker.commerce.productName();
+    for (let i = 0; i < PRODUCTS_COUNT / 20; i++) {
+      await Promise.allSettled(
+        Array.from({ length: 20 }, async () => {
+          const name = faker.commerce.productName();
 
-        const ratings = Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () =>
-          faker.number.int({ min: 1, max: 5 }),
-        );
+          const ratings = Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () =>
+            faker.number.int({ min: 1, max: 5 }),
+          );
 
-        const randomImageSetIdx = Math.floor(Math.random() * images.length);
+          const randomImageSetIdx = Math.floor(Math.random() * images.length);
 
-        const createdProduct = await prisma.product.create({
-          data: {
-            name,
-            slug: faker.helpers.slugify(name).toLowerCase(),
-            description: faker.commerce.productDescription(),
-            rating: ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length,
-            price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
-            images: {
-              create: {
-                //url: faker.image.urlLoremFlickr({ category: 'clothes', width: 480, height: 640 }),
-                url: images[randomImageSetIdx]![Math.floor(Math.random() * images[randomImageSetIdx]!.length)] as string,
-                alt: name,
+          const createdProduct = await prisma.product.create({
+            data: {
+              name,
+              slug: faker.helpers.slugify(name).toLowerCase(),
+              description: faker.commerce.productDescription(),
+              rating: ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length,
+              price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
+              images: {
+                create: {
+                  //url: faker.image.urlLoremFlickr({ category: 'clothes', width: 480, height: 640 }),
+                  url: images[randomImageSetIdx]![
+                    Math.floor(Math.random() * images[randomImageSetIdx]!.length)
+                  ] as string,
+                  alt: name,
+                },
+              },
+              reviews: {
+                createMany: {
+                  data: ratings.map((rating) => {
+                    const user = faker.person.firstName();
+                    return {
+                      rating,
+                      title: faker.word.adjective(),
+                      description: faker.lorem.paragraph({ min: 1, max: 5 }),
+                      email: faker.internet.email({ firstName: user }),
+                      author: user,
+                    };
+                  }),
+                },
+              },
+              categories: {
+                connect: { id: categoryIds[randomImageSetIdx] },
+              },
+              collections: {
+                connect: { id: collectionIds[Math.floor(Math.random() * collectionIds.length)] },
+              },
+              colors: {
+                createMany: {
+                  data: colorIds.map((colorId) => ({ colorId, inStock: true })),
+                },
+              },
+              sizes: {
+                createMany: {
+                  data: sizeIds.map((sizeId) => ({ sizeId, inStock: faker.datatype.boolean() })),
+                },
+              },
+              details: {
+                createMany: {
+                  data: Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () => ({
+                    description: faker.lorem.paragraph(1),
+                  })),
+                },
               },
             },
-            reviews: {
-              createMany: {
-                data: ratings.map((rating) => {
-                  const user = faker.person.firstName();
-                  return {
-                    rating,
-                    title: faker.word.adjective(),
-                    description: faker.lorem.paragraph({ min: 1, max: 5 }),
-                    email: faker.internet.email({ firstName: user }),
-                    author: user,
-                  };
-                }),
-              },
-            },
-            categories: {
-              connect: { id: categoryIds[randomImageSetIdx] },
-            },
-            collections: {
-              connect: { id: collectionIds[Math.floor(Math.random() * collectionIds.length)] },
-            },
-            colors: {
-              createMany: {
-                data: colorIds.map((colorId) => ({ colorId, inStock: true })),
-              },
-            },
-            sizes: {
-              createMany: {
-                data: sizeIds.map((sizeId) => ({ sizeId, inStock: faker.datatype.boolean() })),
-              },
-            },
-            details: {
-              createMany: {
-                data: Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () => ({
-                  description: faker.lorem.paragraph(1),
-                })),
-              },
-            },
-          },
-        });
+          });
 
-        console.log(`Created product with id: ${createdProduct.id}`);
-      }),
-    );
+          console.log(`Created product with id: ${createdProduct.id}`);
+        }),
+      );
+    }
+
+    //    await Promise.all(
+    //      Array.from({ length: PRODUCTS_COUNT }, async (_, index) => {
+    //        if (index % 15) await new Promise<void>((resolve) => setTimeout(() => {
+    //          console.log('Waiting for 5 seconds...');
+    //          resolve();
+    //        }, 5000));
+    //
+    //        const name = faker.commerce.productName();
+    //
+    //        const ratings = Array.from({ length: Math.floor(Math.random() * 10) + 1 }, () =>
+    //          faker.number.int({ min: 1, max: 5 }),
+    //        );
+    //
+    //        const randomImageSetIdx = Math.floor(Math.random() * images.length);
+    //
+    //        const createdProduct = await prisma.product.create({
+    //          data: {
+    //            name,
+    //            slug: faker.helpers.slugify(name).toLowerCase(),
+    //            description: faker.commerce.productDescription(),
+    //            rating: ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length,
+    //            price: parseInt(faker.commerce.price({ min: 1000, max: 5000 }), 10),
+    //            images: {
+    //              create: {
+    //                //url: faker.image.urlLoremFlickr({ category: 'clothes', width: 480, height: 640 }),
+    //                url: images[randomImageSetIdx]![Math.floor(Math.random() * images[randomImageSetIdx]!.length)] as string,
+    //                alt: name,
+    //              },
+    //            },
+    //            reviews: {
+    //              createMany: {
+    //                data: ratings.map((rating) => {
+    //                  const user = faker.person.firstName();
+    //                  return {
+    //                    rating,
+    //                    title: faker.word.adjective(),
+    //                    description: faker.lorem.paragraph({ min: 1, max: 5 }),
+    //                    email: faker.internet.email({ firstName: user }),
+    //                    author: user,
+    //                  };
+    //                }),
+    //              },
+    //            },
+    //            categories: {
+    //              connect: { id: categoryIds[randomImageSetIdx] },
+    //            },
+    //            collections: {
+    //              connect: { id: collectionIds[Math.floor(Math.random() * collectionIds.length)] },
+    //            },
+    //            colors: {
+    //              createMany: {
+    //                data: colorIds.map((colorId) => ({ colorId, inStock: true })),
+    //              },
+    //            },
+    //            sizes: {
+    //              createMany: {
+    //                data: sizeIds.map((sizeId) => ({ sizeId, inStock: faker.datatype.boolean() })),
+    //              },
+    //            },
+    //            details: {
+    //              createMany: {
+    //                data: Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () => ({
+    //                  description: faker.lorem.paragraph(1),
+    //                })),
+    //              },
+    //            },
+    //          },
+    //        });
+    //
+    //        console.log(`Created product with id: ${createdProduct.id}`);
+    //      }),
+    //    );
 
     await prisma.$disconnect();
 
