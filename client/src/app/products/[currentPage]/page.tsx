@@ -46,7 +46,7 @@ export default async function ProductsPaginated({
         currentPage={Number(currentPage)}
         hasPreviousPage={products.hasPreviousPage}
         hasNextPage={products.hasNextPage}
-        totalPages={Math.ceil(products.totalCount / 20)}
+        totalPages={Math.ceil(products.totalCount / 18)}
         directory="products"
       />
     </main>

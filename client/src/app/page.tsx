@@ -34,7 +34,7 @@ export default async function Home({ searchParams: { sortOrder, sortBy } }: Prop
         currentPage={1}
         hasPreviousPage={products.hasPreviousPage}
         hasNextPage={products.hasNextPage}
-        totalPages={Math.floor(products.totalCount / 20)}
+        totalPages={Math.ceil(products.totalCount / 18)}
         directory="products"
       />
     </main>
