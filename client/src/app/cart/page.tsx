@@ -3,7 +3,7 @@ import { Cart } from '@/ui/organisms/Cart';
 export const metadata = {
   title: 'Cart',
   description: 'Cart page',
-}
+};
 
 export const dynamic = 'force-dynamic';
 

@@ -22,7 +22,7 @@ const documents = {
     "fragment Order on Order {\n  ...OrderItemsCount\n  total\n  status\n  items(orderBy: {createdAt: Desc}) {\n    ...OrderItem\n  }\n}": types.OrderFragmentDoc,
     "query OrderGetById($id: ID!) {\n  order(id: $id) {\n    ...Order\n  }\n}": types.OrderGetByIdDocument,
     "query OrderGetItemsCountById($id: ID!) {\n  order(id: $id) {\n    ...OrderItemsCount\n  }\n}": types.OrderGetItemsCountByIdDocument,
-    "query OrderGetList($where: OrderWhere) {\n  orders(where: $where) {\n    ...OrderListItem\n  }\n}": types.OrderGetListDocument,
+    "query OrderGetList($where: OrderWhere, $orderBy: OrderOrderBy) {\n  orders(where: $where, orderBy: $orderBy) {\n    ...OrderListItem\n  }\n}": types.OrderGetListDocument,
     "mutation OrderItemAdd($input: OrderItemAddInput!) {\n  addOrderItem(input: $input) {\n    ...OrderItemId\n  }\n}": types.OrderItemAddDocument,
     "mutation OrderItemDecrement($id: ID!) {\n  decrementOrderItemQuantity(id: $id) {\n    ...OrderItemId\n  }\n}": types.OrderItemDecrementDocument,
     "fragment OrderItem on OrderItem {\n  id\n  total\n  quantity\n  size {\n    id\n    type\n  }\n  color {\n    id\n    name\n  }\n  product {\n    ...OrderItemProduct\n  }\n}": types.OrderItemFragmentDoc,
@@ -80,7 +80,7 @@ export function graphql(source: "query OrderGetItemsCountById($id: ID!) {\n  ord
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query OrderGetList($where: OrderWhere) {\n  orders(where: $where) {\n    ...OrderListItem\n  }\n}"): typeof import('./graphql').OrderGetListDocument;
+export function graphql(source: "query OrderGetList($where: OrderWhere, $orderBy: OrderOrderBy) {\n  orders(where: $where, orderBy: $orderBy) {\n    ...OrderListItem\n  }\n}"): typeof import('./graphql').OrderGetListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

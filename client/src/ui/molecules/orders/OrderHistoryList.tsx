@@ -4,7 +4,9 @@ import { getOrders } from '@/api/orders';
 
 export const OrdersHistoryList = async () => {
   const { userId } = auth();
-  const orders = userId ? await getOrders({ userId, NOT: { status: 'CREATED' } }) : [];
+  const orders = userId
+    ? await getOrders({ userId, NOT: { status: 'CREATED' } }, { createdAt: 'Desc' })
+    : [];
 
   return (
     userId &&

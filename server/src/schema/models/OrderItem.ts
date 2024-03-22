@@ -18,6 +18,14 @@ builder.prismaObject('OrderItem', {
   }),
 });
 
+export const OrderItemOrderBy = builder.prismaOrderBy('OrderItem', {
+  name: 'OrderItemOrderBy',
+  fields: {
+    createdAt: true,
+    updatedAt: true,
+  },
+});
+
 const OrderItemAddInput = builder.inputType('OrderItemAddInput', {
   fields: (t) => ({
     productId: t.string({ required: true }),

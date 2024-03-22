@@ -25,7 +25,7 @@ export const OrderHistoryListItemProductsListItemInfo = ({
       <p className="mt-0.5 sm:mt-0">{formatDolars(total / 100)}</p>
     </div>
     <p className="hidden text-neutral-500 sm:mt-2 sm:block">{product.description}</p>
-    <p className="text-neutral-500 mt-1 sm:mt-4">Quantity: {quantity}</p>
+    <p className="mt-1 text-neutral-500 sm:mt-4">Quantity: {quantity}</p>
     <p className="text-neutral-500">{color.name}</p>
     <p className="text-neutral-500">{size.type}</p>
   </div>

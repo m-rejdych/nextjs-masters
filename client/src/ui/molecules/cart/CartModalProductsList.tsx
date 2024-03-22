@@ -12,5 +12,7 @@ export const CartModalProductsList = async () => {
         <CartModalProductsListItem key={item.id} {...item} />
       ))}
     </ul>
-  ) : <h3 className="text-xl text-center mt-8 text-neutral-600">No items in your cart</h3>;
+  ) : (
+    <h3 className="mt-8 text-center text-xl text-neutral-600">No items in your cart</h3>
+  );
 };

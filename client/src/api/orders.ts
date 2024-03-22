@@ -7,6 +7,7 @@ import {
   type OrderItemsCountFragment,
   type OrderFragment,
   type OrderWhere,
+  type OrderOrderBy,
 } from '@/gql/graphql';
 import { executeQuery } from '@/util/gql';
 
@@ -55,11 +56,14 @@ export const getOrderById = async (id: string): Promise<OrderFragment | null> =>
   }
 };
 
-export const getOrders = async (where?: OrderWhere): Promise<OrderListItemFragment[]> => {
+export const getOrders = async (
+  where?: OrderWhere,
+  orderBy?: OrderOrderBy,
+): Promise<OrderListItemFragment[]> => {
   try {
     const { orders } = await executeQuery({
       query: OrderGetListDocument,
-      variables: { where },
+      variables: { where, orderBy },
       next: { tags: ['orders'] },
     });
     return orders;

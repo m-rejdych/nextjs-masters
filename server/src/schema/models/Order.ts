@@ -1,5 +1,6 @@
 import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
+import { OrderItemOrderBy } from '@/schema/models/OrderItem';
 
 enum OrderStatus {
   CANCELLED = 'CANCELLED',
@@ -12,14 +13,6 @@ enum OrderStatus {
 
 builder.enumType(OrderStatus, {
   name: 'OrderStatus',
-});
-
-const OrderItemOrderBy = builder.prismaOrderBy('OrderItem', {
-  name: 'OrderItemOrderBy',
-  fields: {
-    createdAt: true,
-    updatedAt: true,
-  },
 });
 
 builder.prismaObject('Order', {
@@ -58,6 +51,16 @@ builder.prismaObject('Order', {
   }),
 });
 
+const OrderOrderBy = builder.prismaOrderBy('Order', {
+  name: 'OrderOrderBy',
+  fields: {
+    createdAt: true,
+    updatedAt: true,
+    status: true,
+    userId: true,
+  },
+});
+
 const OrderWhereNot = builder.prismaWhere('Order', {
   name: 'OrderWhereNot',
   fields: {
@@ -93,9 +96,14 @@ builder.queryField('orders', (t) =>
     type: ['Order'],
     args: {
       where: t.arg({ type: OrderWhere }),
+      orderBy: t.arg({ type: OrderOrderBy }),
     },
-    resolve: async (query, _, { where }) => {
-      return prisma.order.findMany({ ...query, where: where ?? undefined });
+    resolve: async (query, _, { where, orderBy }) => {
+      return prisma.order.findMany({
+        ...query,
+        where: where ?? undefined,
+        orderBy: orderBy ?? undefined,
+      });
     },
   }),
 );

@@ -33,7 +33,7 @@ export const POST = async (req: NextRequest) => {
       return Response.json({ result: 'failure', data: 'No orderId metadata' }, { status: 400 });
     }
 
-    let response: NextResponse<{ result: string, data: string }>;
+    let response: NextResponse<{ result: string; data: string }>;
 
     switch (event.type) {
       case 'payment_intent.canceled':
@@ -41,31 +41,46 @@ export const POST = async (req: NextRequest) => {
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'CANCELLED' },
         });
-        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        response = NextResponse.json(
+          { result: 'success', data: 'Webhook succeeded' },
+          { status: 200 },
+        );
         break;
       case 'payment_intent.payment_failed':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'FAILED' },
         });
-        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        response = NextResponse.json(
+          { result: 'success', data: 'Webhook succeeded' },
+          { status: 200 },
+        );
         break;
       case 'payment_intent.processing':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'PROCESSING_PAYMENT' },
         });
-        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        response = NextResponse.json(
+          { result: 'success', data: 'Webhook succeeded' },
+          { status: 200 },
+        );
         break;
       case 'payment_intent.succeeded':
         await executeQuery({
           query: OrderUpdateStatusDocument,
           variables: { id: orderId, status: 'PAID' },
         });
-        response = NextResponse.json({ result: 'success', data: 'Webhook succeeded' }, { status: 200 });
+        response = NextResponse.json(
+          { result: 'success', data: 'Webhook succeeded' },
+          { status: 200 },
+        );
         break;
       default:
-        response = NextResponse.json({ result: 'failure', data: 'Unexpected event' }, { status: 400 });
+        response = NextResponse.json(
+          { result: 'failure', data: 'Unexpected event' },
+          { status: 400 },
+        );
     }
 
     revalidatePath(`/order/${orderId}`);

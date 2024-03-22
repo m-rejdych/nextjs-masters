@@ -25,14 +25,14 @@ export const CategoryPopover = ({ variant, children }: Props) => {
             leaveTo="opacity-0"
           >
             <Popover.Panel className="absolute inset-x-0 top-full text-sm text-neutral-500">
-            {({ close }) => (
-              <>
-                <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
-                <div onClick={() => close()} role="button">
-                  {children}
-                </div>
-              </>
-            )}
+              {({ close }) => (
+                <>
+                  <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
+                  <div onClick={() => close()} role="button">
+                    {children}
+                  </div>
+                </>
+              )}
             </Popover.Panel>
           </Transition>
         </>

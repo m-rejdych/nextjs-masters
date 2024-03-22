@@ -24,13 +24,13 @@ export const CartModal = ({ checkoutSection, productsList }: Props) => {
   const handleClose = (): void => {
     setOpen(false);
     setBackOnLeave(true);
-  }
+  };
 
   const handleAfterLeave = (): void => {
     if (!backOnLeave) return;
     router.back();
     setBackOnLeave(false);
-  }
+  };
 
   return (
     <Transition.Root show={open} appear as={Fragment} afterLeave={handleAfterLeave}>

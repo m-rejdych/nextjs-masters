@@ -250,6 +250,13 @@ export type OrderItemOrderBy = {
   updatedAt?: InputMaybe<OrderBy>;
 };
 
+export type OrderOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  status?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
+};
+
 export type OrderStatus =
   | 'CANCELLED'
   | 'CREATED'
@@ -377,6 +384,7 @@ export type QueryOrderArgs = {
 
 
 export type QueryOrdersArgs = {
+  orderBy?: InputMaybe<OrderOrderBy>;
   where?: InputMaybe<OrderWhere>;
 };
 
@@ -518,6 +526,7 @@ export type OrderGetItemsCountByIdQuery = { __typename?: 'Query', order?: { __ty
 
 export type OrderGetListQueryVariables = Exact<{
   where?: InputMaybe<OrderWhere>;
+  orderBy?: InputMaybe<OrderOrderBy>;
 }>;
 
 
@@ -1117,8 +1126,8 @@ export const OrderGetItemsCountByIdDocument = new TypedDocumentString(`
   status
 }`) as unknown as TypedDocumentString<OrderGetItemsCountByIdQuery, OrderGetItemsCountByIdQueryVariables>;
 export const OrderGetListDocument = new TypedDocumentString(`
-    query OrderGetList($where: OrderWhere) {
-  orders(where: $where) {
+    query OrderGetList($where: OrderWhere, $orderBy: OrderOrderBy) {
+  orders(where: $where, orderBy: $orderBy) {
     ...OrderListItem
   }
 }

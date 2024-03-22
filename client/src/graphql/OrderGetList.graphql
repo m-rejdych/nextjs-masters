@@ -1,5 +1,5 @@
-query OrderGetList($where: OrderWhere) {
-  orders(where: $where) {
+query OrderGetList($where: OrderWhere, $orderBy: OrderOrderBy) {
+  orders(where: $where, orderBy: $orderBy) {
     ...OrderListItem
   }
 }

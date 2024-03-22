@@ -31,4 +31,5 @@ export const getTaxValue = (amount: number) => amount * (TAX_RATE / 100);
 
 export const getShippingValue = () => SHIPPING;
 
-export const getTotalOrderValue = (amount: number) => amount + getTaxValue(amount) + getShippingValue();
+export const getTotalOrderValue = (amount: number) =>
+  amount + getTaxValue(amount) + getShippingValue();

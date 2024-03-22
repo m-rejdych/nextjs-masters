@@ -6,7 +6,7 @@ import { stripe } from '@/util/stripe';
 export const metadata = {
   title: 'Checkout',
   description: 'Checkout page',
-}
+};
 
 export const dynamic = 'force-dynamic';
 

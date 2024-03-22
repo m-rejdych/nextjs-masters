@@ -1,5 +1,5 @@
-import { OrderHistoryListItemProductsListItem } from "@/ui/molecules/orders/OrderHistoryListItemProductsListItem";
-import type { OrderListItemItemFragment } from "@/gql/graphql";
+import { OrderHistoryListItemProductsListItem } from '@/ui/molecules/orders/OrderHistoryListItemProductsListItem';
+import type { OrderListItemItemFragment } from '@/gql/graphql';
 
 interface Props {
   items: OrderListItemItemFragment[];

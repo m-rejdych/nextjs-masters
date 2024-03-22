@@ -21,7 +21,7 @@ export const DesktopMenuItems = ({ authButton, ordersButton, cartButton }: Props
     {/* Hidden links workaround for tests match */}
     <ActiveLink
       href="/collections/winter"
-      className="fixed left-0 bottom-0 h-1 w-1 opacity-0"
+      className="fixed bottom-0 left-0 h-1 w-1 opacity-0"
       activeClassName="bg-red"
       inactiveClassName="bg-black"
     >
@@ -29,7 +29,7 @@ export const DesktopMenuItems = ({ authButton, ordersButton, cartButton }: Props
     </ActiveLink>
     <ActiveLink
       href="/collections/summer"
-      className="fixed left-0 bottom-4 h-1 w-1 opacity-0"
+      className="fixed bottom-4 left-0 h-1 w-1 opacity-0"
       activeClassName="bg-red"
       inactiveClassName="bg-black"
     >
@@ -37,7 +37,7 @@ export const DesktopMenuItems = ({ authButton, ordersButton, cartButton }: Props
     </ActiveLink>
     <ActiveLink
       href="/categories/accessories"
-      className="fixed left-0 bottom-8 h-1 w-1 opacity-0"
+      className="fixed bottom-8 left-0 h-1 w-1 opacity-0"
       activeClassName="bg-red"
       inactiveClassName="bg-black"
     />

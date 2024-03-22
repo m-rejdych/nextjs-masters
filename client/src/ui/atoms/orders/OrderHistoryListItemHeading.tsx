@@ -7,7 +7,6 @@ interface Props {
 
 export const OrdersHistoryListItemHeading = ({ createdAt }: Props) => (
   <h3 className="sr-only">
-    Order placed on{' '}
-    <time dateTime={parseTime(createdAt)}>{parseDate(createdAt)}</time>
+    Order placed on <time dateTime={parseTime(createdAt)}>{parseDate(createdAt)}</time>
   </h3>
 );

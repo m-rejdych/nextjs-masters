@@ -3,7 +3,7 @@ import { SignUp } from '@clerk/nextjs';
 export const metadata = {
   title: 'Register',
   description: 'Register an account',
-}
+};
 
 export default function RegisterPage() {
   return (

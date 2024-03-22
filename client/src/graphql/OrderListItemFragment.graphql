@@ -1,5 +1,5 @@
 fragment OrderListItem on Order {
-  id 
+  id
   total
   status
   createdAt
