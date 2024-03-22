@@ -20,7 +20,7 @@ export const metadata = {
 };
 
 export default async function Home({ searchParams: { sortOrder, sortBy } }: Props) {
-  const products = await getProducts({ take: 20, orderBy: getOrderBy(sortBy, sortOrder) });
+  const products = await getProducts({ take: 18, orderBy: getOrderBy(sortBy, sortOrder) });
 
   if (!products) {
     return notFound();

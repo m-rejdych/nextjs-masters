@@ -2,10 +2,10 @@ import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
 
 enum CategoryName {
-  BASICS = 'BASICS',
-  HOODIES = 'HOODIES',
-  SHIRTS = 'SHIRTS',
-  JACKETS = 'JACKETS',
+  CLOTHING = 'CLOTHING',
+  ACCESSORIES = 'ACCESSORIES',
+  JEWELRY = 'JEWELRY',
+  COSMETICS = 'COSMETICS',
 }
 
 builder.enumType(CategoryName, {

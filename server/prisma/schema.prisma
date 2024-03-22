@@ -159,17 +159,17 @@ model OrderItem {
 }
 
 enum CategoryName {
-  BASICS
-  HOODIES
-  SHIRTS
-  JACKETS
+  CLOTHING
+  ACCESSORIES
+  JEWELRY
+  COSMETICS
 }
 
 enum CollectionName {
+  SUMMER
+  WINTER
   NEW_ARRIVALS
-  SPORT
-  BEAUTY
-  ACCESSORIES
+  BEST_SELLERS
 }
 
 enum ColorName {

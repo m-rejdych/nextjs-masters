@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import type { Metadata } from 'next';
 import './globals.css';
 import { Nav } from '@/ui/organisms/Nav';
+import { Footer } from '@/ui/molecules/nav/Footer';
 import { CategoryPopoverList } from '@/ui/molecules/nav/CategoryPopoverList';
 import { MobileMenuPanelsCategoryList } from '@/ui/molecules/nav/MobileMenuPanelsCategoryList';
 import { DesktopMenuCartButton } from '@/ui/atoms/nav/DesktopMenuCartButton';
@@ -51,6 +52,7 @@ export default function RootLayout({ children, modal }: Props) {
           <div className="mx-auto h-full max-w-7xl px-4 py-32 sm:px-6 sm:py-40 lg:px-8">
             {children}
           </div>
+          <Footer />
           {modal}
         </body>
       </html>

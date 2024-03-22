@@ -9,8 +9,8 @@ interface Props {
 export const CartProductsListItemImage = ({ url, alt }: Props) => (
   <div className="flex-shrink-0">
     <Image
-      width={480}
-      height={640}
+      width={800}
+      height={800}
       src={url}
       alt={alt}
       className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"

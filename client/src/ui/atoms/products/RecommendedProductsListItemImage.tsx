@@ -8,8 +8,8 @@ interface Props {
 export const RecommendedProductsListItemImage = ({ image: { url, alt } }: Props) => (
   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-neutral-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
     <Image
-      width={480}
-      height={640}
+      width={800}
+      height={800}
       src={url}
       alt={alt}
       className="h-full w-full object-cover object-center lg:h-full lg:w-full"

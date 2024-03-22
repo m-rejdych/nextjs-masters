@@ -10,6 +10,8 @@ const nextConfig = {
 			{ hostname: 'tailwindui.com', protocol: 'https' },
 			{ hostname: 'fakestoreapi.com', protocol: 'https' },
 			{ hostname: 'cdn.dummyjson.com', protocol: 'https' },
+			{ hostname: 'localhost', protocol: 'http' },
+			{ hostname: 'nextjs-shop-api.mrejdych.com', protocol: 'https' },
 		],
 	},
 	async redirects() {

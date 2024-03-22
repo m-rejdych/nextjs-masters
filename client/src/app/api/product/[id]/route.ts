@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
 
   revalidatePath('/');
   revalidatePath(`/product/${id}`);
-  revalidatePath('/products/[currentPage]');
+  revalidatePath('/products/[currentPage]', 'page');
 
   return NextResponse.json({ result: 'success', data: `Product ${id} revalidated` });
 };

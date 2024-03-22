@@ -50,10 +50,10 @@ export type CategoryImage = {
 };
 
 export type CategoryName =
-  | 'BASICS'
-  | 'HOODIES'
-  | 'JACKETS'
-  | 'SHIRTS';
+  | 'ACCESSORIES'
+  | 'CLOTHING'
+  | 'COSMETICS'
+  | 'JEWELRY';
 
 export type CategoryProductsConnection = {
   __typename?: 'CategoryProductsConnection';
@@ -103,10 +103,10 @@ export type CollectionImage = {
 };
 
 export type CollectionName =
-  | 'ACCESSORIES'
-  | 'BEAUTY'
+  | 'BEST_SELLERS'
   | 'NEW_ARRIVALS'
-  | 'SPORT';
+  | 'SUMMER'
+  | 'WINTER';
 
 export type CollectionProductsConnection = {
   __typename?: 'CollectionProductsConnection';

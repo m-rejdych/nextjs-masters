@@ -11,8 +11,8 @@ export const ProductListItemImage = ({ alt, url }: Props) => (
     <Image
       src={url}
       alt={alt}
-      height={640}
-      width={480}
+      height={800}
+      width={800}
       className="h-full w-full object-cover object-center sm:h-full sm:w-full"
     />
   </div>
