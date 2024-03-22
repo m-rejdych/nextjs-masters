@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { notFound, redirect } from 'next/navigation';
-import { getOrderById } from '@/api/order';
+import { getOrderById } from '@/api/orders';
 import { stripe } from '@/util/stripe';
 import { OrderSummary } from '@/ui/organisms/OrderSummary';
 

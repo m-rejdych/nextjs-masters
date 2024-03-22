@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getOrderById } from '@/api/order';
+import { getOrderById } from '@/api/orders';
 
 export const POST = async () => {
   const orderId = cookies().get('orderId')?.value;

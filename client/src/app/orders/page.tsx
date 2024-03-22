@@ -1,5 +1,10 @@
 import { OrdersHistory } from '@/ui/organisms/OrdersHistory';
 
+export const metadata = {
+  title: 'Orders',
+  description: 'Check the status of recent orders, manage returns, and discover similar products.',
+};
+
 export default function OrdersPage() {
   return (
     <div className="bg-white">

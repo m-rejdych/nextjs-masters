@@ -5,7 +5,7 @@ import { AddToCartButton } from '@/ui/atoms/nav/AddToCartButton';
 import { ColorPicker } from '@/ui/molecules/products/ColorPicker';
 import { SizePicker } from '@/ui/molecules/products/SizePicker';
 import { addOrderItem } from '@/api/orderItem';
-import { createOrder } from '@/api/order';
+import { createOrder } from '@/api/orders';
 import { getCookieOrderItemsCount } from '@/util/order';
 import type { ProductFragment } from '@/gql/graphql';
 

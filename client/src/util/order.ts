@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import type { OrderItemsCountFragment, OrderFragment } from '@/gql/graphql';
-import { getOrderItemsCountById, getOrderById } from '@/api/order';
+import { getOrderItemsCountById, getOrderById } from '@/api/orders';
 
 export const getCookieOrderItemsCount = async (): Promise<OrderItemsCountFragment | null> => {
   const orderId = cookies().get('orderId')?.value;
