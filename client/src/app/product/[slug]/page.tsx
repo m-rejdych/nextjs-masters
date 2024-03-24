@@ -59,7 +59,7 @@ export default async function SingleProductPage({ params: { slug } }: Props) {
           <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
             <div className="lg:col-span-5 lg:col-start-8">
               <ProductHeading name={product.name} price={product.price} />
-              <ProductReviews rating={product.rating} reviewCount={product.reviewCount} />
+              <ProductReviews slug={slug} rating={product.rating} reviewCount={product.reviewCount} />
             </div>
             <ProductImagesGallery images={product.images} />
             <div className="mt-8 lg:col-span-5">
@@ -73,7 +73,7 @@ export default async function SingleProductPage({ params: { slug } }: Props) {
             </div>
           </div>
           <Suspense fallback={null}>
-            <Reviews productId={decodedId} />
+            <Reviews limit={5} productId={decodedId} />
           </Suspense>
           <ReviewForm productId={decodedId} />
           {!!product.categories[0] && !!product.collections[0] && (

@@ -1,6 +1,7 @@
 import { decodeGlobalID } from '@pothos/plugin-relay';
 import { builder } from '@/schema/builder';
 import { prisma } from '@/util/prisma';
+import { ProductWhere } from './Product';
 
 builder.prismaObject('Review', {
   fields: (t) => ({
@@ -32,6 +33,7 @@ const ReviewWhere = builder.prismaWhere('Review', {
     title: 'String',
     description: 'String',
     rating: 'Float',
+    product: ProductWhere,
   },
 });
 

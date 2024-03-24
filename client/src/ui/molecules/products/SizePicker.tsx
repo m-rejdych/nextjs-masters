@@ -16,12 +16,7 @@ export const SizePicker = ({ sizes }: Props) => {
 
   return (
     <div className="mt-8">
-      <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-neutral-900">Size</h2>
-        <a href="#" className="text-sm font-medium text-primary-600 hover:text-primary-500">
-          See sizing chart
-        </a>
-      </div>
+      <h2 className="text-sm font-medium text-neutral-900">Size</h2>
       <RadioGroup
         name="sizeId"
         value={selectedSize}

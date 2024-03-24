@@ -55,7 +55,7 @@ const ProductWhereAnd = builder.prismaWhere('Product', {
   },
 });
 
-const ProductWhere = builder.prismaWhere('Product', {
+export const ProductWhere = builder.prismaWhere('Product', {
   name: 'ProductWhere',
   fields: {
     id: 'String',
