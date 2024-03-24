@@ -8,15 +8,16 @@ interface Props {
   image: ListItem['image'];
   name: ListItem['name'];
   slug: ListItem['slug'];
+  variant: 'categories' | 'collections';
 }
 
-export const MobileMenuPanelsCategoryListItem = ({ slug, name, image: { alt, url } }: Props) => (
+export const MobileMenuPanelsCategoryListItem = ({ variant, slug, name, image: { alt, url } }: Props) => (
   <div className="group relative">
     <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-neutral-100 group-hover:opacity-75">
       <Image src={url} alt={alt} className="object-cover object-center" width={400} height={400} />
     </div>
     <ActiveLink
-      href={`/categories/${slug}`}
+      href={`/${variant}/${slug}`}
       className="mt-6 block text-sm font-medium text-neutral-900"
     >
       <span className="absolute inset-0 z-10" aria-hidden="true" />

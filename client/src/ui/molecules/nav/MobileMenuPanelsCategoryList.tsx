@@ -11,7 +11,7 @@ export const MobileMenuPanelsCategoryList = async ({ variant }: Props) => {
 
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-10">
-      {items?.map(({ id, ...rest }) => <MobileMenuPanelsCategoryListItem key={id} {...rest} />)}
+      {items?.map(({ id, ...rest }) => <MobileMenuPanelsCategoryListItem variant={variant} key={id} {...rest} />)}
     </div>
   );
 };
