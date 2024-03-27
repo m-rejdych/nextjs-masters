@@ -31,6 +31,7 @@ export const ReviewFormRatingInput = () => {
         ))}
       </div>
       <input
+        required
         name="rating"
         id="rating"
         type="number"

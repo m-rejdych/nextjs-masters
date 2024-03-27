@@ -5,6 +5,7 @@ export const ReviewFormDescriptionInput = () => (
     </label>
     <div className="mt-2">
       <textarea
+        required
         id="content"
         name="content"
         rows={3}

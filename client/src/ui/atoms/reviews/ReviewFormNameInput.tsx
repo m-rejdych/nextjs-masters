@@ -6,6 +6,7 @@ export const ReviewFormNameInput = () => (
     <div className="mt-2">
       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-neutral-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 sm:max-w-md">
         <input
+          required
           type="text"
           name="name"
           id="name"
